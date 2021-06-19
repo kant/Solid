@@ -11,6 +11,10 @@
 		40795AA1267D985E00953D36 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AA0267D985E00953D36 /* ContentView.swift */; };
 		40795AA3267D986000953D36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40795AA2267D986000953D36 /* Assets.xcassets */; };
 		40795AA6267D986000953D36 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40795AA5267D986000953D36 /* Preview Assets.xcassets */; };
+		40795AAD267DA90500953D36 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AAC267DA90500953D36 /* Model.swift */; };
+		40795AAF267DA97B00953D36 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AAE267DA97B00953D36 /* Storage.swift */; };
+		40795AB1267DABED00953D36 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AB0267DABED00953D36 /* PreviewView.swift */; };
+		40795AB3267DB34500953D36 /* ModelListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AB2267DB34500953D36 /* ModelListCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +23,10 @@
 		40795AA0267D985E00953D36 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		40795AA2267D986000953D36 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40795AA5267D986000953D36 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		40795AAC267DA90500953D36 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		40795AAE267DA97B00953D36 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		40795AB0267DABED00953D36 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		40795AB2267DB34500953D36 /* ModelListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelListCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +61,10 @@
 			children = (
 				40795A9E267D985E00953D36 /* SolidApp.swift */,
 				40795AA0267D985E00953D36 /* ContentView.swift */,
+				40795AB2267DB34500953D36 /* ModelListCell.swift */,
+				40795AB0267DABED00953D36 /* PreviewView.swift */,
+				40795AAC267DA90500953D36 /* Model.swift */,
+				40795AAE267DA97B00953D36 /* Storage.swift */,
 				40795AA2267D986000953D36 /* Assets.xcassets */,
 				40795AA4267D986000953D36 /* Preview Content */,
 			);
@@ -137,6 +149,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40795AB1267DABED00953D36 /* PreviewView.swift in Sources */,
+				40795AB3267DB34500953D36 /* ModelListCell.swift in Sources */,
+				40795AAD267DA90500953D36 /* Model.swift in Sources */,
+				40795AAF267DA97B00953D36 /* Storage.swift in Sources */,
 				40795AA1267D985E00953D36 /* ContentView.swift in Sources */,
 				40795A9F267D985E00953D36 /* SolidApp.swift in Sources */,
 			);
@@ -280,7 +296,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = andrew.sawyer.Solid;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -309,7 +325,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = andrew.sawyer.Solid;
 				PRODUCT_NAME = "$(TARGET_NAME)";

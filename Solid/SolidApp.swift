@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct SolidApp: App {
+    
+    let storage = Storage()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
-        }
+            ContentView(storage: storage)
+        }.windowToolbarStyle( UnifiedWindowToolbarStyle() )
     }
 }
