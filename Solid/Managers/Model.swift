@@ -6,21 +6,18 @@
 //
 
 import Foundation
-import RealityKit
 
 class Model: NSObject, ObservableObject {
     
     var storage: Storage
-    var captureImporting: Capture?
+    var viewportModel = ViewportModel()
     
     init(storage: Storage) {
         self.storage = storage
     }
     
     func newCapture(with folderUrl: URL) {
-        var capture = Capture(name: "New Model")
-//        capture.tempFolderUrl = folderUrl
-        captureImporting = capture
+        let capture = Capture(name: "New Model", importFolderUrl: folderUrl)
         storage.models.append(capture)
     }
     

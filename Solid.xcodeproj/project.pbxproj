@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		400AD15026803C6D00A3F81D /* ViewportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400AD14F26803C6D00A3F81D /* ViewportView.swift */; };
+		400AD15226804DE700A3F81D /* ViewportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400AD15126804DE700A3F81D /* ViewportModel.swift */; };
 		4052AA1B267E312200644CC2 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1A267E312200644CC2 /* Model.swift */; };
 		4052AA1E267EF46600644CC2 /* ImportOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1D267EF46600644CC2 /* ImportOptionsView.swift */; };
 		4052AA20267F92F200644CC2 /* ImportConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1F267F92F200644CC2 /* ImportConfiguration.swift */; };
@@ -21,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		400AD14F26803C6D00A3F81D /* ViewportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewportView.swift; sourceTree = "<group>"; };
+		400AD15126804DE700A3F81D /* ViewportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewportModel.swift; sourceTree = "<group>"; };
 		4052AA1A267E312200644CC2 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		4052AA1D267EF46600644CC2 /* ImportOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportOptionsView.swift; sourceTree = "<group>"; };
 		4052AA1F267F92F200644CC2 /* ImportConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportConfiguration.swift; sourceTree = "<group>"; };
@@ -49,6 +53,7 @@
 		4052AA19267E2CCF00644CC2 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				400AD15126804DE700A3F81D /* ViewportModel.swift */,
 				40795AAE267DA97B00953D36 /* Storage.swift */,
 				40795AAC267DA90500953D36 /* Capture.swift */,
 				4052AA1A267E312200644CC2 /* Model.swift */,
@@ -65,6 +70,7 @@
 				40795AB0267DABED00953D36 /* PreviewView.swift */,
 				40795AB2267DB34500953D36 /* ModelListCell.swift */,
 				4052AA1D267EF46600644CC2 /* ImportOptionsView.swift */,
+				400AD14F26803C6D00A3F81D /* ViewportView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -174,12 +180,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				400AD15026803C6D00A3F81D /* ViewportView.swift in Sources */,
 				40795AB1267DABED00953D36 /* PreviewView.swift in Sources */,
 				4052AA1B267E312200644CC2 /* Model.swift in Sources */,
 				40795AB3267DB34500953D36 /* ModelListCell.swift in Sources */,
 				40795AAD267DA90500953D36 /* Capture.swift in Sources */,
 				4052AA20267F92F200644CC2 /* ImportConfiguration.swift in Sources */,
 				40795AAF267DA97B00953D36 /* Storage.swift in Sources */,
+				400AD15226804DE700A3F81D /* ViewportModel.swift in Sources */,
 				40795AA1267D985E00953D36 /* ContentView.swift in Sources */,
 				40795A9F267D985E00953D36 /* SolidApp.swift in Sources */,
 				4052AA1E267EF46600644CC2 /* ImportOptionsView.swift in Sources */,

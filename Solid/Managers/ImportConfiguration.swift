@@ -10,6 +10,5 @@ import RealityKit
 
 struct ImportConfiguration {
     var folderUrl: URL?
-    var qualityLevels: Set<PhotogrammetrySession.Request.Detail> = []
-//    var fileFormats: 
+    var qualityLevels: Set<PhotogrammetrySession.Request.Detail> = [.preview]
 }

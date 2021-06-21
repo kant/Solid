@@ -8,6 +8,14 @@
 import Foundation
 import RealityKit
 
+struct ProcessedFile: Hashable, Identifiable {
+    var id: ObjectIdentifier
+    
+    var location: URL
+    var qualityName: String
+    var quality: PhotogrammetrySession.Request.Detail
+}
+
 class Capture: Identifiable, Hashable, ObservableObject {
     
     @Published var isInPreviewState = true
@@ -17,11 +25,13 @@ class Capture: Identifiable, Hashable, ObservableObject {
     var dayCreated: Date?
     var name: String
     
-//    var availableQualityLevels: [PhotogrammetrySession] = []
-//    var importConfiguration: ImportConfiguration?
+    var importConfiguration = ImportConfiguration()
+    var processedFiles: [ProcessedFile] = []
     
-    init(name: String) {
+    init(name: String, importFolderUrl: URL?) {
         self.name = name
+
+        importConfiguration.folderUrl = importFolderUrl
         
         dateCreated = Date()
         let components = Calendar.current.dateComponents([.year, .month, .day], from: dateCreated)
@@ -29,8 +39,21 @@ class Capture: Identifiable, Hashable, ObservableObject {
     }
     
     convenience init() {
-        self.init(name: "Test Model")
+        self.init(name: "New Model", importFolderUrl: nil)
     }
+    
+    
+    
+    
+    func url(for qualityLevel: PhotogrammetrySession.Request.Detail) -> URL? {
+        let selectedProcessedFile = processedFiles.first { processedFile in
+            processedFile.quality == qualityLevel
+        }
+        
+        return selectedProcessedFile?.location
+    }
+    
+    
     
     static func == (lhs: Capture, rhs: Capture) -> Bool {
         return lhs.id == rhs.id
