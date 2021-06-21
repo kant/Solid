@@ -7,23 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4052AA1B267E312200644CC2 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1A267E312200644CC2 /* Model.swift */; };
+		4052AA1E267EF46600644CC2 /* ImportOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1D267EF46600644CC2 /* ImportOptionsView.swift */; };
+		4052AA20267F92F200644CC2 /* ImportConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1F267F92F200644CC2 /* ImportConfiguration.swift */; };
 		40795A9F267D985E00953D36 /* SolidApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795A9E267D985E00953D36 /* SolidApp.swift */; };
 		40795AA1267D985E00953D36 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AA0267D985E00953D36 /* ContentView.swift */; };
 		40795AA3267D986000953D36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40795AA2267D986000953D36 /* Assets.xcassets */; };
 		40795AA6267D986000953D36 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40795AA5267D986000953D36 /* Preview Assets.xcassets */; };
-		40795AAD267DA90500953D36 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AAC267DA90500953D36 /* Model.swift */; };
+		40795AAD267DA90500953D36 /* Capture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AAC267DA90500953D36 /* Capture.swift */; };
 		40795AAF267DA97B00953D36 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AAE267DA97B00953D36 /* Storage.swift */; };
 		40795AB1267DABED00953D36 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AB0267DABED00953D36 /* PreviewView.swift */; };
 		40795AB3267DB34500953D36 /* ModelListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AB2267DB34500953D36 /* ModelListCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4052AA1A267E312200644CC2 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		4052AA1D267EF46600644CC2 /* ImportOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportOptionsView.swift; sourceTree = "<group>"; };
+		4052AA1F267F92F200644CC2 /* ImportConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportConfiguration.swift; sourceTree = "<group>"; };
 		40795A9B267D985E00953D36 /* Solid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Solid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40795A9E267D985E00953D36 /* SolidApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidApp.swift; sourceTree = "<group>"; };
 		40795AA0267D985E00953D36 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		40795AA2267D986000953D36 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40795AA5267D986000953D36 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		40795AAC267DA90500953D36 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		40795AAC267DA90500953D36 /* Capture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Capture.swift; sourceTree = "<group>"; };
 		40795AAE267DA97B00953D36 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		40795AB0267DABED00953D36 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		40795AB2267DB34500953D36 /* ModelListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelListCell.swift; sourceTree = "<group>"; };
@@ -40,6 +46,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4052AA19267E2CCF00644CC2 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				40795AAE267DA97B00953D36 /* Storage.swift */,
+				40795AAC267DA90500953D36 /* Capture.swift */,
+				4052AA1A267E312200644CC2 /* Model.swift */,
+				4052AA1F267F92F200644CC2 /* ImportConfiguration.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		4052AA1C267E313D00644CC2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				40795A9E267D985E00953D36 /* SolidApp.swift */,
+				40795AA0267D985E00953D36 /* ContentView.swift */,
+				40795AB0267DABED00953D36 /* PreviewView.swift */,
+				40795AB2267DB34500953D36 /* ModelListCell.swift */,
+				4052AA1D267EF46600644CC2 /* ImportOptionsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		40795A92267D985E00953D36 = {
 			isa = PBXGroup;
 			children = (
@@ -59,12 +88,8 @@
 		40795A9D267D985E00953D36 /* Solid */ = {
 			isa = PBXGroup;
 			children = (
-				40795A9E267D985E00953D36 /* SolidApp.swift */,
-				40795AA0267D985E00953D36 /* ContentView.swift */,
-				40795AB2267DB34500953D36 /* ModelListCell.swift */,
-				40795AB0267DABED00953D36 /* PreviewView.swift */,
-				40795AAC267DA90500953D36 /* Model.swift */,
-				40795AAE267DA97B00953D36 /* Storage.swift */,
+				4052AA1C267E313D00644CC2 /* Views */,
+				4052AA19267E2CCF00644CC2 /* Managers */,
 				40795AA2267D986000953D36 /* Assets.xcassets */,
 				40795AA4267D986000953D36 /* Preview Content */,
 			);
@@ -150,11 +175,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				40795AB1267DABED00953D36 /* PreviewView.swift in Sources */,
+				4052AA1B267E312200644CC2 /* Model.swift in Sources */,
 				40795AB3267DB34500953D36 /* ModelListCell.swift in Sources */,
-				40795AAD267DA90500953D36 /* Model.swift in Sources */,
+				40795AAD267DA90500953D36 /* Capture.swift in Sources */,
+				4052AA20267F92F200644CC2 /* ImportConfiguration.swift in Sources */,
 				40795AAF267DA97B00953D36 /* Storage.swift in Sources */,
 				40795AA1267D985E00953D36 /* ContentView.swift in Sources */,
 				40795A9F267D985E00953D36 /* SolidApp.swift in Sources */,
+				4052AA1E267EF46600644CC2 /* ImportOptionsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
