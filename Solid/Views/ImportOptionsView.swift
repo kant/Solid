@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ImportOptionsView: View {
     
-    @EnvironmentObject private var model: Model
+    @EnvironmentObject private var model: ContentViewModel
     @ObservedObject var capture: Capture
     
     var body: some View {

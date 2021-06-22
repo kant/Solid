@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import RealmSwift
 import UniformTypeIdentifiers
 
 struct ContentView: View {
     
-    @EnvironmentObject private var model: Model
+    @EnvironmentObject private var model: ContentViewModel
+    @ObservedRealmObject var captures: RealmSwift.Results<Capture>
     
     @State private var selectedCapture: Capture?
     
@@ -21,7 +23,7 @@ struct ContentView: View {
         
         //List & Preview View
         NavigationView {
-            List(model.storage.models, id: \.id) { capture in
+            List(model.storage.captures, id: \.id) { capture in
                 NavigationLink(
                     destination:
                         PreviewView(capture: capture),
@@ -45,7 +47,7 @@ struct ContentView: View {
                     let url = try result.get()
                     debugPrint(url)
                     if let firstUrl = url.first {
-                        model.newCapture(with: firstUrl)
+                        model.storage.newCapture(with: firstUrl)
                     }
                 } catch {
                     debugPrint("error with importing")
@@ -88,6 +90,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(Model(storage: Storage()))
+        ContentView().environmentObject(ContentViewModel(storage: Storage()))
     }
 }

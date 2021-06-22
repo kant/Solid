@@ -11,7 +11,7 @@ import RealityKit
 
 struct ViewportView: View {
     
-    @EnvironmentObject private var model: Model
+    @EnvironmentObject private var model: ContentViewModel
     var viewportModel: ViewportModel {
         return model.viewportModel
     }

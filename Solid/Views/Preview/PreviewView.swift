@@ -11,7 +11,7 @@ import RealityKit
 
 struct PreviewView: View {
 
-    @EnvironmentObject private var model: Model
+    @EnvironmentObject private var model: ContentViewModel
     @ObservedObject var capture: Capture
     
     @State var selectedPreviewQuality: PhotogrammetrySession.Request.Detail = .preview

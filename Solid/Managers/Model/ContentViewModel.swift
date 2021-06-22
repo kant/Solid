@@ -7,18 +7,13 @@
 
 import Foundation
 
-class Model: NSObject, ObservableObject {
+class ContentViewModel: NSObject, ObservableObject {
     
     var storage: Storage
     var viewportModel = ViewportModel()
     
     init(storage: Storage) {
         self.storage = storage
-    }
-    
-    func newCapture(with folderUrl: URL) {
-        let capture = Capture(name: "New Model", importFolderUrl: folderUrl)
-        storage.models.append(capture)
     }
     
     func processWithOptions(capture: Capture) {

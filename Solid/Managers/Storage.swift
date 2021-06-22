@@ -7,17 +7,34 @@
 
 import Foundation
 import SwiftUI
+import RealmSwift
 
 class Storage {
-    var models: [Capture] = []
+    let realm = try! Realm()
+    
+    lazy var captures: RealmSwift.List<Capture> = {
+        let list = RealmSwift.List<Capture>()
+        try! realm.write {
+            list.append(Capture(name: "1", importFolderUrl: nil))
+            list.append(Capture(name: "2", importFolderUrl: nil))
+            list.append(Capture(name: "3", importFolderUrl: nil))
+        }
+        return list
+//        let objects = realm.objects(Capture.self)
+//        let sorted = objects.sorted(byKeyPath: "dateCreated", ascending: false)
+//        return sorted
+    }()
     
     init() {
-        models.append(contentsOf: [
-            Capture(name: "Model 1", importFolderUrl: nil),
-            Capture(name: "Model 2", importFolderUrl: nil),
-            Capture(name: "Model 3", importFolderUrl: nil),
-            Capture(name: "Model 4", importFolderUrl: nil)
-        ])
-        
+//        try! realm.write {
+//            realm.add( Capture() )
+//        }
+    }
+    
+    func newCapture(with folderUrl: URL) {
+        let capture = Capture(name: "New Model", importFolderUrl: folderUrl)
+        try! realm.write {
+            realm.add(capture)
+        }
     }
 }

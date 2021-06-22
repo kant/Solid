@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct SolidApp: App {
-    @StateObject var model = Model(storage: Storage())
+    @StateObject var model = ContentViewModel(storage: Storage())
     
     var body: some Scene {
         WindowGroup {
