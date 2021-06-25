@@ -6,10 +6,16 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 @main
-struct SolidApp: App {
-    @StateObject var model = ContentViewModel(storage: Storage())
+struct SolidApp: SwiftUI.App {
+    
+    @StateObject var model: ContentViewModel = {
+        let realm = try! Realm()
+        let storage = Storage(with: realm)
+        return ContentViewModel(storage: storage)
+    }()
     
     var body: some Scene {
         WindowGroup {

@@ -10,25 +10,10 @@ import SwiftUI
 import RealmSwift
 
 class Storage {
-    let realm = try! Realm()
+    var realm: Realm
     
-    lazy var captures: RealmSwift.List<Capture> = {
-        let list = RealmSwift.List<Capture>()
-        try! realm.write {
-            list.append(Capture(name: "1", importFolderUrl: nil))
-            list.append(Capture(name: "2", importFolderUrl: nil))
-            list.append(Capture(name: "3", importFolderUrl: nil))
-        }
-        return list
-//        let objects = realm.objects(Capture.self)
-//        let sorted = objects.sorted(byKeyPath: "dateCreated", ascending: false)
-//        return sorted
-    }()
-    
-    init() {
-//        try! realm.write {
-//            realm.add( Capture() )
-//        }
+    init(with realm: Realm) {
+        self.realm = realm
     }
     
     func newCapture(with folderUrl: URL) {

@@ -12,27 +12,23 @@ import UniformTypeIdentifiers
 struct ContentView: View {
     
     @EnvironmentObject private var model: ContentViewModel
-    @ObservedRealmObject var captures: RealmSwift.Results<Capture>
     
     @State private var selectedCapture: Capture?
     
     @State private var displayFileBrowser: Bool = false
-    @State private var displayImportOptions: Bool = false
+
+    @ObservedResults(Capture.self, sortDescriptor: SortDescriptor(keyPath: "dateCreated", ascending: false)) var captures
     
     var body: some View {
         
         //List & Preview View
         NavigationView {
-            List(model.storage.captures, id: \.id) { capture in
-                NavigationLink(
-                    destination:
-                        PreviewView(capture: capture),
-                    tag: capture,
-                    selection: $selectedCapture,
-                    label: {
+            List(selection: $selectedCapture) {
+                ForEach(captures) { capture in
+                    NavigationLink(destination: PreviewView(capture: capture)) {
                         ModelListCell(capture: capture)
-                    }
-                )
+                    }.tag(capture)
+                }
             }
             .listStyle(.sidebar)
         }
@@ -47,7 +43,8 @@ struct ContentView: View {
                     let url = try result.get()
                     debugPrint(url)
                     if let firstUrl = url.first {
-                        model.storage.newCapture(with: firstUrl)
+                        let capture = Capture(name: "New Model", importFolderUrl: firstUrl)
+                        $captures.append(capture)
                     }
                 } catch {
                     debugPrint("error with importing")
@@ -59,7 +56,7 @@ struct ContentView: View {
         .toolbar {
             ToolbarItem(placement: ToolbarItemPlacement.destructiveAction) {
                 Button(action: {
-                    debugPrint("delete \(selectedCapture?.name ?? "no name model")")
+                    debugPrint("delete \(selectedCapture?.name ?? "")")
                 }, label: {
                     Image(systemName: "trash")
                 })
@@ -75,7 +72,7 @@ struct ContentView: View {
             
             ToolbarItem {
                 Button(action: {
-                    debugPrint("sharing \(selectedCapture?.name ?? "no name model")")
+                    debugPrint("sharing \(selectedCapture?.name ?? "")")
                 }, label: {
                     Image(systemName: "square.and.arrow.up")
                 })
@@ -90,6 +87,11 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(ContentViewModel(storage: Storage()))
+        let object: ContentViewModel = {
+            let realm = try! Realm()
+            let storage = Storage(with: realm)
+            return ContentViewModel(storage: storage)
+        }()
+        ContentView().environmentObject(object)
     }
 }

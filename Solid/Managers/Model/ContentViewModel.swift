@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 class ContentViewModel: NSObject, ObservableObject {
     
@@ -16,8 +17,17 @@ class ContentViewModel: NSObject, ObservableObject {
         self.storage = storage
     }
     
-    func processWithOptions(capture: Capture) {
-        capture.isInPreviewState = false
-        debugPrint("process \(capture.name) with options")
+    func processWithOptions(_ capture: Capture) {
+        objectWillChange.send()
+        do {
+            try storage.realm.write {
+                if let thawedCapture = capture.thaw() {
+                    thawedCapture.isInPreviewState = false
+                }
+            }
+        } catch {
+            debugPrint("problem")
+        }
+        debugPrint("begin processing with options")
     }
 }

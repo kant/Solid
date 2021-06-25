@@ -6,15 +6,16 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct ModelListCell: View {
     
-    @ObservedObject var capture: Capture
+    @ObservedRealmObject var capture: Capture
     
     var body: some View {
         HStack() {
             VStack(alignment: .leading) {
-                Text(capture.name)
+                TextField("", text: $capture.name)
                 if let day = capture.dayCreated {
                     Text(day.formatted(date: .abbreviated, time: .omitted))
                         .foregroundStyle(.secondary)
