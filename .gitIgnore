@@ -1,0 +1,2 @@
+Pods/Realm/core/realm-monorepo.xcframework/*
+!Pods/Realm/core/realm-monorepo.xcframework/macos-x86_64_arm64/*
