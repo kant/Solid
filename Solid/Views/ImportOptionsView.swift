@@ -14,21 +14,29 @@ struct ImportOptionsView: View {
     @EnvironmentObject private var model: ContentViewModel
     @ObservedRealmObject var capture: Capture
     
-    @StateObject var importConfiguration = ImportConfiguration()
+    @ObservedObject var importConfiguration: ImportConfiguration
     
-    typealias Detail = PhotogrammetrySession.Request.Detail
     var body: some View {
         HStack {
-            TextField("Capture Name: ", text: $capture.name)
+            VStack {
+                TextField("Capture Name: ", text: $capture.name)
+                if let folderUrl = importConfiguration.folderUrl {
+                    Text(folderUrl.path)
+                }
+                Text("_ Images") //add num of pics etc
+            }
             
-            Toggle("basic test", isOn: $importConfiguration.testSelection.selected)
-            Toggle("single element from array", isOn: $importConfiguration.qualitySelections.first!.selected)
-            
-            SwiftUI.List($importConfiguration.qualitySelections) { qualitySelection in
-                Toggle(
-                    "qualitySelection.quality.description",
-                    isOn: qualitySelection.selected
-                )
+            if let importConfiguration = importConfiguration {
+                SwiftUI.List {
+                    ForEach(importConfiguration.qualitySelections.indices) { index in
+                        Toggle(
+                            importConfiguration.qualitySelections[index].name,
+                            isOn: $importConfiguration.qualitySelections[index].selected
+                        )
+                    }
+                }
+            } else {
+                Text("Could not load ImportConfiguration 2")
             }
             
             Button {
@@ -41,29 +49,10 @@ struct ImportOptionsView: View {
     }
 }
 
-extension PhotogrammetrySession.Request.Detail: CustomStringConvertible, CaseIterable {
+extension PhotogrammetrySession.Request.Detail: CaseIterable {
     public static var allCases: [PhotogrammetrySession.Request.Detail] = [
         .preview, .reduced, .medium, .full, .raw
     ]
-    
-    public var description: String {
-        switch self {
-        case .preview:
-            return "Preview"
-        case .reduced:
-            return "Reduced"
-        case .medium:
-            return "Medium"
-        case .full:
-            return "Full"
-        case .raw:
-            return "Raw"
-        @unknown default:
-            return "unknown"
-        }
-    }
-    
-    
 }
 
 //struct ImportOptionsView_Previews: PreviewProvider {

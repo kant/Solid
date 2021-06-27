@@ -12,6 +12,7 @@ import RealmSwift
 
 struct PreviewView: View {
     
+    @EnvironmentObject private var model: ContentViewModel
     @StateRealmObject var capture: Capture
     
     @State var selectedPreviewQuality: PhotogrammetrySession.Request.Detail = .preview
@@ -27,8 +28,13 @@ struct PreviewView: View {
             Spacer()
         }
 
-        if capture.isInPreviewState {
-            ImportOptionsView(capture: capture)
+        if capture.isInPreviewState, let config = model.importConfiguration(for: capture) {
+            ImportOptionsView(  
+                capture: capture,
+                importConfiguration: config
+            )
+        } else {
+            Text("Could not load ImportConfiguration 1")
         }
         
     }
