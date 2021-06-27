@@ -18,7 +18,9 @@ import SwiftUI
     @objc dynamic var dayCreated: Date
     @objc dynamic var name: String
     
+    @objc dynamic var importFolderUrl: String
     let processedFiles = RealmSwift.List<ProcessedFile>()
+    
     
     init(name: String, importFolderUrl: URL?) {
         self.name = name
@@ -28,9 +30,9 @@ import SwiftUI
         let components = Calendar.current.dateComponents([.year, .month, .day], from: dateCreated)
         dayCreated = Calendar.current.date(from: components) ?? date
         
-        super.init()
+        self.importFolderUrl = importFolderUrl?.absoluteString ?? ""
         
-//        importConfiguration.folderUrl = importFolderUrl
+        super.init()
     }
     
     required convenience override init() {

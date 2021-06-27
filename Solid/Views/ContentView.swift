@@ -45,6 +45,9 @@ struct ContentView: View {
                     if let firstUrl = url.first {
                         let capture = Capture(name: "New Model", importFolderUrl: firstUrl)
                         $captures.append(capture)
+                        model.importConfigurations.append(
+                            ImportConfiguration(for: capture)
+                        )
                     }
                 } catch {
                     debugPrint("error with importing")

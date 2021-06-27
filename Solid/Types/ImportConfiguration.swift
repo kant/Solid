@@ -25,8 +25,14 @@ class ImportConfiguration: ObservableObject {
         return selection
     }()
     
-    init(id: ObjectId) {
-        self.captureId = id
+//    init(id: ObjectId, folderUrl: URL) {
+//        self.captureId = id
+//        self.folderUrl = folderUrl
+//    }
+    
+    init(for capture: Capture) {
+        self.captureId = capture.id
+        self.folderUrl = URL(string: capture.importFolderUrl)
     }
 }
 

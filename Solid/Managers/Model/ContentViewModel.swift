@@ -46,7 +46,7 @@ class ContentViewModel: NSObject, ObservableObject {
         
         //create new import config
         } else {
-            let newConfig = ImportConfiguration(id: capture.id)
+            let newConfig = ImportConfiguration(for: capture)
             importConfigurations.append(newConfig)
             return newConfig
         }
