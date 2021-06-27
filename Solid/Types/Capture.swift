@@ -18,11 +18,11 @@ import SwiftUI
     @objc dynamic var dayCreated: Date
     @objc dynamic var name: String
     
-    @objc dynamic var importFolderUrl: String
+    @objc dynamic var importFolderRelativePath: String
     let processedFiles = RealmSwift.List<ProcessedFile>()
     
     
-    init(name: String, importFolderUrl: URL?) {
+    init(name: String, rawUrl: URL?) {
         self.name = name
         
         let date = Date()
@@ -30,13 +30,14 @@ import SwiftUI
         let components = Calendar.current.dateComponents([.year, .month, .day], from: dateCreated)
         dayCreated = Calendar.current.date(from: components) ?? date
         
-        self.importFolderUrl = importFolderUrl?.absoluteString ?? ""
+        self.importFolderRelativePath = rawUrl?.relativePath ?? ""
+        //rawUrl?.absoluteString ?? ""
         
         super.init()
     }
     
     required convenience override init() {
-        self.init(name: "New Model", importFolderUrl: nil)
+        self.init(name: "New Model", rawUrl: nil)
     }
     
     func url(for qualityLevel: PhotogrammetrySession.Request.Detail) -> URL? {

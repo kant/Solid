@@ -16,6 +16,7 @@ struct ModelListCell: View {
         HStack() {
             VStack(alignment: .leading) {
                 TextField("", text: $capture.name)
+                    .textFieldStyle(.roundedBorder)
                 if let day = capture.dayCreated {
                     Text(day.formatted(date: .abbreviated, time: .omitted))
                         .foregroundStyle(.secondary)

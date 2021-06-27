@@ -17,7 +17,7 @@ class Storage {
     }
     
     func newCapture(with folderUrl: URL) {
-        let capture = Capture(name: "New Model", importFolderUrl: folderUrl)
+        let capture = Capture(name: "New Model", rawUrl: folderUrl)
         try! realm.write {
             realm.add(capture)
         }

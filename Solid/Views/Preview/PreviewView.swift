@@ -13,29 +13,36 @@ import RealmSwift
 struct PreviewView: View {
     
     @EnvironmentObject private var model: ContentViewModel
-    @StateRealmObject var capture: Capture
+    @ObservedRealmObject var capture: Capture
     
     @State var selectedPreviewQuality: PhotogrammetrySession.Request.Detail = .preview
     
     var body: some View {
-        ViewportView(selectedPreviewQuality: $selectedPreviewQuality).overlay {
-            Picker("Preview Quality", selection: $selectedPreviewQuality) {
-                ForEach(capture.processedFiles) { file in
-                    Text(file.qualityName).tag(file.quality)
+        ZStack() {
+            ViewportView(selectedPreviewQuality: $selectedPreviewQuality)
+            
+            VStack {
+                //Preview Quality Picker
+                Picker("Preview Quality", selection: $selectedPreviewQuality) {
+                    ForEach(capture.processedFiles) { file in
+                        Text(file.qualityName).tag(file.quality)
+                    }
                 }
+                .pickerStyle(.inline)
+                
+                Spacer()
+                
+                //Import Config Bar
+                BottomBar(capture: capture)
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(10)
+                    .padding()
+                    
             }
-            .pickerStyle(.inline)
-            Spacer()
         }
 
-        if capture.isInPreviewState, let config = model.importConfiguration(for: capture) {
-            ImportOptionsView(  
-                capture: capture,
-                importConfiguration: config
-            )
-        } else {
-            Text("Could not load ImportConfiguration 1")
-        }
+        
         
     }
 }

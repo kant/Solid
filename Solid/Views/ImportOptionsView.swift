@@ -17,17 +17,39 @@ struct ImportOptionsView: View {
     @ObservedObject var importConfiguration: ImportConfiguration
     
     var body: some View {
-        HStack {
-            VStack {
+        HStack(alignment: .top) {
+            VStack(alignment: .leading) {
+                
+                //Name
                 TextField("Capture Name: ", text: $capture.name)
-                if let folderUrl = importConfiguration.folderUrl {
-                    Text(folderUrl.path)
+                    .font(.headline)
+                    .textFieldStyle(.roundedBorder)
+                    
+                
+                //Folder Url
+                if let _ = importConfiguration.rawFolderUrl {
+                    HStack(alignment: .top) {
+                        Text("Folder Location:")
+                            .bold()
+                        Text(importConfiguration.relativePath)
+                    }
+                    .font(.subheadline)
+                } else {
+                    Text("Relink Folder")
                 }
-                Text("_ Images") //add num of pics etc
+                
+                //Number of Images
+                HStack(alignment: .top) {
+                    Text("# of Images:")
+                        .bold()
+                    Text("_ Images") //add num of pics etc
+                }
+                .font(.subheadline)
             }
             
             if let importConfiguration = importConfiguration {
-                SwiftUI.List {
+
+                VStack(alignment: .leading) {
                     ForEach(importConfiguration.qualitySelections.indices) { index in
                         Toggle(
                             importConfiguration.qualitySelections[index].name,
@@ -35,6 +57,8 @@ struct ImportOptionsView: View {
                         )
                     }
                 }
+                .padding([.horizontal])
+                
             } else {
                 Text("Could not load ImportConfiguration 2")
             }
@@ -45,7 +69,7 @@ struct ImportOptionsView: View {
                 Text("Generate Full")
             }
         }
-        .padding()
+//        .padding()
     }
 }
 
@@ -55,8 +79,15 @@ extension PhotogrammetrySession.Request.Detail: CaseIterable {
     ]
 }
 
-//struct ImportOptionsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ImportOptionsView(capture: Capture())
-//    }
-//}
+struct ImportOptionsView_Previews: PreviewProvider {
+    static var previews: some View {
+        let capture = Capture(
+            name: "Testing",
+            rawUrl: URL(string: "url/")
+        )
+        ImportOptionsView(
+            capture: capture,
+            importConfiguration: ImportConfiguration(for: capture)
+        )
+    }
+}

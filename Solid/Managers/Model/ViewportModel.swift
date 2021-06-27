@@ -25,9 +25,12 @@ class ViewportModel: NSObject, ObservableObject {
         //make & add camera
         cameraNode.camera = SCNCamera()
         scene.rootNode.addChildNode(cameraNode)
+        
+        setGradientBackground()
     }
     
     func scene(with qualityLevel: PhotogrammetrySession.Request.Detail) -> SCNScene {
+        
         guard let url = capture?.url(for: qualityLevel) else { return scene }
         let newNode = SCNReferenceNode(url: url)
         newNode?.load()
@@ -38,5 +41,9 @@ class ViewportModel: NSObject, ObservableObject {
         scene.rootNode.addChildNode(captureNode)
         
         return scene
+    }
+    
+    private func setGradientBackground() {
+        scene.background.contents = CGColor(red: 1, green: 0.2, blue: 0, alpha: 1)
     }
 }

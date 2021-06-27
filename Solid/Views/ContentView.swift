@@ -43,7 +43,7 @@ struct ContentView: View {
                     let url = try result.get()
                     debugPrint(url)
                     if let firstUrl = url.first {
-                        let capture = Capture(name: "New Model", importFolderUrl: firstUrl)
+                        let capture = Capture(name: "New Model", rawUrl: firstUrl)
                         $captures.append(capture)
                         model.importConfigurations.append(
                             ImportConfiguration(for: capture)
@@ -70,14 +70,6 @@ struct ContentView: View {
                     displayFileBrowser = true
                 }, label: {
                     Image(systemName: "plus")
-                })
-            }
-            
-            ToolbarItem {
-                Button(action: {
-                    debugPrint("sharing \(selectedCapture?.name ?? "")")
-                }, label: {
-                    Image(systemName: "square.and.arrow.up")
                 })
             }
         }

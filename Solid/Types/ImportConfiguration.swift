@@ -13,7 +13,8 @@ import RealmSwift
 class ImportConfiguration: ObservableObject {
     var captureId: ObjectId
     
-    var folderUrl: URL?
+    var rawFolderUrl: URL?
+    var relativePath: String
     
     @Published var qualitySelections: [QualitySelection] = {
         var selection: [QualitySelection] = []
@@ -32,7 +33,13 @@ class ImportConfiguration: ObservableObject {
     
     init(for capture: Capture) {
         self.captureId = capture.id
-        self.folderUrl = URL(string: capture.importFolderUrl)
+        
+
+        relativePath = capture.importFolderRelativePath
+        rawFolderUrl = URL(
+            fileURLWithPath: capture.importFolderRelativePath,
+            relativeTo: FileManager().homeDirectoryForCurrentUser
+        )
     }
 }
 
