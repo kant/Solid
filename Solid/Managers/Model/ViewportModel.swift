@@ -7,8 +7,8 @@
 
 import Foundation
 import SceneKit
-//import SceneKit.ModelIO
 import RealityKit
+import SpriteKit
 
 class ViewportModel: NSObject, ObservableObject {
     var scene = SCNScene()
@@ -43,7 +43,38 @@ class ViewportModel: NSObject, ObservableObject {
         return scene
     }
     
+    static let fromColor = CGColor(gray: 0.9, alpha: 1)
+    static let toColor = CGColor(gray: 0.95, alpha: 1)
+    
     private func setGradientBackground() {
-        scene.background.contents = CGColor(red: 1, green: 0.2, blue: 0, alpha: 1)
+        let skyBox = CAGradientLayer()
+        skyBox.colors = [
+            ViewportModel.fromColor,
+            ViewportModel.toColor
+        ]
+        skyBox.frame = CGRect(x: 0, y: 0, width: 512, height: 256)
+        
+//        let skyBox = MDLSkyCubeTexture(name: "sky",
+//                                       channelEncoding: .float16,
+//                                       textureDimensions: vector_int2(256, 256),
+//                                       turbidity: 0.75,
+//                                       sunElevation: 0.5,
+//                                       upperAtmosphereScattering: 0.15,
+//                                       groundAlbedo: 0.85)
+        
+//        let skyBox = MDLColorSwatchTexture(
+//            colorGradientFrom: ViewportModel.fromColor,
+//            to: ViewportModel.toColor,
+//            name: "gradient",
+//            textureDimensions: vector_int2(2048, 1024)
+//        )
+        scene.background.contents = skyBox
+        scene.lightingEnvironment.contents = MDLSkyCubeTexture(name: "sky",
+                                                               channelEncoding: .float16,
+                                                               textureDimensions: vector_int2(256, 256),
+                                                               turbidity: 0.75,
+                                                               sunElevation: 0.5,
+                                                               upperAtmosphereScattering: 0.15,
+                                                               groundAlbedo: 0.85)
     }
 }
