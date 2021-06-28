@@ -67,7 +67,6 @@ struct ImportOptionsView: View {
                 model.captureGenerators.append(
                     CaptureGenerator(for: capture, with: importConfiguration, model: model)
                 )
-                //model.processWithOptions(capture: capture)
             } label: {
                 Text("Generate Full")
             }

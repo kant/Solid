@@ -12,9 +12,9 @@ struct BottomBar: View {
     @ObservedObject var model: ContentViewModel
     @ObservedRealmObject var capture: Capture
     
-    
     var body: some View {
         
+        //Config Bar
         if capture.isInPreviewState {
             if let config = model.importConfiguration(for: capture) {
                 ImportOptionsView(
@@ -26,13 +26,18 @@ struct BottomBar: View {
                 Text("Could not load ImportConfiguration 1")
             }
 
-        //Share Bar
-        } else {
-            Button(action: {
-                debugPrint("sharing \(capture.name)")
-            }, label: {
-                Image(systemName: "square.and.arrow.up")
-            })
+        //Progress Bar
+        } else { //if let progress = model.currentlyProcessingProgress
+            let progress = (model.currentlyProcessingProgress ?? 0) * 100
+            HStack {
+                ProgressView(
+                    "Processing: ",
+                    value: progress,
+                    total: 100
+                )
+                Text("\( progress ) %")
+                    .font(.headline)
+            }
         }
     }
     

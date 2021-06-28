@@ -32,7 +32,7 @@ struct PreviewView: View {
                 
                 Spacer()
                 
-                //Import Config Bar
+                //Bottom Bar
                 BottomBar(model: model, capture: capture)
                     .padding()
                     .background(Color.white)

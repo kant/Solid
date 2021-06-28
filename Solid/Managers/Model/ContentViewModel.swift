@@ -19,6 +19,9 @@ class ContentViewModel: NSObject, ObservableObject {
     var captureGenerators: [CaptureGenerator] = []
     var captureGeneratorSubscriptions: Set<AnyCancellable> = []
     
+    @Published var currentlyProcessingProgress: Double?
+    //var currentlyProcessingName: String?
+    
     init(storage: Storage) {
         self.storage = storage
     }

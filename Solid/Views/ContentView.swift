@@ -59,7 +59,8 @@ struct ContentView: View {
         .toolbar {
             ToolbarItem(placement: ToolbarItemPlacement.destructiveAction) {
                 Button(action: {
-                    debugPrint("delete \(selectedCapture?.name ?? "")")
+                    guard let selectedCapture = selectedCapture else { return }
+                    debugPrint("delete \(selectedCapture.name)")
                 }, label: {
                     Image(systemName: "trash")
                 })
@@ -72,6 +73,16 @@ struct ContentView: View {
                     Image(systemName: "plus")
                 })
             }
+            
+            ToolbarItem(placement: ToolbarItemPlacement.principal) {
+                Button(action: {
+                    guard let selectedCapture = selectedCapture else { return }
+                    debugPrint("sharing all quality levels of \(selectedCapture.name)")
+                }, label: {
+                    Image(systemName: "square.and.arrow.up")
+                })
+            }
+            
         }
         
         //Navigation Title / Subtitle

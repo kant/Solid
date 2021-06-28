@@ -27,7 +27,8 @@ class CaptureGenerator: Equatable {
     
     func process() {
         debugPrint("begin processing with options")
-            
+        showProgressBar()
+        
         do {
             session = try PhotogrammetrySession(
                 input: URL(fileURLWithPath: config.relativePath,
@@ -43,6 +44,7 @@ class CaptureGenerator: Equatable {
         
         var requests: [PhotogrammetrySession.Request] = []
         for selection in config.qualitySelections {
+            guard selection.selected else { continue }
             requests.append(
                 PhotogrammetrySession.Request.modelFile(
                     url: Storage.url(for: selection),
@@ -67,54 +69,72 @@ class CaptureGenerator: Equatable {
                 var maybeError: Error? = nil
                 if case .failure(let error) = completion {
                     // Handle error.
-                    
+                    debugPrint("error: \(error)")
                 }
-            }, receiveValue: { output in
+            }, receiveValue: { [self] output in
                 switch output {
                 case .processingComplete:
                     // RealityKit has processed all requests.
                     debugPrint("RealityKit has processed all requests.")
+                    
                 case let .requestComplete(request, result):
                     // RealityKit has finished processing a request.
                     debugPrint("RealityKit has finished processing a request.")
+                    
                 case .inputComplete:
                     // Ingestion of images complete, processing begins.
                     debugPrint("Ingestion of images complete, processing begins.")
+                    
                 case let .requestProgress(request, fractionComplete):
                     // Periodic progress update. Update UI here.
                     debugPrint("Periodic progress update. Update UI here. \(fractionComplete)")
+                    self.model.currentlyProcessingProgress = fractionComplete
+                    
                 case let .requestError(request, error):
                     // Request encountered an error.
                     debugPrint("Request encountered an error. \(error)")
+                    
                 case .processingCancelled:
                     // Processing was canceled.
                     debugPrint("Processing was canceled.")
+                    
                 case let .invalidSample(id, reason):
                     // RealityKit deemed a sample invalid and didn't use it.
                     debugPrint("RealityKit deemed a sample invalid and didn't use it. \(reason)")
+                    
                 case let .skippedSample(id):
                     // RealityKit was unable to use a provided sample.
                     debugPrint("RealityKit was unable to use a provided sample.")
+                    
                 case .automaticDownsampling:
                     // RealityKit downsampled the input images because of resource constraints.
                     debugPrint("RealityKit downsampled the input images because of resource constraints.")
+                    
+                @unknown default:
+                    debugPrint("default PhotogrammetrySession.Output case")
+                    
                 }
             })
             .store(in: &model.captureGeneratorSubscriptions)
     }
-    
-    func complete() {
-//        objectWillChange.send()
-//        do {
-//            try model.storage.realm.write {
-//                if let thawedCapture = capture.thaw() {
-//                    thawedCapture.isInPreviewState = false
-//                }
-//            }
-//        } catch {
-//            debugPrint("problem")
+
+    private func showProgressBar() {
+//        async {
+            do {
+                try model.storage.realm.write {
+                    if let thawedCapture = capture.thaw() {
+                        thawedCapture.isInPreviewState = false
+                    }
+                }
+            } catch {
+                debugPrint("couldn't write to realm while updating preview state")
+            }
 //        }
         
+    }
+    
+    func complete() {
+
         model.captureGenerators.removeAll { captureGenerator in
             captureGenerator == self
         }
