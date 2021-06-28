@@ -19,8 +19,7 @@ struct SolidApp: SwiftUI.App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(model)
+            ContentView(model: model)
         }
         .windowToolbarStyle( UnifiedWindowToolbarStyle() )
     }

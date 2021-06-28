@@ -11,7 +11,7 @@ import RealityKit
 
 struct ImportOptionsView: View {
     
-    @EnvironmentObject private var model: ContentViewModel
+    @ObservedObject var model: ContentViewModel
     @ObservedRealmObject var capture: Capture
     
     @ObservedObject var importConfiguration: ImportConfiguration
@@ -64,7 +64,10 @@ struct ImportOptionsView: View {
             }
             
             Button {
-                model.processWithOptions(capture)
+                model.captureGenerators.append(
+                    CaptureGenerator(for: capture, with: importConfiguration, model: model)
+                )
+                //model.processWithOptions(capture: capture)
             } label: {
                 Text("Generate Full")
             }
@@ -79,15 +82,16 @@ extension PhotogrammetrySession.Request.Detail: CaseIterable {
     ]
 }
 
-struct ImportOptionsView_Previews: PreviewProvider {
-    static var previews: some View {
-        let capture = Capture(
-            name: "Testing",
-            rawUrl: URL(string: "url/")
-        )
-        ImportOptionsView(
-            capture: capture,
-            importConfiguration: ImportConfiguration(for: capture)
-        )
-    }
-}
+//struct ImportOptionsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let capture = Capture(
+//            name: "Testing",
+//            rawUrl: URL(string: "url/")
+//        )
+//        ImportOptionsView(
+//            model: ContentViewModel(storage: Storage(with: Realm())),
+//            capture: capture,
+//            importConfiguration: ImportConfiguration(for: capture)
+//        )
+//    }
+//}

@@ -9,7 +9,7 @@ import SwiftUI
 import RealmSwift
 
 struct BottomBar: View {
-    @EnvironmentObject private var model: ContentViewModel
+    @ObservedObject var model: ContentViewModel
     @ObservedRealmObject var capture: Capture
     
     
@@ -18,6 +18,7 @@ struct BottomBar: View {
         if capture.isInPreviewState {
             if let config = model.importConfiguration(for: capture) {
                 ImportOptionsView(
+                    model: model,
                     capture: capture,
                     importConfiguration: config
                 )

@@ -11,7 +11,7 @@ import UniformTypeIdentifiers
 
 struct ContentView: View {
     
-    @EnvironmentObject private var model: ContentViewModel
+    @ObservedObject var model: ContentViewModel
     
     @State private var selectedCapture: Capture?
     
@@ -25,7 +25,7 @@ struct ContentView: View {
         NavigationView {
             List(selection: $selectedCapture) {
                 ForEach(captures) { capture in
-                    NavigationLink(destination: PreviewView(capture: capture)) {
+                    NavigationLink(destination: PreviewView(model: model, capture: capture)) {
                         ModelListCell(capture: capture)
                     }.tag(capture)
                 }
@@ -82,11 +82,11 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let object: ContentViewModel = {
+        let model: ContentViewModel = {
             let realm = try! Realm()
             let storage = Storage(with: realm)
             return ContentViewModel(storage: storage)
         }()
-        ContentView().environmentObject(object)
+        ContentView(model: model)
     }
 }

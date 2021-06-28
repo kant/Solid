@@ -22,4 +22,14 @@ class Storage {
             realm.add(capture)
         }
     }
+    
+    static private func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        return documentsDirectory
+    }
+    
+    static func url(for selection: QualitySelection) -> URL {
+        return getDocumentsDirectory().appendingPathComponent("\(selection.id)_\(selection.quality.name).usdz")
+    }
 }

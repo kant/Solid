@@ -10,7 +10,11 @@ import RealityKit
 import SwiftUI
 import RealmSwift
 
-class ImportConfiguration: ObservableObject {
+class ImportConfiguration: ObservableObject, Equatable {
+    static func == (lhs: ImportConfiguration, rhs: ImportConfiguration) -> Bool {
+        lhs.captureId == rhs.captureId && lhs.qualitySelections == rhs.qualitySelections
+    }
+    
     var captureId: ObjectId
     
     var rawFolderUrl: URL?
@@ -26,11 +30,6 @@ class ImportConfiguration: ObservableObject {
         return selection
     }()
     
-//    init(id: ObjectId, folderUrl: URL) {
-//        self.captureId = id
-//        self.folderUrl = folderUrl
-//    }
-    
     init(for capture: Capture) {
         self.captureId = capture.id
         
@@ -43,7 +42,11 @@ class ImportConfiguration: ObservableObject {
     }
 }
 
-class QualitySelection: Identifiable, ObservableObject {
+class QualitySelection: Identifiable, ObservableObject, Equatable {
+    static func == (lhs: QualitySelection, rhs: QualitySelection) -> Bool {
+        lhs.quality == rhs.quality && lhs.selected == rhs.selected //should include id?
+    }
+    
     var id = UUID()
     
     var quality: PhotogrammetrySession.Request.Detail

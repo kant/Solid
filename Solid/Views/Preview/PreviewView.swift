@@ -12,14 +12,14 @@ import RealmSwift
 
 struct PreviewView: View {
     
-    @EnvironmentObject private var model: ContentViewModel
+    @ObservedObject var model: ContentViewModel
     @ObservedRealmObject var capture: Capture
     
     @State var selectedPreviewQuality: PhotogrammetrySession.Request.Detail = .preview
     
     var body: some View {
         ZStack() {
-            ViewportView(selectedPreviewQuality: $selectedPreviewQuality)
+            ViewportView(model: model, selectedPreviewQuality: $selectedPreviewQuality)
             
             VStack {
                 //Preview Quality Picker
@@ -33,7 +33,7 @@ struct PreviewView: View {
                 Spacer()
                 
                 //Import Config Bar
-                BottomBar(capture: capture)
+                BottomBar(model: model, capture: capture)
                     .padding()
                     .background(Color.white)
                     .cornerRadius(10)
@@ -47,10 +47,10 @@ struct PreviewView: View {
     }
 }
 
-struct PreviewView_Previews: PreviewProvider {
-    static var previews: some View {
-        PreviewView( capture: Capture(), selectedPreviewQuality: .preview )   //.constant( )
-    }
-}
+//struct PreviewView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PreviewView( capture: Capture(), selectedPreviewQuality: .preview )   //.constant( )
+//    }
+//}
 
 

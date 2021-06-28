@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import SwiftUI
 import RealmSwift
+import Combine
 
 class ContentViewModel: NSObject, ObservableObject {
     
@@ -14,25 +16,12 @@ class ContentViewModel: NSObject, ObservableObject {
     var viewportModel = ViewportModel()
     
     var importConfigurations: [ImportConfiguration] = []
+    var captureGenerators: [CaptureGenerator] = []
+    var captureGeneratorSubscriptions: Set<AnyCancellable> = []
     
     init(storage: Storage) {
         self.storage = storage
     }
-    
-    func processWithOptions(_ capture: Capture) {
-        objectWillChange.send()
-        do {
-            try storage.realm.write {
-                if let thawedCapture = capture.thaw() {
-                    thawedCapture.isInPreviewState = false
-                }
-            }
-        } catch {
-            debugPrint("problem")
-        }
-        debugPrint("begin processing with options")
-    }
-    
     
     func importConfiguration(for capture: Capture) -> ImportConfiguration? {
     
@@ -51,4 +40,5 @@ class ContentViewModel: NSObject, ObservableObject {
             return newConfig
         }
     }
+    
 }

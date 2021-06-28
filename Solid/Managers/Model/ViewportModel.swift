@@ -68,6 +68,7 @@ class ViewportModel: NSObject, ObservableObject {
 //            name: "gradient",
 //            textureDimensions: vector_int2(2048, 1024)
 //        )
+        
         scene.background.contents = skyBox
         scene.lightingEnvironment.contents = MDLSkyCubeTexture(name: "sky",
                                                                channelEncoding: .float16,
