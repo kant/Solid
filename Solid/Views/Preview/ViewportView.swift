@@ -10,7 +10,7 @@ import SceneKit
 import RealityKit
 import RealmSwift
 
-struct ViewportView: View, Equatable {
+struct ViewportView: View { //Equatable
     
     @ObservedObject var model: ContentViewModel
     
@@ -31,9 +31,16 @@ struct ViewportView: View, Equatable {
         )
     }
     
-    static func == (lhs: ViewportView, rhs: ViewportView) -> Bool {
-        return lhs.model.viewportModel.capture?.id == rhs.model.viewportModel.capture?.id && lhs.model.viewportModel.capture?.processedFiles == rhs.model.viewportModel.capture?.processedFiles && lhs.selectedPreviewQuality == rhs.selectedPreviewQuality
-    }
+//    static func == (lhs: ViewportView, rhs: ViewportView) -> Bool {
+//        let captureIdIsEqual = lhs.model.viewportModel.capture?.id == rhs.model.viewportModel.capture?.id
+//        debugPrint("captureIdIsEqual \(captureIdIsEqual)")
+//        let captureProcessedFilesIsEqual = lhs.model.viewportModel.capture?.processedFiles == rhs.model.viewportModel.capture?.processedFiles
+//        debugPrint("captureProcessedFilesIsEqual \(captureProcessedFilesIsEqual)")
+//        let selectedQualityIsEqual = lhs.selectedPreviewQuality == rhs.selectedPreviewQuality
+//        debugPrint("selectedQualityIsEqual \(selectedQualityIsEqual)")
+//
+//        return  captureIdIsEqual && captureProcessedFilesIsEqual && selectedQualityIsEqual
+//    }
     
 }
 

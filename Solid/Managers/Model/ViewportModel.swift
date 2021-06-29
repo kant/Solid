@@ -11,11 +11,13 @@ import RealityKit
 import SpriteKit
 
 class ViewportModel: NSObject, ObservableObject {
-    var scene = SCNScene()
+    private var scene = SCNScene()
     var cameraNode = SCNNode()
     
     var capture: Capture?
-    var captureNode: SCNNode?
+    private var captureNode: SCNNode?
+    
+    private var previousCapture: Capture?
     
     //TODO: cache of nodes?
     
@@ -40,9 +42,15 @@ class ViewportModel: NSObject, ObservableObject {
     
     func scene(with qualityLevel: PhotogrammetrySession.Request.Detail) -> SCNScene {
         guard let capture = capture else {
+            debugPrint("no capture found")
             self.captureNode?.removeFromParentNode()
             return scene
         }
+        
+        guard capture.id != previousCapture?.id else {
+            return scene
+        }
+        previousCapture = capture
         
         let url = Storage.url(for: capture, with: qualityLevel)
         guard Storage.fileExists(at: url) else {

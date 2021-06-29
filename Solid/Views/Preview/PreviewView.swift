@@ -20,7 +20,6 @@ struct PreviewView: View {
     var body: some View {
         ZStack() {
             ViewportView(model: model, capture: capture, selectedPreviewQuality: selectedPreviewQuality)
-                .equatable()
             
             VStack {
                 //Preview Quality Picker
