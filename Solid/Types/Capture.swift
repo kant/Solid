@@ -40,12 +40,12 @@ import SwiftUI
         self.init(name: "New Model", rawUrl: nil)
     }
     
-    func url(for qualityLevel: PhotogrammetrySession.Request.Detail) -> URL? {
-        let selectedProcessedFile = processedFiles.first { processedFile in
-            processedFile.quality == qualityLevel
-        }
-        return selectedProcessedFile?.location
-    }
+//    func url(for qualityLevel: PhotogrammetrySession.Request.Detail) -> URL? {
+//        let selectedProcessedFile = processedFiles.first { processedFile in
+//            processedFile.quality == qualityLevel
+//        }
+//        return selectedProcessedFile
+//    }
 
     static func == (lhs: Capture, rhs: Capture) -> Bool {
         return lhs.id == rhs.id

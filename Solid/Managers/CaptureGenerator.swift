@@ -47,7 +47,7 @@ class CaptureGenerator: Equatable {
             guard selection.selected else { continue }
             requests.append(
                 PhotogrammetrySession.Request.modelFile(
-                    url: Storage.url(for: selection),
+                    url: Storage.url(for: capture, with: selection.quality),
                     detail: selection.quality
                 )
             )
@@ -62,75 +62,64 @@ class CaptureGenerator: Equatable {
         
     }
     
+    //1
+    //self.model.currentlyProcessingProgress = fractionComplete
+    
+    
+    //2
+//    debugPrint("RealityKit has finished processing a request.")
+//    debugPrint("& has saved to \(url)")
+//
+//    let processedFile = ProcessedFile()
+//    processedFile.quality = quality
+//    capture.processedFiles.append(processedFile)
+    
     func subscribe(with session: PhotogrammetrySession) {
-        session.output
-            .receive(on: DispatchQueue.global())
-            .sink(receiveCompletion: { completion in
-                var maybeError: Error? = nil
-                if case .failure(let error) = completion {
-                    // Handle error.
-                    debugPrint("error: \(error)")
-                }
-            }, receiveValue: { [self] output in
+        async {
+            for try await output in session.outputs {
                 switch output {
-                case .processingComplete:
-                    // RealityKit has processed all requests.
-                    debugPrint("RealityKit has processed all requests.")
-                    
-                case let .requestComplete(request, result):
-                    // RealityKit has finished processing a request.
-                    debugPrint("RealityKit has finished processing a request.")
                     
                 case .inputComplete:
-                    // Ingestion of images complete, processing begins.
-                    debugPrint("Ingestion of images complete, processing begins.")
+                    debugPrint("input complete")
+                case .requestError(_, _):
+                    debugPrint("request error")
+                case let .requestComplete(.modelFile(url: _, detail: quality, geometry: nil), .modelFile(saveUrl)):
+                    debugPrint("RealityKit has finished processing a request.")
+                    debugPrint("& has saved to \(saveUrl)")
                     
-                case let .requestProgress(request, fractionComplete):
-                    // Periodic progress update. Update UI here.
-                    debugPrint("Periodic progress update. Update UI here. \(fractionComplete)")
+                    model.storage.new(ProcessedFile(quality: quality), for: capture)
+                    
+                case .requestProgress(_, fractionComplete: let fractionComplete):
+                    debugPrint("progress update: \(fractionComplete)")
                     self.model.currentlyProcessingProgress = fractionComplete
-                    
-                case let .requestError(request, error):
-                    // Request encountered an error.
-                    debugPrint("Request encountered an error. \(error)")
-                    
+                case .processingComplete:
+                    debugPrint("processing complete")
+                    //hide progress bar?
                 case .processingCancelled:
-                    // Processing was canceled.
-                    debugPrint("Processing was canceled.")
-                    
-                case let .invalidSample(id, reason):
-                    // RealityKit deemed a sample invalid and didn't use it.
-                    debugPrint("RealityKit deemed a sample invalid and didn't use it. \(reason)")
-                    
-                case let .skippedSample(id):
-                    // RealityKit was unable to use a provided sample.
-                    debugPrint("RealityKit was unable to use a provided sample.")
-                    
+                    debugPrint("processing cancelled")
+                case .invalidSample(id: let id, reason: let reason):
+                    debugPrint("invalid sample \(id) \(reason)")
+                case .skippedSample(id: let id):
+                    debugPrint("skipped sample \(id)")
                 case .automaticDownsampling:
-                    // RealityKit downsampled the input images because of resource constraints.
-                    debugPrint("RealityKit downsampled the input images because of resource constraints.")
-                    
+                    debugPrint("automatic down sampling")
                 @unknown default:
-                    debugPrint("default PhotogrammetrySession.Output case")
-                    
+                    debugPrint("PhotogrammetrySession.Outputs default")
                 }
-            })
-            .store(in: &model.captureGeneratorSubscriptions)
+            }
+        }
     }
 
     private func showProgressBar() {
-//        async {
-            do {
-                try model.storage.realm.write {
-                    if let thawedCapture = capture.thaw() {
-                        thawedCapture.isInPreviewState = false
-                    }
+        do {
+            try model.storage.realm.write {
+                if let thawedCapture = capture.thaw() {
+                    thawedCapture.isInPreviewState = false
                 }
-            } catch {
-                debugPrint("couldn't write to realm while updating preview state")
             }
-//        }
-        
+        } catch {
+            debugPrint("couldn't write to realm while updating preview state")
+        }
     }
     
     func complete() {

@@ -10,15 +10,15 @@ import RealmSwift
 import RealityKit
 
 class ProcessedFile: Object, Identifiable {
-    var location: URL?
     var quality: PhotogrammetrySession.Request.Detail {
         get { return PhotogrammetrySession.Request.Detail(rawValue: rawQuality) ?? .preview }
         set { rawQuality = newValue.rawValue }
     }
-    @objc dynamic var qualityName: String = ""
-    
     @objc private dynamic var rawQuality: Int = 0
-//    override class func ignoredProperties() -> [String] {
-//        return ["location", "quality"]
-//    }
+    
+    convenience init(quality: PhotogrammetrySession.Request.Detail) {
+        self.init()
+        self.quality = quality
+    }
+    
 }

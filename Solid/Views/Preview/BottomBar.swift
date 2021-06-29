@@ -37,6 +37,12 @@ struct BottomBar: View {
                 )
                 Text("\( progress ) %")
                     .font(.headline)
+                
+                Button {
+                    model.storage.new(ProcessedFile(quality: .preview), for: capture)
+                } label: {
+                    Text("hi")
+                }
             }
         }
     }

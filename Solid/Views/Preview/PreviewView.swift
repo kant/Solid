@@ -19,13 +19,14 @@ struct PreviewView: View {
     
     var body: some View {
         ZStack() {
-            ViewportView(model: model, selectedPreviewQuality: $selectedPreviewQuality)
+            ViewportView(model: model, capture: capture, selectedPreviewQuality: selectedPreviewQuality)
+                .equatable()
             
             VStack {
                 //Preview Quality Picker
                 Picker("Preview Quality", selection: $selectedPreviewQuality) {
                     ForEach(capture.processedFiles) { file in
-                        Text(file.qualityName).tag(file.quality)
+                        Text(file.quality.name).tag(file.quality)
                     }
                 }
                 .pickerStyle(.inline)
@@ -41,9 +42,6 @@ struct PreviewView: View {
                     
             }
         }
-
-        
-        
     }
 }
 

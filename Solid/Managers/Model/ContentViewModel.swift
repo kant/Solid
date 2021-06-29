@@ -20,7 +20,6 @@ class ContentViewModel: NSObject, ObservableObject {
     var captureGeneratorSubscriptions: Set<AnyCancellable> = []
     
     @Published var currentlyProcessingProgress: Double?
-    //var currentlyProcessingName: String?
     
     init(storage: Storage) {
         self.storage = storage
@@ -42,6 +41,5 @@ class ContentViewModel: NSObject, ObservableObject {
             importConfigurations.append(newConfig)
             return newConfig
         }
-    }
-    
+    }  
 }

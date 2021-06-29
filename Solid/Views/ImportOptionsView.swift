@@ -52,7 +52,7 @@ struct ImportOptionsView: View {
                 VStack(alignment: .leading) {
                     ForEach(importConfiguration.qualitySelections.indices) { index in
                         Toggle(
-                            importConfiguration.qualitySelections[index].name,
+                            importConfiguration.qualitySelections[index].quality.name,
                             isOn: $importConfiguration.qualitySelections[index].selected
                         )
                     }

@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import RealmSwift
+import RealityFoundation
 
 class Storage {
     var realm: Realm
@@ -18,8 +19,24 @@ class Storage {
     
     func newCapture(with folderUrl: URL) {
         let capture = Capture(name: "New Model", rawUrl: folderUrl)
-        try! realm.write {
-            realm.add(capture)
+        do {
+            try realm.write {
+                realm.add(capture)
+            }
+        } catch {
+            debugPrint("could not add new capture")
+        }
+    }
+    
+    func new(_ processedFile: ProcessedFile, for capture: Capture) {
+        do {
+            try realm.write {
+                if let thawedCapture = capture.thaw() {
+                    thawedCapture.processedFiles.append(processedFile)
+                }
+            }
+        } catch {
+            debugPrint("couldn't add new processed file")
         }
     }
     
@@ -29,7 +46,11 @@ class Storage {
         return documentsDirectory
     }
     
-    static func url(for selection: QualitySelection) -> URL {
-        return getDocumentsDirectory().appendingPathComponent("\(selection.id)_\(selection.quality.name).usdz")
+    static func url(for capture: Capture, with quality: PhotogrammetrySession.Request.Detail) -> URL {
+        return getDocumentsDirectory().appendingPathComponent("\(capture.id)_\(quality.name).usdz")
+    }
+    
+    static func fileExists(at url: URL) -> Bool {
+        return FileManager.default.fileExists(atPath: url.path)
     }
 }

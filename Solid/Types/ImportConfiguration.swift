@@ -50,12 +50,10 @@ class QualitySelection: Identifiable, ObservableObject, Equatable {
     var id = UUID()
     
     var quality: PhotogrammetrySession.Request.Detail
-    var name: String
     var selected: Bool = false
     
     init(quality: PhotogrammetrySession.Request.Detail) {
         self.quality = quality
-        self.name = quality.name
     }
 }
 

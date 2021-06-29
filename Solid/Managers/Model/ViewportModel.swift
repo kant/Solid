@@ -24,20 +24,42 @@ class ViewportModel: NSObject, ObservableObject {
         
         //make & add camera
         cameraNode.camera = SCNCamera()
+        cameraNode.camera?.zNear = 0.01
+        cameraNode.position = SCNVector3(x: 0, y: 0, z: 2)
+        cameraNode.constraints?.append(
+            SCNLookAtConstraint(target: scene.rootNode)
+        )
         scene.rootNode.addChildNode(cameraNode)
+        
+        
+        //scene options
+        scene.wantsScreenSpaceReflection = true
         
         setGradientBackground()
     }
     
     func scene(with qualityLevel: PhotogrammetrySession.Request.Detail) -> SCNScene {
+        guard let capture = capture else {
+            self.captureNode?.removeFromParentNode()
+            return scene
+        }
         
-        guard let url = capture?.url(for: qualityLevel) else { return scene }
+        let url = Storage.url(for: capture, with: qualityLevel)
+        guard Storage.fileExists(at: url) else {
+            debugPrint("capture file NOT found")
+            self.captureNode?.removeFromParentNode()
+            return scene
+        }
+        debugPrint("capture file found")
+        
         let newNode = SCNReferenceNode(url: url)
         newNode?.load()
         captureNode?.removeFromParentNode()
         captureNode = newNode
         
-        guard let captureNode = captureNode else { return scene }
+        guard let captureNode = captureNode else {
+            return scene
+        }
         scene.rootNode.addChildNode(captureNode)
         
         return scene
@@ -70,12 +92,14 @@ class ViewportModel: NSObject, ObservableObject {
 //        )
         
         scene.background.contents = skyBox
-        scene.lightingEnvironment.contents = MDLSkyCubeTexture(name: "sky",
-                                                               channelEncoding: .float16,
-                                                               textureDimensions: vector_int2(256, 256),
-                                                               turbidity: 0.75,
-                                                               sunElevation: 0.5,
-                                                               upperAtmosphereScattering: 0.15,
-                                                               groundAlbedo: 0.85)
+        
+        
+//        scene.lightingEnvironment.contents = MDLSkyCubeTexture(name: "sky",
+//                                                               channelEncoding: .float16,
+//                                                               textureDimensions: vector_int2(256, 256),
+//                                                               turbidity: 0.75,
+//                                                               sunElevation: 0.5,
+//                                                               upperAtmosphereScattering: 0.15,
+//                                                               groundAlbedo: 0.85)
     }
 }
