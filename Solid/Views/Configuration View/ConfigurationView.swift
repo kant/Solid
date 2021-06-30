@@ -19,7 +19,7 @@ struct ConfigurationView: View {
     var body: some View {
         HStack {
             ImportOptionsView(model: model, capture: capture, importConfiguration: importConfiguration)
-            ImportGallery(model: model, capture: capture, importConfiguration: importConfiguration)
+            ImportGalleryView(model: model, capture: capture, importConfiguration: importConfiguration)
         }
     }
 }

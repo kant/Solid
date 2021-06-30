@@ -20,6 +20,24 @@ class ImportConfiguration: ObservableObject, Equatable {
     var rawFolderUrl: URL?
     var relativePath: String
     
+    lazy var previewImages: [PreviewImage] = {
+        
+        var previews: [PreviewImage] = []
+        do {
+            let contents = try FileManager.default.contentsOfDirectory(atPath: relativePath)
+            for path in contents {
+                let folderUrl = URL(fileURLWithPath: relativePath)
+                previews.append(
+                    PreviewImage(url: URL(fileURLWithPath: path, relativeTo: folderUrl) )
+                )
+            }
+        } catch {
+            return previews
+        }
+        return previews
+        
+    }()
+    
     @Published var qualitySelections: [QualitySelection] = {
         var selection: [QualitySelection] = []
         for qualityLevel in PhotogrammetrySession.Request.Detail.allCases {
@@ -48,6 +66,12 @@ class ImportConfiguration: ObservableObject, Equatable {
             return nil
         }
     }
+        
+}
+
+struct PreviewImage: Identifiable {
+    let id = UUID()
+    var url: URL
 }
 
 class QualitySelection: Identifiable, ObservableObject, Equatable {

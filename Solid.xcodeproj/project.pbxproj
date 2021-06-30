@@ -11,7 +11,7 @@
 		400AD15226804DE700A3F81D /* ViewportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400AD15126804DE700A3F81D /* ViewportModel.swift */; };
 		400AD15A268175CE00A3F81D /* ProcessedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400AD159268175CE00A3F81D /* ProcessedFile.swift */; };
 		40294838268BAB26002B1B9D /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40294837268BAB26002B1B9D /* ConfigurationView.swift */; };
-		4029483A268BABA0002B1B9D /* ImportGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40294839268BABA0002B1B9D /* ImportGallery.swift */; };
+		4029483A268BABA0002B1B9D /* ImportGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40294839268BABA0002B1B9D /* ImportGalleryView.swift */; };
 		4052AA1B267E312200644CC2 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1A267E312200644CC2 /* ContentViewModel.swift */; };
 		4052AA1E267EF46600644CC2 /* ImportOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1D267EF46600644CC2 /* ImportOptionsView.swift */; };
 		4052AA20267F92F200644CC2 /* ImportConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1F267F92F200644CC2 /* ImportConfiguration.swift */; };
@@ -33,7 +33,7 @@
 		400AD15126804DE700A3F81D /* ViewportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewportModel.swift; sourceTree = "<group>"; };
 		400AD159268175CE00A3F81D /* ProcessedFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessedFile.swift; sourceTree = "<group>"; };
 		40294837268BAB26002B1B9D /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
-		40294839268BABA0002B1B9D /* ImportGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportGallery.swift; sourceTree = "<group>"; };
+		40294839268BABA0002B1B9D /* ImportGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportGalleryView.swift; sourceTree = "<group>"; };
 		4052AA1A267E312200644CC2 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		4052AA1D267EF46600644CC2 /* ImportOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportOptionsView.swift; sourceTree = "<group>"; };
 		4052AA1F267F92F200644CC2 /* ImportConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportConfiguration.swift; sourceTree = "<group>"; };
@@ -106,8 +106,8 @@
 		40294836268BAAFB002B1B9D /* Configuration View */ = {
 			isa = PBXGroup;
 			children = (
-				40294839268BABA0002B1B9D /* ImportGallery.swift */,
 				40294837268BAB26002B1B9D /* ConfigurationView.swift */,
+				40294839268BABA0002B1B9D /* ImportGalleryView.swift */,
 				4052AA1D267EF46600644CC2 /* ImportOptionsView.swift */,
 			);
 			path = "Configuration View";
@@ -299,7 +299,7 @@
 				40294838268BAB26002B1B9D /* ConfigurationView.swift in Sources */,
 				40795AB1267DABED00953D36 /* PreviewView.swift in Sources */,
 				4052AA1B267E312200644CC2 /* ContentViewModel.swift in Sources */,
-				4029483A268BABA0002B1B9D /* ImportGallery.swift in Sources */,
+				4029483A268BABA0002B1B9D /* ImportGalleryView.swift in Sources */,
 				40795AB3267DB34500953D36 /* ModelListCell.swift in Sources */,
 				40795AAD267DA90500953D36 /* Capture.swift in Sources */,
 				4052AA20267F92F200644CC2 /* ImportConfiguration.swift in Sources */,
