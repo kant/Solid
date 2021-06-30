@@ -33,6 +33,45 @@ struct ContentView: View {
             .listStyle(.sidebar)
         }
         
+        //Toolbar
+        .toolbar {
+            ToolbarItem(placement: ToolbarItemPlacement.navigation) {
+                Button(action: {
+                    //from https://developer.apple.com/forums/thread/651807?answerId=617555022#617555022
+                    NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
+                }, label: {
+                    Image(systemName: "sidebar.left")
+                })
+            }
+            
+            ToolbarItem(placement: ToolbarItemPlacement.destructiveAction) {
+                Button(action: {
+                    guard let selectedCapture = selectedCapture else { return }
+                    debugPrint("delete \(selectedCapture.name)")
+                }, label: {
+                    Image(systemName: "trash")
+                })
+            }
+
+            ToolbarItem(placement: ToolbarItemPlacement.automatic) {
+                Button(action: {
+                    guard let selectedCapture = selectedCapture else { return }
+                    debugPrint("sharing all quality levels of \(selectedCapture.name)")
+                }, label: {
+                    Image(systemName: "square.and.arrow.up")
+                })
+            }
+
+            ToolbarItem(placement: ToolbarItemPlacement.primaryAction) {
+                Button(action: {
+                    displayFileBrowser = true
+                }, label: {
+                    Image(systemName: "plus")
+                })
+            }
+
+        }
+        
         //File Import
         .fileImporter(
             isPresented: $displayFileBrowser,
@@ -54,36 +93,6 @@ struct ContentView: View {
                 }
             }
         )
-        
-        //Toolbar
-        .toolbar {
-            ToolbarItem(placement: ToolbarItemPlacement.destructiveAction) {
-                Button(action: {
-                    guard let selectedCapture = selectedCapture else { return }
-                    debugPrint("delete \(selectedCapture.name)")
-                }, label: {
-                    Image(systemName: "trash")
-                })
-            }
-            
-            ToolbarItem(placement: ToolbarItemPlacement.automatic) {
-                Button(action: {
-                    guard let selectedCapture = selectedCapture else { return }
-                    debugPrint("sharing all quality levels of \(selectedCapture.name)")
-                }, label: {
-                    Image(systemName: "square.and.arrow.up")
-                })
-            }
-            
-            ToolbarItem(placement: ToolbarItemPlacement.primaryAction) {
-                Button(action: {
-                    displayFileBrowser = true
-                }, label: {
-                    Image(systemName: "plus")
-                })
-            }
-            
-        }
         
         //Navigation Title / Subtitle
         .navigationTitle(selectedCapture?.name ?? "")
