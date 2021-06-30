@@ -33,7 +33,7 @@ struct ImportGalleryView: View {
                                 .padding()
                         }
                     }
-                }
+                }.padding()
             }
         } else {
             Text("Could not load ImportConfiguration 1")

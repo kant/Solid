@@ -18,6 +18,8 @@ struct ImportOptionsView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
+            Spacer()
+            
             //Name
             TextField("Capture Name: ", text: $capture.name)
                 .font(.headline)
@@ -41,7 +43,7 @@ struct ImportOptionsView: View {
                 Text("\(numberOfImages) Images")
             }
             
-            Spacer()
+            
             
             //Quality Toggles
             VStack(alignment: .leading) {
@@ -52,6 +54,7 @@ struct ImportOptionsView: View {
                     )
                 }
             }
+            .padding()
             
             //Generate Button
             Button {

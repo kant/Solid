@@ -23,7 +23,6 @@ struct PreviewView: View {
             
             if let config = model.importConfiguration(for: capture) {
                 ConfigurationView(model: model, capture: capture, importConfiguration: config)
-                .padding()
             } else {
                 Text("Could not load ImportConfiguration 1")
             }
