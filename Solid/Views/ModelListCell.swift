@@ -30,8 +30,9 @@ struct ModelListCell: View {
                     .padding([.horizontal], 5)
                     .padding([.vertical], 2)
                     .foregroundStyle(.primary)
-                    .background(.secondary)
+                    .background(.gray)
                     .cornerRadius(5)
+                    
             }
         }
     }

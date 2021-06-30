@@ -47,7 +47,8 @@ class ViewportModel: NSObject, ObservableObject {
             return scene
         }
         
-        guard capture.id != previousCapture?.id else {
+        //ensure that capture isn't same OR the processedFiles aren't the same
+        guard capture.id != previousCapture?.id || capture.processedFiles != previousCapture?.processedFiles else {
             return scene
         }
         previousCapture = capture

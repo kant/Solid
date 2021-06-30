@@ -40,6 +40,14 @@ class ImportConfiguration: ObservableObject, Equatable {
             relativeTo: FileManager().homeDirectoryForCurrentUser
         )
     }
+    
+    func numberOfImages() -> Int? {
+        do {
+            return try FileManager.default.contentsOfDirectory(atPath: relativePath).count
+        } catch {
+            return nil
+        }
+    }
 }
 
 class QualitySelection: Identifiable, ObservableObject, Equatable {

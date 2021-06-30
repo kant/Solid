@@ -66,20 +66,20 @@ struct ContentView: View {
                 })
             }
             
-            ToolbarItem(placement: ToolbarItemPlacement.primaryAction) {
-                Button(action: {
-                    displayFileBrowser = true
-                }, label: {
-                    Image(systemName: "plus")
-                })
-            }
-            
-            ToolbarItem(placement: ToolbarItemPlacement.principal) {
+            ToolbarItem(placement: ToolbarItemPlacement.automatic) {
                 Button(action: {
                     guard let selectedCapture = selectedCapture else { return }
                     debugPrint("sharing all quality levels of \(selectedCapture.name)")
                 }, label: {
                     Image(systemName: "square.and.arrow.up")
+                })
+            }
+            
+            ToolbarItem(placement: ToolbarItemPlacement.primaryAction) {
+                Button(action: {
+                    displayFileBrowser = true
+                }, label: {
+                    Image(systemName: "plus")
                 })
             }
             

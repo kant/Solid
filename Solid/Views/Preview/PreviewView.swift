@@ -18,27 +18,38 @@ struct PreviewView: View {
     @State var selectedPreviewQuality: PhotogrammetrySession.Request.Detail = .preview
     
     var body: some View {
-        ZStack() {
-            ViewportView(model: model, capture: capture, selectedPreviewQuality: selectedPreviewQuality)
+        
+        if capture.isInPreviewState {
             
-            VStack {
-                //Preview Quality Picker
-                Picker("Preview Quality", selection: $selectedPreviewQuality) {
-                    ForEach(capture.processedFiles) { file in
-                        Text(file.quality.name).tag(file.quality)
+            if let config = model.importConfiguration(for: capture) {
+                ConfigurationView(model: model, capture: capture, importConfiguration: config)
+                .padding()
+            } else {
+                Text("Could not load ImportConfiguration 1")
+            }
+            
+        } else {
+            ZStack() {
+                ViewportView(model: model, capture: capture, selectedPreviewQuality: selectedPreviewQuality)
+                
+                VStack {
+                    //Preview Quality Picker
+                    Picker("Preview Quality", selection: $selectedPreviewQuality) {
+                        ForEach(capture.processedFiles) { file in
+                            Text(file.quality.name).tag(file.quality)
+                        }
                     }
-                }
-                .pickerStyle(.inline)
-                
-                Spacer()
-                
-                //Bottom Bar
-                BottomBar(model: model, capture: capture)
-                    .padding()
-                    .background(Color.white)
-                    .cornerRadius(10)
-                    .padding()
+                    .pickerStyle(.inline)
                     
+                    Spacer()
+                    
+                    //Bottom Bar
+                    ProgressBar(model: model, capture: capture)
+                        .padding()
+                        .background( Color(NSColor.textBackgroundColor) )
+                        .cornerRadius(10)
+                        .padding()
+                }
             }
         }
     }

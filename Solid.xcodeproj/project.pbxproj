@@ -10,10 +10,12 @@
 		400AD15026803C6D00A3F81D /* ViewportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400AD14F26803C6D00A3F81D /* ViewportView.swift */; };
 		400AD15226804DE700A3F81D /* ViewportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400AD15126804DE700A3F81D /* ViewportModel.swift */; };
 		400AD15A268175CE00A3F81D /* ProcessedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400AD159268175CE00A3F81D /* ProcessedFile.swift */; };
+		40294838268BAB26002B1B9D /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40294837268BAB26002B1B9D /* ConfigurationView.swift */; };
+		4029483A268BABA0002B1B9D /* ImportGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40294839268BABA0002B1B9D /* ImportGallery.swift */; };
 		4052AA1B267E312200644CC2 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1A267E312200644CC2 /* ContentViewModel.swift */; };
 		4052AA1E267EF46600644CC2 /* ImportOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1D267EF46600644CC2 /* ImportOptionsView.swift */; };
 		4052AA20267F92F200644CC2 /* ImportConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1F267F92F200644CC2 /* ImportConfiguration.swift */; };
-		406335272688E9B5006105BC /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406335262688E9B5006105BC /* BottomBar.swift */; };
+		406335272688E9B5006105BC /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406335262688E9B5006105BC /* ProgressBar.swift */; };
 		40795A9F267D985E00953D36 /* SolidApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795A9E267D985E00953D36 /* SolidApp.swift */; };
 		40795AA1267D985E00953D36 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AA0267D985E00953D36 /* ContentView.swift */; };
 		40795AA3267D986000953D36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40795AA2267D986000953D36 /* Assets.xcassets */; };
@@ -30,10 +32,12 @@
 		400AD14F26803C6D00A3F81D /* ViewportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewportView.swift; sourceTree = "<group>"; };
 		400AD15126804DE700A3F81D /* ViewportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewportModel.swift; sourceTree = "<group>"; };
 		400AD159268175CE00A3F81D /* ProcessedFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessedFile.swift; sourceTree = "<group>"; };
+		40294837268BAB26002B1B9D /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
+		40294839268BABA0002B1B9D /* ImportGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportGallery.swift; sourceTree = "<group>"; };
 		4052AA1A267E312200644CC2 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		4052AA1D267EF46600644CC2 /* ImportOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportOptionsView.swift; sourceTree = "<group>"; };
 		4052AA1F267F92F200644CC2 /* ImportConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportConfiguration.swift; sourceTree = "<group>"; };
-		406335262688E9B5006105BC /* BottomBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBar.swift; sourceTree = "<group>"; };
+		406335262688E9B5006105BC /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		40795A9B267D985E00953D36 /* Solid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Solid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40795A9E267D985E00953D36 /* SolidApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidApp.swift; sourceTree = "<group>"; };
 		40795AA0267D985E00953D36 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -93,10 +97,20 @@
 			isa = PBXGroup;
 			children = (
 				40795AB0267DABED00953D36 /* PreviewView.swift */,
-				406335262688E9B5006105BC /* BottomBar.swift */,
+				406335262688E9B5006105BC /* ProgressBar.swift */,
 				400AD14F26803C6D00A3F81D /* ViewportView.swift */,
 			);
 			path = Preview;
+			sourceTree = "<group>";
+		};
+		40294836268BAAFB002B1B9D /* Configuration View */ = {
+			isa = PBXGroup;
+			children = (
+				40294839268BABA0002B1B9D /* ImportGallery.swift */,
+				40294837268BAB26002B1B9D /* ConfigurationView.swift */,
+				4052AA1D267EF46600644CC2 /* ImportOptionsView.swift */,
+			);
+			path = "Configuration View";
 			sourceTree = "<group>";
 		};
 		4052AA19267E2CCF00644CC2 /* Managers */ = {
@@ -116,7 +130,7 @@
 				40795AA0267D985E00953D36 /* ContentView.swift */,
 				400AD15C2681762300A3F81D /* Preview */,
 				40795AB2267DB34500953D36 /* ModelListCell.swift */,
-				4052AA1D267EF46600644CC2 /* ImportOptionsView.swift */,
+				40294836268BAAFB002B1B9D /* Configuration View */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -282,8 +296,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				400AD15026803C6D00A3F81D /* ViewportView.swift in Sources */,
+				40294838268BAB26002B1B9D /* ConfigurationView.swift in Sources */,
 				40795AB1267DABED00953D36 /* PreviewView.swift in Sources */,
 				4052AA1B267E312200644CC2 /* ContentViewModel.swift in Sources */,
+				4029483A268BABA0002B1B9D /* ImportGallery.swift in Sources */,
 				40795AB3267DB34500953D36 /* ModelListCell.swift in Sources */,
 				40795AAD267DA90500953D36 /* Capture.swift in Sources */,
 				4052AA20267F92F200644CC2 /* ImportConfiguration.swift in Sources */,
@@ -291,7 +307,7 @@
 				40795AAF267DA97B00953D36 /* Storage.swift in Sources */,
 				400AD15226804DE700A3F81D /* ViewportModel.swift in Sources */,
 				40795AA1267D985E00953D36 /* ContentView.swift in Sources */,
-				406335272688E9B5006105BC /* BottomBar.swift in Sources */,
+				406335272688E9B5006105BC /* ProgressBar.swift in Sources */,
 				40795A9F267D985E00953D36 /* SolidApp.swift in Sources */,
 				40E20B892689250500C4EDFC /* CaptureGenerator.swift in Sources */,
 				4052AA1E267EF46600644CC2 /* ImportOptionsView.swift in Sources */,
