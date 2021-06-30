@@ -14,9 +14,24 @@ import SwiftUI
     @objc dynamic var id = ObjectId.generate()
     @objc dynamic var isInPreviewState = true
     
-    @objc dynamic var dateCreated: Date
-    @objc dynamic var dayCreated: Date
     @objc dynamic var name: String
+    @objc dynamic var dateCreated: Date
+    lazy var formatedDate: String = {
+        
+        //display time created
+        if Calendar.current.isDateInToday(dateCreated) {
+            return dateCreated.formatted(date: .omitted, time: .shortened)
+        } else {
+            return dateCreated.formatted(date: .abbreviated, time: .omitted)
+        }
+        
+        //unable to get .named to work
+        //let dateFormater = RelativeDateTimeFormatter()
+        //dateFormater.dateTimeStyle = .numeric
+        //dateFormater.unitsStyle = .abbreviated
+        //return dateFormater.localizedString(for: dateCreated, relativeTo: currentDate)
+        
+    }()
     
     @objc dynamic var importFolderRelativePath: String
     let processedFiles = RealmSwift.List<ProcessedFile>()
@@ -27,11 +42,11 @@ import SwiftUI
         
         let date = Date()
         dateCreated = date
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: dateCreated)
-        dayCreated = Calendar.current.date(from: components) ?? date
+        
+        //dateCreated = Date(timeIntervalSince1970: 100) //long term debug date
+        //dateCreated = Calendar.current.date(byAdding: .day, value: -5, to: Date())! //relative debug date
         
         self.importFolderRelativePath = rawUrl?.relativePath ?? ""
-        //rawUrl?.absoluteString ?? ""
         
         super.init()
     }
@@ -39,13 +54,6 @@ import SwiftUI
     required convenience override init() {
         self.init(name: "New Model", rawUrl: nil)
     }
-    
-//    func url(for qualityLevel: PhotogrammetrySession.Request.Detail) -> URL? {
-//        let selectedProcessedFile = processedFiles.first { processedFile in
-//            processedFile.quality == qualityLevel
-//        }
-//        return selectedProcessedFile
-//    }
 
     static func == (lhs: Capture, rhs: Capture) -> Bool {
         return lhs.id == rhs.id
@@ -53,5 +61,9 @@ import SwiftUI
     
     override class func primaryKey() -> String? {
         return "id"
+    }
+    
+    override class func ignoredProperties() -> [String] {
+        return [#keyPath(formatedDate)]
     }
 }

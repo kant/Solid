@@ -17,10 +17,10 @@ struct ModelListCell: View {
             VStack(alignment: .leading) {
                 TextField("", text: $capture.name)
                     .textFieldStyle(.plain)
-                if let day = capture.dayCreated {
-                    Text(day.formatted(date: .abbreviated, time: .omitted))
-                        .foregroundStyle(.secondary)
-                }
+                
+
+                Text(capture.formatedDate)
+                    .foregroundStyle(.secondary)
             }
             
             Spacer()
