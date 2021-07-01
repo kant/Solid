@@ -49,17 +49,21 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         //make & add camera
         let camera = SCNCamera()
         
-        camera.grainIntensity = 0.5
-        camera.grainIsColored = true
+        //grain
+        //camera.grainIntensity = 0.5
+        //camera.grainIsColored = true
         
-        camera.automaticallyAdjustsZRange = true
-//        camera.screenSpaceAmbientOcclusionIntensity = 1
+        //camera.wantsHDR = true
         
+        camera.zNear = 0.1
+        //camera.automaticallyAdjustsZRange = true
+        
+        //DOF
 //        camera.wantsDepthOfField = true
 //        camera.focusDistance = 1
 //        camera.fStop = 0.5
-        cameraNode.camera = camera
         
+        cameraNode.camera = camera
         cameraNode.position = SCNVector3(x: 0, y: 0, z: 2)
         cameraNode.constraints?.append(
             SCNLookAtConstraint(target: scene.rootNode)
@@ -75,17 +79,10 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
     }
     
     func scene(with qualityLevel: PhotogrammetrySession.Request.Detail?, colorScheme: ColorScheme) -> SCNScene {
-        //update color scheme
-        //self.colorScheme = .dark
-        scene.fogColor = backgroundColor
-        scene.background.contents = backgroundColor
-        
-        //remove current capture node
-        self.captureNode?.removeFromParentNode()
-        
         //return empty scene if no quality selected OR capture is not found
         guard let qualityLevel = qualityLevel, let capture = capture else {
             debugPrint("no quality selected OR no capture found")
+            self.captureNode?.removeFromParentNode()
             return scene
         }
         
@@ -97,6 +94,16 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
             return scene
         }
         previousCapture = capture
+        
+        
+        //update color scheme
+        //self.colorScheme = .dark
+        //make updates to scene.fogColor & scene.background.contents if wanting colorSchemeSupport
+        
+        
+        //remove current capture node
+        self.captureNode?.removeFromParentNode()
+        
         
         //get url and check that file exists
         let url = Storage.url(for: capture, with: qualityLevel)
@@ -125,9 +132,13 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
     
     private func setupSceneEnviroment() {
         //fog
+        scene.fogColor = backgroundColor
         scene.fogDensityExponent = 1
         scene.fogStartDistance = 5
         scene.fogEndDistance = 33
+        
+        //background
+        scene.background.contents = backgroundColor
         
         //floor geometry
         let floorGeometry = SCNFloor()
@@ -135,7 +146,7 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         
         //floor node
         let floorNode = SCNNode(geometry: floorGeometry)
-        floorNode.position = SCNVector3(0, 0, 0)
+        floorNode.position = SCNVector3(0, -0.5, 0)
         floorNode.opacity = 0.2
         
         //floor material
@@ -145,7 +156,7 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         floorMaterial?.diffuse.contents = NSImage(named: "grid")
         floorMaterial?.diffuse.wrapT = .mirror
         floorMaterial?.diffuse.wrapS = .mirror
-        floorMaterial?.diffuse.contentsTransform = SCNMatrix4MakeScale(200, 200, 1)
+        floorMaterial?.diffuse.contentsTransform = SCNMatrix4MakeScale(25, 25, 1)
         
         //add floor
         scene.rootNode.addChildNode(floorNode)
@@ -165,7 +176,12 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
             
 //            scene.rootNode.addChildNode(lightNode)
             
-            let sky = NSImage(named: "testGradient")
+            var sky: [NSImage] = []
+            for index in 1...6 {
+                if let image = NSImage(named: "light_1_000\(index).png") {
+                    sky.append(image)
+                }
+            }
 
             scene.lightingEnvironment.contents = sky
             //scene.background.contents = sky

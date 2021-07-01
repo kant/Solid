@@ -29,7 +29,7 @@ struct ViewportView: View { //Equatable
         SceneView(
             scene: model.viewportModel.scene(with: selectedPreviewQuality, colorScheme: colorScheme),
             pointOfView: model.viewportModel.cameraNode,
-            options: [.allowsCameraControl, .rendersContinuously],
+            options: [.allowsCameraControl],
             delegate: model.viewportModel
         )
     }
