@@ -15,7 +15,7 @@ struct PreviewView: View {
     @ObservedObject var model: ContentViewModel
     @ObservedRealmObject var capture: Capture
     
-    @State var selectedPreviewQuality: PhotogrammetrySession.Request.Detail = .preview
+    @State var selectedPreviewQuality: PhotogrammetrySession.Request.Detail?
     
     var body: some View {
         
@@ -33,12 +33,7 @@ struct PreviewView: View {
                 
                 VStack {
                     //Preview Quality Picker
-                    Picker("Preview Quality", selection: $selectedPreviewQuality) {
-                        ForEach(capture.processedFiles) { file in
-                            Text(file.quality.name).tag(file.quality)
-                        }
-                    }
-                    .pickerStyle(.inline)
+                    QualitySelector(capture: capture, selectedPreviewQuality: $selectedPreviewQuality)
                     
                     Spacer()
                     
@@ -56,7 +51,8 @@ struct PreviewView: View {
 
 //struct PreviewView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        PreviewView( capture: Capture(), selectedPreviewQuality: .preview )   //.constant( )
+//        let previewContent = PreviewContent()
+//        PreviewView(model: previewContent.contentViewModel, capture: PreviewContent.capture)
 //    }
 //}
 

@@ -14,9 +14,11 @@ struct ViewportView: View { //Equatable
     
     @ObservedObject var model: ContentViewModel
     
-    var selectedPreviewQuality: PhotogrammetrySession.Request.Detail
+    @Environment(\.colorScheme) var colorScheme
     
-    init(model: ContentViewModel, capture: Capture, selectedPreviewQuality: PhotogrammetrySession.Request.Detail) {
+    var selectedPreviewQuality: PhotogrammetrySession.Request.Detail?
+    
+    init(model: ContentViewModel, capture: Capture, selectedPreviewQuality: PhotogrammetrySession.Request.Detail?) {
         self.model = model
         self.selectedPreviewQuality = selectedPreviewQuality
         
@@ -25,9 +27,10 @@ struct ViewportView: View { //Equatable
     
     var body: some View {
         SceneView(
-            scene: model.viewportModel.scene(with: selectedPreviewQuality),
+            scene: model.viewportModel.scene(with: selectedPreviewQuality, colorScheme: colorScheme),
             pointOfView: model.viewportModel.cameraNode,
-            options: [.allowsCameraControl, .autoenablesDefaultLighting]
+            options: [.allowsCameraControl, .rendersContinuously],
+            delegate: model.viewportModel
         )
     }
     
