@@ -12,26 +12,49 @@ import RealmSwift
 
 struct ViewportView: View { //Equatable
     
-    @ObservedObject var model: ContentViewModel
     
-    @Environment(\.colorScheme) var colorScheme
+    @ObservedObject var viewportModel: ViewportModel
+    @ObservedRealmObject var capture: Capture
     
-    var selectedPreviewQuality: PhotogrammetrySession.Request.Detail?
+    @Binding var selectedPreviewQuality: PhotogrammetrySession.Request.Detail
     
-    init(model: ContentViewModel, capture: Capture, selectedPreviewQuality: PhotogrammetrySession.Request.Detail?) {
-        self.model = model
-        self.selectedPreviewQuality = selectedPreviewQuality
-        
-        self.model.viewportModel.capture = capture
-    }
+    //@Environment(\.colorScheme) var colorScheme: ColorScheme
+//    @AppStorage("wantsDOF") var wantsDOF = false
+//    @AppStorage("enviromentRotation") var enviromentRotation = 0.0
+//    @AppStorage("enviromentBrightness") var enviromentBrightness = 1.0
+    
+    //var sceneViewRepresentable: SceneViewRepresentable?
+    
+//    init(model: ContentViewModel, capture: Capture, lightingRotationAngle: Double) {
+//        self.lightingRotationAngle = lightingRotationAngle
+//        self.model = model
+//        self.model.viewportModel.capture = capture
+//
+//    }
     
     var body: some View {
-        SceneView(
-            scene: model.viewportModel.scene(with: selectedPreviewQuality, colorScheme: colorScheme),
-            pointOfView: model.viewportModel.cameraNode,
-            options: [.allowsCameraControl],
-            delegate: model.viewportModel
-        )
+        //HStack {
+            SceneViewRepresentable(
+                viewportModel: viewportModel,
+                capture: capture,
+                selectedPreviewQuality: $selectedPreviewQuality
+            )
+            
+//            VStack {
+//                Toggle("wantsDOF", isOn: $wantsDOF)
+//                Slider(value: $lightingRotationAngle, in: 0...1) {
+//                    Text("lightingRotationAngle")
+//                }
+//            }
+//            SceneView(
+//                scene: model.viewportModel.scene(colorScheme: colorScheme, wantsDOF: wantsDOF),
+//                pointOfView: model.viewportModel.cameraNode,
+//                options: [.allowsCameraControl],
+//                delegate: model.viewportModel
+//            )
+//            Text("wants dof: \(wantsDOF.description)")
+//                .foregroundColor(.white)
+        //}
     }
     
 //    static func == (lhs: ViewportView, rhs: ViewportView) -> Bool {

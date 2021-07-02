@@ -13,11 +13,13 @@
 		40294838268BAB26002B1B9D /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40294837268BAB26002B1B9D /* ConfigurationView.swift */; };
 		4029483A268BABA0002B1B9D /* ImportGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40294839268BABA0002B1B9D /* ImportGalleryView.swift */; };
 		40340D4F268D0BD000F34A37 /* PreviewContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40340D4E268D0BD000F34A37 /* PreviewContent.swift */; };
-		40340D51268D0EA200F34A37 /* QualitySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40340D50268D0EA200F34A37 /* QualitySelector.swift */; };
+		40340D51268D0EA200F34A37 /* ToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40340D50268D0EA200F34A37 /* ToolBar.swift */; };
 		4052AA1B267E312200644CC2 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1A267E312200644CC2 /* ContentViewModel.swift */; };
 		4052AA1E267EF46600644CC2 /* ImportOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1D267EF46600644CC2 /* ImportOptionsView.swift */; };
 		4052AA20267F92F200644CC2 /* ImportConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1F267F92F200644CC2 /* ImportConfiguration.swift */; };
 		406335272688E9B5006105BC /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406335262688E9B5006105BC /* ProgressBar.swift */; };
+		40770FF1268ED90B00DF7637 /* SceneViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40770FF0268ED90B00DF7637 /* SceneViewRepresentable.swift */; };
+		40770FF3268F9F9300DF7637 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40770FF2268F9F9300DF7637 /* Defaults.swift */; };
 		40795A9F267D985E00953D36 /* SolidApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795A9E267D985E00953D36 /* SolidApp.swift */; };
 		40795AA1267D985E00953D36 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AA0267D985E00953D36 /* ContentView.swift */; };
 		40795AA3267D986000953D36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40795AA2267D986000953D36 /* Assets.xcassets */; };
@@ -43,11 +45,13 @@
 		40294837268BAB26002B1B9D /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
 		40294839268BABA0002B1B9D /* ImportGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportGalleryView.swift; sourceTree = "<group>"; };
 		40340D4E268D0BD000F34A37 /* PreviewContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContent.swift; sourceTree = "<group>"; };
-		40340D50268D0EA200F34A37 /* QualitySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QualitySelector.swift; sourceTree = "<group>"; };
+		40340D50268D0EA200F34A37 /* ToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBar.swift; sourceTree = "<group>"; };
 		4052AA1A267E312200644CC2 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		4052AA1D267EF46600644CC2 /* ImportOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportOptionsView.swift; sourceTree = "<group>"; };
 		4052AA1F267F92F200644CC2 /* ImportConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportConfiguration.swift; sourceTree = "<group>"; };
 		406335262688E9B5006105BC /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
+		40770FF0268ED90B00DF7637 /* SceneViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewRepresentable.swift; sourceTree = "<group>"; };
+		40770FF2268F9F9300DF7637 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		40795A9B267D985E00953D36 /* Solid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Solid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40795A9E267D985E00953D36 /* SolidApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidApp.swift; sourceTree = "<group>"; };
 		40795AA0267D985E00953D36 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -113,9 +117,10 @@
 			isa = PBXGroup;
 			children = (
 				40795AB0267DABED00953D36 /* PreviewView.swift */,
-				40340D50268D0EA200F34A37 /* QualitySelector.swift */,
+				40340D50268D0EA200F34A37 /* ToolBar.swift */,
 				406335262688E9B5006105BC /* ProgressBar.swift */,
 				400AD14F26803C6D00A3F81D /* ViewportView.swift */,
+				40770FF0268ED90B00DF7637 /* SceneViewRepresentable.swift */,
 			);
 			path = Preview;
 			sourceTree = "<group>";
@@ -136,6 +141,7 @@
 				40795AAE267DA97B00953D36 /* Storage.swift */,
 				400AD158268173EB00A3F81D /* Model */,
 				40E20B882689250500C4EDFC /* CaptureGenerator.swift */,
+				40770FF2268F9F9300DF7637 /* Defaults.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -343,7 +349,7 @@
 			files = (
 				400AD15026803C6D00A3F81D /* ViewportView.swift in Sources */,
 				40294838268BAB26002B1B9D /* ConfigurationView.swift in Sources */,
-				40340D51268D0EA200F34A37 /* QualitySelector.swift in Sources */,
+				40340D51268D0EA200F34A37 /* ToolBar.swift in Sources */,
 				40795AB1267DABED00953D36 /* PreviewView.swift in Sources */,
 				4052AA1B267E312200644CC2 /* ContentViewModel.swift in Sources */,
 				4029483A268BABA0002B1B9D /* ImportGalleryView.swift in Sources */,
@@ -358,6 +364,8 @@
 				40795A9F267D985E00953D36 /* SolidApp.swift in Sources */,
 				40E20B892689250500C4EDFC /* CaptureGenerator.swift in Sources */,
 				40340D4F268D0BD000F34A37 /* PreviewContent.swift in Sources */,
+				40770FF3268F9F9300DF7637 /* Defaults.swift in Sources */,
+				40770FF1268ED90B00DF7637 /* SceneViewRepresentable.swift in Sources */,
 				4052AA1E267EF46600644CC2 /* ImportOptionsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

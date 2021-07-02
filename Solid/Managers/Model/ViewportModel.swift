@@ -17,15 +17,24 @@ enum LightingSetup {
 }
 
 class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
-    private var scene = SCNScene()
-    var cameraNode = SCNNode()
     
+    var scnView: SCNView?
+    var scene = SCNScene()
+    
+    var cameraNode = SCNNode()
+    var camera = SCNCamera()
+
     var capture: Capture?
     private var captureNode: SCNNode?
     
-    private var previousCapture: Capture?
+    var previewQuality: PhotogrammetrySession.Request.Detail?
     
-    private var colorScheme: ColorScheme = .dark
+    var colorScheme: ColorScheme = .dark {
+        didSet {
+            scene.fogColor = backgroundColor
+            scene.background.contents = backgroundColor
+        }
+    }
     private var backgroundColor: CGColor {
         switch colorScheme {
         case .light:
@@ -46,22 +55,10 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
     override init() {
         super.init()
         
-        //make & add camera
-        let camera = SCNCamera()
-        
-        //grain
-        //camera.grainIntensity = 0.5
-        //camera.grainIsColored = true
-        
-        //camera.wantsHDR = true
-        
-        camera.zNear = 0.1
-        //camera.automaticallyAdjustsZRange = true
-        
-        //DOF
-//        camera.wantsDepthOfField = true
-//        camera.focusDistance = 1
-//        camera.fStop = 0.5
+        //camera setup
+        camera.zNear = Defaults.zMin
+        camera.fStop = 0.5
+        camera.wantsDepthOfField = UserDefaults.standard.bool(forKey: "wantsDOF")
         
         cameraNode.camera = camera
         cameraNode.position = SCNVector3(x: 0, y: 0, z: 2)
@@ -70,75 +67,80 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         )
         scene.rootNode.addChildNode(cameraNode)
         
-        
         //scene options
         scene.wantsScreenSpaceReflection = true
-        
         setupSceneEnviroment()
         setupLights(for: .standard)
     }
     
-    func scene(with qualityLevel: PhotogrammetrySession.Request.Detail?, colorScheme: ColorScheme) -> SCNScene {
-        //return empty scene if no quality selected OR capture is not found
-        guard let qualityLevel = qualityLevel, let capture = capture else {
-            debugPrint("no quality selected OR no capture found")
-            self.captureNode?.removeFromParentNode()
-            return scene
-        }
-        
+    //update scene with enviroment properties
+//    func scene(colorScheme: ColorScheme, wantsDOF: Bool) -> SCNScene {
+//        camera.wantsDepthOfField = wantsDOF
+//        cameraNode.camera?.wantsDepthOfField = wantsDOF
+//
+//        //update color scheme
+//        self.colorScheme = colorScheme
+//        scene.fogColor = backgroundColor
+//        scene.background.contents = backgroundColor
+//        //make updates to scene.fogColor & scene.background.contents if wanting colorSchemeSupport
+//        
+//        return scene
+//    }
+    
+    func update(withNewCapture newCapture: Capture, quality: PhotogrammetrySession.Request.Detail) {
         //ensure that capture isn't same OR the processedFiles aren't the same
         guard
-            capture.id != previousCapture?.id ||
-            capture.processedFiles != previousCapture?.processedFiles
+            newCapture != capture ||
+            quality != previewQuality
         else {
-            return scene
+            return
         }
-        previousCapture = capture
         
+        //update local variables
+        capture = newCapture
+        previewQuality = quality
+        guard let capture = capture, let previewQuality = previewQuality else { return }
         
-        //update color scheme
-        //self.colorScheme = .dark
-        //make updates to scene.fogColor & scene.background.contents if wanting colorSchemeSupport
-        
-        
-        //remove current capture node
-        self.captureNode?.removeFromParentNode()
-        
-        
+
         //get url and check that file exists
-        let url = Storage.url(for: capture, with: qualityLevel)
+        let url = Storage.url(for: capture, with: previewQuality)
         guard Storage.fileExists(at: url) else {
             debugPrint("capture file NOT found")
-            return scene
+            return
         }
         debugPrint("capture file found")
         
-        //capture node
+        //create capture node
         let newNode = SCNReferenceNode(url: url)
         newNode?.load()
         let gZeroNode = newNode?.childNode(withName: "g0", recursively: true)
         gZeroNode?.geometry?.firstMaterial?.lightingModel = .physicallyBased
+        
+        //remove current capture node
+        self.captureNode?.removeFromParentNode()
         
         //add new capture to scene
         captureNode = newNode
         if let captureNode = captureNode {
             scene.rootNode.addChildNode(captureNode)
         }
+    }
+    
+    func frameCapture() {
         
-        return scene
     }
     
     
     
     private func setupSceneEnviroment() {
         //fog
-        scene.fogColor = backgroundColor
+        //scene.fogColor = backgroundColor
         scene.fogDensityExponent = 1
         scene.fogStartDistance = 5
         scene.fogEndDistance = 33
         
         //background
-        scene.background.contents = backgroundColor
+        //scene.background.contents = backgroundColor
         
         //floor geometry
         let floorGeometry = SCNFloor()
@@ -156,7 +158,7 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         floorMaterial?.diffuse.contents = NSImage(named: "grid")
         floorMaterial?.diffuse.wrapT = .mirror
         floorMaterial?.diffuse.wrapS = .mirror
-        floorMaterial?.diffuse.contentsTransform = SCNMatrix4MakeScale(25, 25, 1)
+        floorMaterial?.diffuse.contentsTransform = SCNMatrix4MakeScale(50, 50, 1)
         
         //add floor
         scene.rootNode.addChildNode(floorNode)

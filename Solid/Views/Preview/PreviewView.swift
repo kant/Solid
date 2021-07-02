@@ -15,12 +15,11 @@ struct PreviewView: View {
     @ObservedObject var model: ContentViewModel
     @ObservedRealmObject var capture: Capture
     
-    @State var selectedPreviewQuality: PhotogrammetrySession.Request.Detail?
+    @State var selectedPreviewQuality: PhotogrammetrySession.Request.Detail = .preview
     
     var body: some View {
         
         if capture.isInPreviewState {
-            
             if let config = model.importConfiguration(for: capture) {
                 ConfigurationView(model: model, capture: capture, importConfiguration: config)
             } else {
@@ -29,11 +28,12 @@ struct PreviewView: View {
             
         } else {
             ZStack() {
-                ViewportView(model: model, capture: capture, selectedPreviewQuality: selectedPreviewQuality)
+                ViewportView(viewportModel: model.viewportModel, capture: capture, selectedPreviewQuality: $selectedPreviewQuality)
                 
                 VStack {
                     //Preview Quality Picker
-                    QualitySelector(capture: capture, selectedPreviewQuality: $selectedPreviewQuality)
+                    ToolBar(model: model, capture: capture, selectedPreviewQuality: $selectedPreviewQuality)
+                        .padding()
                     
                     Spacer()
                     

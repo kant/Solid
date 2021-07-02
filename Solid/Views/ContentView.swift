@@ -25,7 +25,9 @@ struct ContentView: View {
         NavigationView {
             List(selection: $selectedCapture) {
                 ForEach(captures) { capture in
-                    NavigationLink(destination: PreviewView(model: model, capture: capture)) {
+                    NavigationLink(
+                        destination: PreviewView(model: model, capture: capture)
+                    ){
                         ModelListCell(capture: capture)
                     }.tag(capture)
                 }
