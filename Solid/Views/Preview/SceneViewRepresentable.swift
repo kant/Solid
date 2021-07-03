@@ -18,13 +18,13 @@ struct SceneViewRepresentable: NSViewRepresentable {
     
     let sceneView = SCNView()
     
-    @Environment(\.colorScheme) var colorScheme
+    //@Environment(\.colorScheme) var colorScheme
     
-    @AppStorage("lightingEnviroment") var lightingEnviroment = Defaults.lightingEnviroment
+    @AppStorage("lightingEnvironment") var lightingEnvironment = Defaults.lightingEnvironment
+    @AppStorage("isBackgroundVisible") var isBackgroundVisible = Defaults.isBackgroundVisible
     @AppStorage("wantsDOF") var wantsDOF = Defaults.wantsDOF
     @AppStorage("focusDistance") var focusDistance = Defaults.focusDistance
-    @AppStorage("enviromentRotation") var enviromentRotation = Defaults.enviromentRotation
-    @AppStorage("enviromentBrightness") var enviromentBrightness = Defaults.enviromentBrightness
+    @AppStorage("environmentRotation") var environmentRotation = Defaults.environmentRotation
     
     @Binding var selectedPreviewQuality: PhotogrammetrySession.Request.Detail
     
@@ -32,8 +32,9 @@ struct SceneViewRepresentable: NSViewRepresentable {
         //update capture
         viewportModel.update(withNewCapture: capture, quality: selectedPreviewQuality)
         
-        //lightingEnviroment
-        viewportModel.setupLightingEnviroment(for: lightingEnviroment)
+        //lightingEnvironment
+        viewportModel.isBackgroundVisible = isBackgroundVisible
+        viewportModel.setupLightingEnvironment(for: lightingEnvironment)
         
         //DOF
         if let camera = sceneView.pointOfView?.camera {
@@ -46,11 +47,13 @@ struct SceneViewRepresentable: NSViewRepresentable {
             camera.focusDistance = focusDistance
         }
         
-        //Brightness Slider
-        viewportModel.scene.lightingEnvironment.intensity = enviromentBrightness
+        //Environment Rotation
+        let radianRotation = environmentRotation * 2 * CGFloat.pi
+        //viewportModel.scene.rootNode.rotation = SCNVector4(x: 0, y: 1, z: 0, w: radianRotation)
+        viewportModel.captureNode?.rotation = SCNVector4(x: 0, y: 1, z: 0, w: radianRotation)
         
         //Color Scheme
-        viewportModel.colorScheme = colorScheme
+        //viewportModel.colorScheme = colorScheme
         
         return sceneView
     }

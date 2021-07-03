@@ -16,11 +16,11 @@ struct ToolBar: View {
     
     @State var showLightingPopover = false
     
-    @AppStorage("lightingEnviroment") var lightingEnviroment = Defaults.lightingEnviroment
+    @AppStorage("lightingEnvironment") var lightingEnvironment = Defaults.lightingEnvironment
+    @AppStorage("isBackgroundVisible") var isBackgroundVisible = Defaults.isBackgroundVisible
     @AppStorage("wantsDOF") var wantsDOF = Defaults.wantsDOF
     @AppStorage("focusDistance") var focusDistance = Defaults.focusDistance
-    @AppStorage("enviromentRotation") var enviromentRotation = Defaults.enviromentRotation
-    @AppStorage("enviromentBrightness") var enviromentBrightness = Defaults.enviromentBrightness
+    @AppStorage("environmentRotation") var environmentRotation = Defaults.environmentRotation
     
     @Binding var selectedPreviewQuality: PhotogrammetrySession.Request.Detail
     
@@ -34,14 +34,6 @@ struct ToolBar: View {
                 Image(systemName: "camera.metering.spot") //camera.viewfinder
                     .font(.body.weight(.bold))
             }
-            
-            //Rotate Around
-//            Button {
-//                model.viewportModel.toggleRotate()
-//            } label: {
-//                Image(systemName: "play.fill") //camera.viewfinder
-//                    .font(.body.weight(.bold))
-//            }
         
             //Lighting Controls
             Button {
@@ -51,8 +43,8 @@ struct ToolBar: View {
                     .font(.body.weight(.bold))
             }
             .popover(isPresented: $showLightingPopover, arrowEdge: .top) {
-                VStack {
-                    Text("Enviroment")
+                VStack(alignment: .leading) {
+                    Text("Environment")
                         .font(.headline)
                     
                     //making custom grid becuase weird animation glitch with LazyVGrid
@@ -61,14 +53,14 @@ struct ToolBar: View {
                             HStack {
                                 ForEach(0..<2) { column in
                                     
-                                    let item = LightingEnviroment.allCases[row * 2 + column]
-                                    let selected = lightingEnviroment.rawValue == item.rawValue
+                                    let item = LightingEnvironment.allCases[row * 2 + column]
+                                    let selected = lightingEnvironment.rawValue == item.rawValue
                                     
                                     Button {
-                                        lightingEnviroment = item
+                                        lightingEnvironment = item
                                     } label: {
                                         ZStack {
-                                            Image("lightingEnviroment_\(item.rawValue)")
+                                            Image("environmentPreview_\(item.rawValue)")
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .cornerRadius(8)
@@ -86,22 +78,21 @@ struct ToolBar: View {
                         }
                     }
                     .frame(width: 90*2, height: 60*2)
-                    .animation(.default, value: lightingEnviroment)
+                    .animation(.default, value: lightingEnvironment)
                     
-                    VStack {
-                        Slider(value: $enviromentRotation, in: 0...1, label: {
-                            Text("Rotate:")
-                        })
+                    
+                    Slider(value: $environmentRotation, in: 0...1, label: {
+                        Text("Rotate:")
+                    })
+                    
+                    Toggle("Show Environment", isOn: $isBackgroundVisible)
+                        .padding(.bottom, 2)
                         
-                        Slider(value: $enviromentBrightness, in: 0...1, label: {
-                            Text("Brightness:")
-                        })
-                    }
-                        .padding()
                     
                     Divider()
                     
                     Toggle("Depth of Field", isOn: $wantsDOF)
+                        .padding(.top, 2)
                     
                     if wantsDOF {
                         Slider(value: $focusDistance, in: Defaults.minFocusDistance...Defaults.maxFocusDistance, label: {
@@ -118,9 +109,7 @@ struct ToolBar: View {
                     Text(file.quality.name).tag(file.quality)
                 }
             }
-            .scaledToFit()
             .pickerStyle(.segmented)
-            .colorScheme(.light)
         }
         
         

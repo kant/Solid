@@ -9,11 +9,12 @@ import Foundation
 
 struct Defaults {
     
-    static var lightingEnviroment = LightingEnviroment.styleOne
+    static var lightingEnvironment = LightingEnvironment.styleOne
+    static var isBackgroundVisible = true
+    
     static var wantsDOF = false
     static var focusDistance = 2.0
-    static var enviromentRotation = 0.0
-    static var enviromentBrightness = 1.0
+    static var environmentRotation = 0.0
     
     static var zMin = Defaults.minFocusDistance - 0.1
     static var minFocusDistance = 0.2

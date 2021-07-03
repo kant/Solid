@@ -33,6 +33,7 @@ struct PreviewView: View {
                 VStack {
                     //Preview Quality Picker
                     ToolBar(model: model, capture: capture, selectedPreviewQuality: $selectedPreviewQuality)
+                        //.colorScheme(.light)
                         .padding()
                     
                     Spacer()

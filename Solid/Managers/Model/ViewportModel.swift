@@ -33,33 +33,59 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
     }()
     private var referenceCamera: SCNCamera = {
         let camera = SCNCamera()
+        
         camera.zNear = Defaults.zMin
-        camera.fStop = 0.5
         camera.wantsDepthOfField = UserDefaults.standard.bool(forKey: "wantsDOF")
+        camera.fStop = 1
+        
+        camera.wantsHDR = true
+        camera.wantsExposureAdaptation = true
+        
+        camera.exposureAdaptationDarkeningSpeedFactor = 10
+        camera.exposureAdaptationBrighteningSpeedFactor = 10
+        
+//        camera.bloomThreshold = 0.5
+//        camera.bloomBlurRadius = 30
+        
+        
         return camera
     }()
 
+
     var capture: Capture?
-    private var captureNode: SCNNode?
+    var captureNode: SCNNode?
+    
+    var floorNode: SCNNode?
     
     var previewQuality: PhotogrammetrySession.Request.Detail?
     
-    var colorScheme: ColorScheme = .dark {
+    
+    var isBackgroundVisible = UserDefaults.standard.bool(forKey: "isBackgroundVisible") {
         didSet {
-            scene.fogColor = backgroundColor
-            scene.background.contents = backgroundColor
+            guard let camera = povCameraNode?.camera else { return }
+            //camera.bloomIntensity = isBackgroundVisible ? 0.6 : 0
+            floorNode?.isHidden = isBackgroundVisible
         }
     }
+//    var colorScheme: ColorScheme = .dark {
+//        didSet {
+//            scene.fogColor = backgroundColor
+//            if !isBackgroundVisible {
+//                scene.background.contents = backgroundColor
+//            }
+//        }
+//    }
     private var backgroundColor: CGColor {
-        switch colorScheme {
-        case .light:
-            return CGColor(gray: 0.9, alpha: 1)
-        case .dark:
+//        switch colorScheme {
+//        case .light:
+//            return CGColor(gray: 0.9, alpha: 1)
+//        case .dark:
             return CGColor(gray: 0.05, alpha: 1)
-        @unknown default:
-            return CGColor(gray: 0.9, alpha: 1)
-        }
+//        @unknown default:
+//            return CGColor(gray: 0.9, alpha: 1)
+//        }
     }
+   
     
     //TODO: cache of nodes?
     
@@ -74,8 +100,8 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         scene.rootNode.addChildNode(referenceCameraNode)
         
         //scene options
-        setupSceneEnviroment()
-        setupLightingEnviroment(for: .styleOne) //MOVE to sceneviewREP
+        setupSceneEnvironment()
+        setupLightingEnvironment(for: .styleOne) //MOVE to sceneviewREP
     }
     
     func update(withNewCapture newCapture: Capture, quality: PhotogrammetrySession.Request.Detail) {
@@ -117,7 +143,7 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         }
     }
     
-    func resetFrame() {
+    func resetFrame() { //completion: (() -> Void)? = nil
         guard let captureNode = captureNode else { return }
         SCNTransaction.begin()
         SCNTransaction.animationDuration = 1
@@ -126,31 +152,31 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         povCameraNode?.rotation = SCNVector4(x: 0, y: 0, z: 0, w: 0)
         povCameraNode?.look(at: captureNode.worldPosition)
         
+        //SCNTransaction.completionBlock = completion
+        
         SCNTransaction.commit()
     }
     
     
-    private func setupSceneEnviroment() {
+    private func setupSceneEnvironment() {
         //reflections
         scene.wantsScreenSpaceReflection = true
         
         //fog
-        //scene.fogColor = backgroundColor
+        scene.fogColor = backgroundColor
         scene.fogDensityExponent = 1
         scene.fogStartDistance = 5
         scene.fogEndDistance = 33
         
-        //background
-        //scene.background.contents = backgroundColor
         
         //floor geometry
         let floorGeometry = SCNFloor()
         floorGeometry.reflectivity = 0
         
         //floor node
-        let floorNode = SCNNode(geometry: floorGeometry)
-        floorNode.position = SCNVector3(0, -0.5, 0)
-        floorNode.opacity = 0.2
+        floorNode = SCNNode(geometry: floorGeometry)
+        floorNode?.position = SCNVector3(0, -0.5, 0)
+        floorNode?.opacity = 0.2
         
         //floor material
         let floorMaterial = floorGeometry.firstMaterial
@@ -162,18 +188,28 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         floorMaterial?.diffuse.contentsTransform = SCNMatrix4MakeScale(50, 50, 1)
         
         //add floor
-        scene.rootNode.addChildNode(floorNode)
+        if let floorNode = floorNode {
+            scene.rootNode.addChildNode(floorNode)
+        }
     }
     
-    func setupLightingEnviroment(for style: LightingEnviroment) {
-        var sky: [NSImage] = []
-        for index in 1...6 {
-            if let image = NSImage(named: "light_\(style.rawValue)_000\(index).png") {
-                sky.append(image)
-            }
-        }
+    func setupLightingEnvironment(for style: LightingEnvironment) {
+        //cube
+//        var sky: [NSImage] = []
+//        for index in 0...5 {
+//            if let image = NSImage(named: "light_\(style.rawValue)_0000\(index).exr") {
+//                sky.append(image)
+//            }
+//        }
         
-        scene.lightingEnvironment.contents = sky
-        //scene.background.contents = sky
+        let imageName = "environment_\(style.rawValue)"
+        scene.lightingEnvironment.contents = imageName
+        
+        //sky
+        if isBackgroundVisible {
+            scene.background.contents = imageName
+        } else {
+            scene.background.contents = backgroundColor
+        }
     }
 }

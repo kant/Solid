@@ -18,20 +18,6 @@ struct ViewportView: View { //Equatable
     
     @Binding var selectedPreviewQuality: PhotogrammetrySession.Request.Detail
     
-    //@Environment(\.colorScheme) var colorScheme: ColorScheme
-//    @AppStorage("wantsDOF") var wantsDOF = false
-//    @AppStorage("enviromentRotation") var enviromentRotation = 0.0
-//    @AppStorage("enviromentBrightness") var enviromentBrightness = 1.0
-    
-    //var sceneViewRepresentable: SceneViewRepresentable?
-    
-//    init(model: ContentViewModel, capture: Capture, lightingRotationAngle: Double) {
-//        self.lightingRotationAngle = lightingRotationAngle
-//        self.model = model
-//        self.model.viewportModel.capture = capture
-//
-//    }
-    
     var body: some View {
         //HStack {
             SceneViewRepresentable(
