@@ -21,8 +21,26 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
     var scnView: SCNView?
     var scene = SCNScene()
     
-    var cameraNode = SCNNode()
-    var camera = SCNCamera()
+    var povCameraNode: SCNNode? {
+        return scnView?.pointOfView
+    }
+    
+    private lazy var referenceCameraNode: SCNNode = {
+        let cameraNode = SCNNode()
+        cameraNode.camera = referenceCamera
+        cameraNode.position = SCNVector3(x: 0, y: 0, z: 2)
+        cameraNode.constraints?.append(
+            SCNLookAtConstraint(target: scene.rootNode)
+        )
+        return cameraNode
+    }()
+    private var referenceCamera: SCNCamera = {
+        let camera = SCNCamera()
+        camera.zNear = Defaults.zMin
+        camera.fStop = 0.5
+        camera.wantsDepthOfField = UserDefaults.standard.bool(forKey: "wantsDOF")
+        return camera
+    }()
 
     var capture: Capture?
     private var captureNode: SCNNode?
@@ -56,36 +74,12 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         super.init()
         
         //camera setup
-        camera.zNear = Defaults.zMin
-        camera.fStop = 0.5
-        camera.wantsDepthOfField = UserDefaults.standard.bool(forKey: "wantsDOF")
-        
-        cameraNode.camera = camera
-        cameraNode.position = SCNVector3(x: 0, y: 0, z: 2)
-        cameraNode.constraints?.append(
-            SCNLookAtConstraint(target: scene.rootNode)
-        )
-        scene.rootNode.addChildNode(cameraNode)
+        scene.rootNode.addChildNode(referenceCameraNode)
         
         //scene options
-        scene.wantsScreenSpaceReflection = true
         setupSceneEnviroment()
-        setupLights(for: .standard)
+        setupLights(for: .standard) //MOVE to sceneviewREP
     }
-    
-    //update scene with enviroment properties
-//    func scene(colorScheme: ColorScheme, wantsDOF: Bool) -> SCNScene {
-//        camera.wantsDepthOfField = wantsDOF
-//        cameraNode.camera?.wantsDepthOfField = wantsDOF
-//
-//        //update color scheme
-//        self.colorScheme = colorScheme
-//        scene.fogColor = backgroundColor
-//        scene.background.contents = backgroundColor
-//        //make updates to scene.fogColor & scene.background.contents if wanting colorSchemeSupport
-//        
-//        return scene
-//    }
     
     func update(withNewCapture newCapture: Capture, quality: PhotogrammetrySession.Request.Detail) {
         //ensure that capture isn't same OR the processedFiles aren't the same
@@ -126,13 +120,23 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         }
     }
     
-    func frameCapture() {
+    func resetFrame() {
+        guard let captureNode = captureNode else { return }
+        SCNTransaction.begin()
+        SCNTransaction.animationDuration = 1
         
+        povCameraNode?.position = SCNVector3(x: 0, y: 0, z: 2)
+        povCameraNode?.rotation = SCNVector4(x: 0, y: 0, z: 0, w: 0)
+        povCameraNode?.look(at: captureNode.worldPosition)
+        
+        SCNTransaction.commit()
     }
     
     
-    
     private func setupSceneEnviroment() {
+        //reflections
+        scene.wantsScreenSpaceReflection = true
+        
         //fog
         //scene.fogColor = backgroundColor
         scene.fogDensityExponent = 1

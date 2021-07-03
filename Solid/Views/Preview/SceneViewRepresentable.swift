@@ -33,7 +33,12 @@ struct SceneViewRepresentable: NSViewRepresentable {
         
         //DOF
         if let camera = sceneView.pointOfView?.camera {
+            //animate DOF state
+            SCNTransaction.begin()
+            SCNTransaction.animationDuration = 1
             camera.wantsDepthOfField = wantsDOF
+            SCNTransaction.commit()
+            
             camera.focusDistance = focusDistance
         }
         

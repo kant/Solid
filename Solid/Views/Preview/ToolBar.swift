@@ -26,13 +26,21 @@ struct ToolBar: View {
     var body: some View {
         
         HStack {
-            //Frame Capture
+            //Reset Frame
             Button {
-                model.viewportModel.frameCapture()
+                model.viewportModel.resetFrame()
             } label: {
                 Image(systemName: "camera.metering.spot") //camera.viewfinder
                     .font(.body.weight(.bold))
             }
+            
+            //Rotate Around
+//            Button {
+//                model.viewportModel.toggleRotate()
+//            } label: {
+//                Image(systemName: "play.fill") //camera.viewfinder
+//                    .font(.body.weight(.bold))
+//            }
         
             //Lighting Controls
             Button {
