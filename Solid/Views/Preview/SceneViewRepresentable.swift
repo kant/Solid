@@ -68,6 +68,8 @@ struct SceneViewRepresentable: NSViewRepresentable {
         //pass the view to the model
         viewportModel.scnView = sceneView
         
+        viewportModel.setupLightingEnvironment(for: lightingEnvironment)
+        
         return updatedSceneView()
     }
     

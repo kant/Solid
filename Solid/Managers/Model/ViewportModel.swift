@@ -62,7 +62,7 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
     
     var isBackgroundVisible = UserDefaults.standard.bool(forKey: "isBackgroundVisible") {
         didSet {
-            guard let camera = povCameraNode?.camera else { return }
+            //guard let camera = povCameraNode?.camera else { return }
             //camera.bloomIntensity = isBackgroundVisible ? 0.6 : 0
             floorNode?.isHidden = isBackgroundVisible
         }
@@ -101,7 +101,6 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         
         //scene options
         setupSceneEnvironment()
-        setupLightingEnvironment(for: .styleOne) //MOVE to sceneviewREP
     }
     
     func update(withNewCapture newCapture: Capture, quality: PhotogrammetrySession.Request.Detail) {
