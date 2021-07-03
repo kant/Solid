@@ -20,6 +20,7 @@ struct SceneViewRepresentable: NSViewRepresentable {
     
     @Environment(\.colorScheme) var colorScheme
     
+    @AppStorage("lightingEnviroment") var lightingEnviroment = Defaults.lightingEnviroment
     @AppStorage("wantsDOF") var wantsDOF = Defaults.wantsDOF
     @AppStorage("focusDistance") var focusDistance = Defaults.focusDistance
     @AppStorage("enviromentRotation") var enviromentRotation = Defaults.enviromentRotation
@@ -30,6 +31,9 @@ struct SceneViewRepresentable: NSViewRepresentable {
     func updatedSceneView() -> SCNView {
         //update capture
         viewportModel.update(withNewCapture: capture, quality: selectedPreviewQuality)
+        
+        //lightingEnviroment
+        viewportModel.setupLightingEnviroment(for: lightingEnviroment)
         
         //DOF
         if let camera = sceneView.pointOfView?.camera {

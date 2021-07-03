@@ -16,6 +16,7 @@ struct ToolBar: View {
     
     @State var showLightingPopover = false
     
+    @AppStorage("lightingEnviroment") var lightingEnviroment = Defaults.lightingEnviroment
     @AppStorage("wantsDOF") var wantsDOF = Defaults.wantsDOF
     @AppStorage("focusDistance") var focusDistance = Defaults.focusDistance
     @AppStorage("enviromentRotation") var enviromentRotation = Defaults.enviromentRotation
@@ -49,13 +50,43 @@ struct ToolBar: View {
                 Image(systemName: "rotate.3d")
                     .font(.body.weight(.bold))
             }
-            .popover(isPresented: $showLightingPopover) {
+            .popover(isPresented: $showLightingPopover, arrowEdge: .top) {
                 VStack {
                     Text("Enviroment")
                         .font(.headline)
                     
-                    Text("Lighting Image Choices")
-                        .padding()
+                    //making custom grid becuase weird animation glitch with LazyVGrid
+                    VStack {
+                        ForEach(0..<2) { row in
+                            HStack {
+                                ForEach(0..<2) { column in
+                                    
+                                    let item = LightingEnviroment.allCases[row * 2 + column]
+                                    let selected = lightingEnviroment.rawValue == item.rawValue
+                                    
+                                    Button {
+                                        lightingEnviroment = item
+                                    } label: {
+                                        ZStack {
+                                            Image("lightingEnviroment_\(item.rawValue)")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .cornerRadius(8)
+                                                .opacity(selected ? 0.5 : 1)
+                                            Image(systemName: "checkmark")
+                                                .font(.body.weight(.bold))
+                                                .opacity(selected ? 1 : 0)
+                                            
+                                        }
+                                    }
+                                    .buttonStyle(.plain)
+                                    
+                                }
+                            }
+                        }
+                    }
+                    .frame(width: 90*2, height: 60*2)
+                    .animation(.default, value: lightingEnviroment)
                     
                     VStack {
                         Slider(value: $enviromentRotation, in: 0...1, label: {

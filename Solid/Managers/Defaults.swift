@@ -8,6 +8,8 @@
 import Foundation
 
 struct Defaults {
+    
+    static var lightingEnviroment = LightingEnviroment.styleOne
     static var wantsDOF = false
     static var focusDistance = 2.0
     static var enviromentRotation = 0.0

@@ -12,9 +12,6 @@ import SpriteKit
 import ModelIO
 import SwiftUI
 
-enum LightingSetup {
-    case standard
-}
 
 class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
     
@@ -78,7 +75,7 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         
         //scene options
         setupSceneEnviroment()
-        setupLights(for: .standard) //MOVE to sceneviewREP
+        setupLightingEnviroment(for: .styleOne) //MOVE to sceneviewREP
     }
     
     func update(withNewCapture newCapture: Capture, quality: PhotogrammetrySession.Request.Detail) {
@@ -168,29 +165,15 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         scene.rootNode.addChildNode(floorNode)
     }
     
-    private func setupLights(for setup: LightingSetup) {
-        switch setup {
-        case .standard:
-//            let light = SCNLight()
-//            light.type = .omni
-//            light.intensity = 600
-//
-//            let lightNode = SCNNode()
-//            lightNode.light = light
-//
-//            lightNode.position = SCNVector3(x: 5, y: 5, z: 5)
-            
-//            scene.rootNode.addChildNode(lightNode)
-            
-            var sky: [NSImage] = []
-            for index in 1...6 {
-                if let image = NSImage(named: "light_1_000\(index).png") {
-                    sky.append(image)
-                }
+    func setupLightingEnviroment(for style: LightingEnviroment) {
+        var sky: [NSImage] = []
+        for index in 1...6 {
+            if let image = NSImage(named: "light_\(style.rawValue)_000\(index).png") {
+                sky.append(image)
             }
-
-            scene.lightingEnvironment.contents = sky
-            //scene.background.contents = sky
         }
+        
+        scene.lightingEnvironment.contents = sky
+        //scene.background.contents = sky
     }
 }
