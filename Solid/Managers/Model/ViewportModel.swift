@@ -101,6 +101,14 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         
         //scene options
         setupSceneEnvironment()
+        
+        //setup lighting environment
+        let lightingEnvironmentValue = UserDefaults.standard.integer(forKey: "lightingEnvironment")
+        if let lightingEnvironment = LightingEnvironment(rawValue: lightingEnvironmentValue) {
+            setupLightingEnvironment(for: lightingEnvironment)
+        }
+        
+        
     }
     
     func update(withNewCapture newCapture: Capture, quality: PhotogrammetrySession.Request.Detail) {
@@ -122,6 +130,7 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         let url = Storage.url(for: capture, with: previewQuality)
         guard Storage.fileExists(at: url) else {
             debugPrint("capture file NOT found")
+            self.captureNode?.removeFromParentNode()
             return
         }
         debugPrint("capture file found")
@@ -141,21 +150,7 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
             scene.rootNode.addChildNode(captureNode)
         }
     }
-    
-    func resetFrame() { //completion: (() -> Void)? = nil
-        guard let captureNode = captureNode else { return }
-        SCNTransaction.begin()
-        SCNTransaction.animationDuration = 1
-        
-        povCameraNode?.position = SCNVector3(x: 0, y: 0, z: 2)
-        povCameraNode?.rotation = SCNVector4(x: 0, y: 0, z: 0, w: 0)
-        povCameraNode?.look(at: captureNode.worldPosition)
-        
-        //SCNTransaction.completionBlock = completion
-        
-        SCNTransaction.commit()
-    }
-    
+ 
     
     private func setupSceneEnvironment() {
         //reflections
@@ -211,4 +206,20 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
             scene.background.contents = backgroundColor
         }
     }
+    
+    
+    func resetFrame() { //completion: (() -> Void)? = nil
+        guard let captureNode = captureNode else { return }
+        SCNTransaction.begin()
+        SCNTransaction.animationDuration = 1
+        
+        povCameraNode?.position = SCNVector3(x: 0, y: 0, z: 2)
+        povCameraNode?.rotation = SCNVector4(x: 0, y: 0, z: 0, w: 0)
+        povCameraNode?.look(at: captureNode.worldPosition)
+        
+        //SCNTransaction.completionBlock = completion
+        
+        SCNTransaction.commit()
+    }
+    
 }

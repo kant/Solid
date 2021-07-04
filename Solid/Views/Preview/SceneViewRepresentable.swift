@@ -16,9 +16,7 @@ struct SceneViewRepresentable: NSViewRepresentable {
     var viewportModel: ViewportModel
     @ObservedRealmObject var capture: Capture
     
-    let sceneView = SCNView()
-    
-    //@Environment(\.colorScheme) var colorScheme
+    var sceneView = SCNView()
     
     @AppStorage("lightingEnvironment") var lightingEnvironment = Defaults.lightingEnvironment
     @AppStorage("isBackgroundVisible") var isBackgroundVisible = Defaults.isBackgroundVisible
@@ -26,7 +24,33 @@ struct SceneViewRepresentable: NSViewRepresentable {
     @AppStorage("focusDistance") var focusDistance = Defaults.focusDistance
     @AppStorage("environmentRotation") var environmentRotation = Defaults.environmentRotation
     
-    @Binding var selectedPreviewQuality: PhotogrammetrySession.Request.Detail
+    var selectedPreviewQuality: PhotogrammetrySession.Request.Detail
+    
+    init(viewportModel: ViewportModel,
+         capture: Capture,
+         selectedPreviewQuality: PhotogrammetrySession.Request.Detail) {
+        
+        self.viewportModel = viewportModel
+        self.capture = capture
+        self.selectedPreviewQuality = selectedPreviewQuality
+        
+        //set the scene for the view
+        sceneView.scene = viewportModel.scene
+        
+        //allows camera control
+        sceneView.allowsCameraControl = true
+        
+        //pass the SCNView to the model
+        viewportModel.scnView = sceneView
+    }
+    
+    func makeNSView(context: Context) -> NSView {
+        return updatedSceneView()
+    }
+    
+    func updateNSView(_ nsView: NSViewType, context: Context) {
+        let _ = updatedSceneView()
+    }
     
     func updatedSceneView() -> SCNView {
         //update capture
@@ -49,43 +73,8 @@ struct SceneViewRepresentable: NSViewRepresentable {
         
         //Environment Rotation
         let radianRotation = environmentRotation * 2 * CGFloat.pi
-        //viewportModel.scene.rootNode.rotation = SCNVector4(x: 0, y: 1, z: 0, w: radianRotation)
         viewportModel.captureNode?.rotation = SCNVector4(x: 0, y: 1, z: 0, w: radianRotation)
-        
-        //Color Scheme
-        //viewportModel.colorScheme = colorScheme
         
         return sceneView
     }
-
-    func makeNSView(context: Context) -> NSView {
-        //set the scene for the view
-        sceneView.scene = viewportModel.scene
-        
-        //allows camera controll
-        sceneView.allowsCameraControl = true
-        
-        //pass the view to the model
-        viewportModel.scnView = sceneView
-        
-        viewportModel.setupLightingEnvironment(for: lightingEnvironment)
-        
-        return updatedSceneView()
-    }
-    
-    func updateNSView(_ nsView: NSViewType, context: Context) {
-        let _ = updatedSceneView()
-    }
-    
-//    func makeCoordinator() -> Coordinator {
-//        Coordinator(self)
-//    }
-//
-//    class Coordinator: NSObject {
-//        var parent: SceneViewRepresentable
-//
-//        init(_ sceneViewRepresentable: SceneViewRepresentable) {
-//            parent = sceneViewRepresentable
-//        }
-//    }
 }

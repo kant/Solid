@@ -19,40 +19,11 @@ struct ViewportView: View { //Equatable
     @Binding var selectedPreviewQuality: PhotogrammetrySession.Request.Detail
     
     var body: some View {
-        //HStack {
-            SceneViewRepresentable(
-                viewportModel: viewportModel,
-                capture: capture,
-                selectedPreviewQuality: $selectedPreviewQuality
-            )
-            
-//            VStack {
-//                Toggle("wantsDOF", isOn: $wantsDOF)
-//                Slider(value: $lightingRotationAngle, in: 0...1) {
-//                    Text("lightingRotationAngle")
-//                }
-//            }
-//            SceneView(
-//                scene: model.viewportModel.scene(colorScheme: colorScheme, wantsDOF: wantsDOF),
-//                pointOfView: model.viewportModel.cameraNode,
-//                options: [.allowsCameraControl],
-//                delegate: model.viewportModel
-//            )
-//            Text("wants dof: \(wantsDOF.description)")
-//                .foregroundColor(.white)
-        //}
+        SceneViewRepresentable(
+            viewportModel: viewportModel,
+            capture: capture,
+            selectedPreviewQuality: selectedPreviewQuality
+        )
     }
-    
-//    static func == (lhs: ViewportView, rhs: ViewportView) -> Bool {
-//        let captureIdIsEqual = lhs.model.viewportModel.capture?.id == rhs.model.viewportModel.capture?.id
-//        debugPrint("captureIdIsEqual \(captureIdIsEqual)")
-//        let captureProcessedFilesIsEqual = lhs.model.viewportModel.capture?.processedFiles == rhs.model.viewportModel.capture?.processedFiles
-//        debugPrint("captureProcessedFilesIsEqual \(captureProcessedFilesIsEqual)")
-//        let selectedQualityIsEqual = lhs.selectedPreviewQuality == rhs.selectedPreviewQuality
-//        debugPrint("selectedQualityIsEqual \(selectedQualityIsEqual)")
-//
-//        return  captureIdIsEqual && captureProcessedFilesIsEqual && selectedQualityIsEqual
-//    }
-    
 }
 
