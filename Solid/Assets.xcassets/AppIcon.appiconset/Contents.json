@@ -41,11 +41,13 @@
       "size" : "256x256"
     },
     {
+      "filename" : "Frame 1@1x.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "512x512"
     },
     {
+      "filename" : "Frame 1@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "512x512"
