@@ -20,7 +20,7 @@ class PreviewContent {
             ProcessedFile(quality: .medium),
             ProcessedFile(quality: .full)
         ])
-        capture.isInPreviewState = false
+        capture.state = .configuring
         return capture
     }
     

@@ -9,7 +9,7 @@ import SwiftUI
 import RealmSwift
 import UniformTypeIdentifiers
 
-struct ContentView: View {
+struct MainView: View {
     
     @ObservedObject var model: ContentViewModel
     
@@ -26,7 +26,7 @@ struct ContentView: View {
             List(selection: $selectedCapture) {
                 ForEach(captures) { capture in
                     NavigationLink(
-                        destination: PreviewView(model: model, capture: capture)
+                        destination: SelectedCaptureView(model: model, capture: capture)
                     ){
                         ModelListCell(capture: capture)
                     }.tag(capture)
@@ -109,6 +109,6 @@ struct ContentView_Previews: PreviewProvider {
             let storage = Storage(with: realm)
             return ContentViewModel(storage: storage)
         }()
-        ContentView(model: model)
+        MainView(model: model)
     }
 }

@@ -10,14 +10,40 @@ import RealityKit
 import RealmSwift
 import SwiftUI
 
+@objc enum CaptureState: Int {
+    case configuring
+    case processing
+    case stored
+}
+extension CaptureState: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .configuring:
+            return "Configuring"
+        case .processing:
+            return "Processing"
+        case .stored:
+            return "Stored"
+        }
+    }
+}
+
 @objcMembers class Capture: Object, ObjectKeyIdentifiable {
     @objc dynamic var id = ObjectId.generate()
-    @objc dynamic var isInPreviewState = true
+    
+    @objc var state: CaptureState {
+        get {
+            return CaptureState(rawValue: stateValue) ?? .configuring
+        }
+        set {
+            stateValue = newValue.rawValue
+        }
+    }
+    @objc private dynamic var stateValue: Int = 0
     
     @objc dynamic var name: String
     @objc dynamic var dateCreated: Date
     lazy var formatedDate: String = {
-        
         //display time created
         if Calendar.current.isDateInToday(dateCreated) {
             return dateCreated.formatted(date: .omitted, time: .shortened)
@@ -30,7 +56,6 @@ import SwiftUI
         //dateFormater.dateTimeStyle = .numeric
         //dateFormater.unitsStyle = .abbreviated
         //return dateFormater.localizedString(for: dateCreated, relativeTo: currentDate)
-        
     }()
     
     @objc dynamic var importFolderRelativePath: String
@@ -64,6 +89,6 @@ import SwiftUI
     }
     
     override class func ignoredProperties() -> [String] {
-        return [#keyPath(formatedDate)]
+        return [#keyPath(formatedDate), #keyPath(state)]
     }
 }

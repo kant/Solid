@@ -25,14 +25,13 @@ struct ModelListCell: View {
             
             Spacer()
             
-            if capture.isInPreviewState {
-                Text("Preview")
-                    .padding([.horizontal], 5)
-                    .padding([.vertical], 2)
-                    .foregroundStyle(.primary)
-                    .background(.gray)
-                    .cornerRadius(5)
-                    
+            if capture.state != .stored {
+                Text(capture.state.description)
+                .padding([.horizontal], 5)
+                .padding([.vertical], 2)
+                .foregroundStyle(.primary)
+                .background(.gray)
+                .cornerRadius(5)
             }
         }
     }

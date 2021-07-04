@@ -22,12 +22,12 @@
 		40770FF3268F9F9300DF7637 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40770FF2268F9F9300DF7637 /* Defaults.swift */; };
 		40770FF5269018C400DF7637 /* LightingEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40770FF4269018C400DF7637 /* LightingEnvironment.swift */; };
 		40795A9F267D985E00953D36 /* SolidApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795A9E267D985E00953D36 /* SolidApp.swift */; };
-		40795AA1267D985E00953D36 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AA0267D985E00953D36 /* ContentView.swift */; };
+		40795AA1267D985E00953D36 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AA0267D985E00953D36 /* MainView.swift */; };
 		40795AA3267D986000953D36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40795AA2267D986000953D36 /* Assets.xcassets */; };
 		40795AA6267D986000953D36 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40795AA5267D986000953D36 /* Preview Assets.xcassets */; };
 		40795AAD267DA90500953D36 /* Capture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AAC267DA90500953D36 /* Capture.swift */; };
 		40795AAF267DA97B00953D36 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AAE267DA97B00953D36 /* Storage.swift */; };
-		40795AB1267DABED00953D36 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AB0267DABED00953D36 /* PreviewView.swift */; };
+		40795AB1267DABED00953D36 /* SelectedCaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AB0267DABED00953D36 /* SelectedCaptureView.swift */; };
 		40795AB3267DB34500953D36 /* ModelListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40795AB2267DB34500953D36 /* ModelListCell.swift */; };
 		40E20B892689250500C4EDFC /* CaptureGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E20B882689250500C4EDFC /* CaptureGenerator.swift */; };
 		40E543B7269104C300B889C5 /* environment_3.hdr in Resources */ = {isa = PBXBuildFile; fileRef = 40E543B3269104C300B889C5 /* environment_3.hdr */; };
@@ -54,12 +54,12 @@
 		40770FF4269018C400DF7637 /* LightingEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightingEnvironment.swift; sourceTree = "<group>"; };
 		40795A9B267D985E00953D36 /* Solid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Solid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40795A9E267D985E00953D36 /* SolidApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidApp.swift; sourceTree = "<group>"; };
-		40795AA0267D985E00953D36 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		40795AA0267D985E00953D36 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		40795AA2267D986000953D36 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40795AA5267D986000953D36 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		40795AAC267DA90500953D36 /* Capture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Capture.swift; sourceTree = "<group>"; };
 		40795AAE267DA97B00953D36 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
-		40795AB0267DABED00953D36 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		40795AB0267DABED00953D36 /* SelectedCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedCaptureView.swift; sourceTree = "<group>"; };
 		40795AB2267DB34500953D36 /* ModelListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelListCell.swift; sourceTree = "<group>"; };
 		40E20B882689250500C4EDFC /* CaptureGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureGenerator.swift; sourceTree = "<group>"; };
 		40E543B3269104C300B889C5 /* environment_3.hdr */ = {isa = PBXFileReference; lastKnownFileType = file; path = environment_3.hdr; sourceTree = "<group>"; };
@@ -115,7 +115,6 @@
 		400AD15C2681762300A3F81D /* Preview */ = {
 			isa = PBXGroup;
 			children = (
-				40795AB0267DABED00953D36 /* PreviewView.swift */,
 				40340D50268D0EA200F34A37 /* ToolBar.swift */,
 				406335262688E9B5006105BC /* ProgressBar.swift */,
 				400AD14F26803C6D00A3F81D /* ViewportView.swift */,
@@ -149,7 +148,8 @@
 			isa = PBXGroup;
 			children = (
 				40795A9E267D985E00953D36 /* SolidApp.swift */,
-				40795AA0267D985E00953D36 /* ContentView.swift */,
+				40795AA0267D985E00953D36 /* MainView.swift */,
+				40795AB0267DABED00953D36 /* SelectedCaptureView.swift */,
 				400AD15C2681762300A3F81D /* Preview */,
 				40795AB2267DB34500953D36 /* ModelListCell.swift */,
 				40294836268BAAFB002B1B9D /* Configuration View */,
@@ -337,7 +337,7 @@
 				400AD15026803C6D00A3F81D /* ViewportView.swift in Sources */,
 				40294838268BAB26002B1B9D /* ConfigurationView.swift in Sources */,
 				40340D51268D0EA200F34A37 /* ToolBar.swift in Sources */,
-				40795AB1267DABED00953D36 /* PreviewView.swift in Sources */,
+				40795AB1267DABED00953D36 /* SelectedCaptureView.swift in Sources */,
 				4052AA1B267E312200644CC2 /* ContentViewModel.swift in Sources */,
 				4029483A268BABA0002B1B9D /* ImportGalleryView.swift in Sources */,
 				40795AB3267DB34500953D36 /* ModelListCell.swift in Sources */,
@@ -347,7 +347,7 @@
 				400AD15A268175CE00A3F81D /* ProcessedFile.swift in Sources */,
 				40795AAF267DA97B00953D36 /* Storage.swift in Sources */,
 				400AD15226804DE700A3F81D /* ViewportModel.swift in Sources */,
-				40795AA1267D985E00953D36 /* ContentView.swift in Sources */,
+				40795AA1267D985E00953D36 /* MainView.swift in Sources */,
 				406335272688E9B5006105BC /* ProgressBar.swift in Sources */,
 				40795A9F267D985E00953D36 /* SolidApp.swift in Sources */,
 				40E20B892689250500C4EDFC /* CaptureGenerator.swift in Sources */,

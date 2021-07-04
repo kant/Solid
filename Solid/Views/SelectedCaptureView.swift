@@ -10,7 +10,7 @@ import QuickLook
 import RealityKit
 import RealmSwift
 
-struct PreviewView: View {
+struct SelectedCaptureView: View {
     
     @ObservedObject var model: ContentViewModel
     @ObservedRealmObject var capture: Capture
@@ -18,15 +18,15 @@ struct PreviewView: View {
     @State var selectedPreviewQuality: PhotogrammetrySession.Request.Detail = .preview
     
     var body: some View {
-        
-        if capture.isInPreviewState {
+        switch capture.state {
+        case .configuring:
             if let config = model.importConfiguration(for: capture) {
                 ConfigurationView(model: model, capture: capture, importConfiguration: config)
             } else {
                 Text("Could not load ImportConfiguration 1")
             }
             
-        } else {
+        case .processing, .stored:
             ZStack() {
                 ViewportView(viewportModel: model.viewportModel, capture: capture, selectedPreviewQuality: $selectedPreviewQuality)
                 
@@ -38,12 +38,14 @@ struct PreviewView: View {
                     
                     Spacer()
                     
-                    //Bottom Bar
-                    ProgressBar(model: model, capture: capture)
-                        .padding()
-                        .background( Color(NSColor.textBackgroundColor) )
-                        .cornerRadius(10)
-                        .padding()
+                    //Processing Bar
+                    if capture.state == .processing {
+                        ProgressBar(model: model, capture: capture)
+                            .padding()
+                            .background( Color(NSColor.textBackgroundColor) )
+                            .cornerRadius(10)
+                            .padding()
+                    }
                 }
             }
         }

@@ -27,7 +27,7 @@ class CaptureGenerator: Equatable {
     
     func process() {
         debugPrint("begin processing with options")
-        showProgressBar()
+        setState(to: .processing)
         
         do {
             session = try PhotogrammetrySession(
@@ -92,9 +92,11 @@ class CaptureGenerator: Equatable {
                 case .requestProgress(_, fractionComplete: let fractionComplete):
                     debugPrint("progress update: \(fractionComplete)")
                     self.model.currentlyProcessingProgress = fractionComplete
+                    
                 case .processingComplete:
                     debugPrint("processing complete")
-                    //hide progress bar?
+                    complete()
+                    
                 case .processingCancelled:
                     debugPrint("processing cancelled")
                 case .invalidSample(id: let id, reason: let reason):
@@ -109,23 +111,23 @@ class CaptureGenerator: Equatable {
             }
         }
     }
-
-    private func showProgressBar() {
-        do {
-            try model.storage.realm.write {
-                if let thawedCapture = capture.thaw() {
-                    thawedCapture.isInPreviewState = false
-                }
-            }
-        } catch {
-            debugPrint("couldn't write to realm while updating preview state")
+    
+    private func complete() {
+        setState(to: .stored)
+        model.captureGenerators.removeAll { captureGenerator in
+            captureGenerator == self
         }
     }
     
-    func complete() {
-
-        model.captureGenerators.removeAll { captureGenerator in
-            captureGenerator == self
+    func setState(to newState: CaptureState) {
+        do {
+            try model.storage.realm.write {
+                if let thawedCapture = capture.thaw() {
+                    thawedCapture.state = newState
+                }
+            }
+        } catch {
+            debugPrint("couldn't write to realm while setting state to \(newState)")
         }
     }
     
