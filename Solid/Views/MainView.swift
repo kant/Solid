@@ -22,18 +22,7 @@ struct MainView: View {
     var body: some View {
         
         //List & Preview View
-        NavigationView {
-            List(selection: $selectedCapture) {
-                ForEach(captures) { capture in
-                    NavigationLink(
-                        destination: SelectedCaptureView(model: model, capture: capture)
-                    ){
-                        ModelListCell(capture: capture)
-                    }.tag(capture)
-                }
-            }
-            .listStyle(.sidebar)
-        }
+        CaptureNavigationView(selectedCapture: $selectedCapture, model: model)
         
         //Toolbar
         .toolbar {
@@ -49,7 +38,9 @@ struct MainView: View {
             ToolbarItem(placement: ToolbarItemPlacement.destructiveAction) {
                 Button(action: {
                     guard let selectedCapture = selectedCapture else { return }
-                    debugPrint("delete \(selectedCapture.name)")
+                    model.storage.delete(capture: selectedCapture)
+                    self.selectedCapture = nil
+                    debugPrint("deleted \(selectedCapture.name)")
                 }, label: {
                     Image(systemName: "trash")
                 })

@@ -40,6 +40,26 @@ class Storage {
         }
     }
     
+    func delete(capture: Capture) {
+        deleteFiles(for: capture)
+        do {
+            try realm.write {
+                if let thawedCapture = capture.thaw() {
+                    realm.delete(thawedCapture)
+                }
+            }
+        } catch {
+            debugPrint("couldn't add new processed file")
+        }
+    }
+    
+    private func deleteFiles(for capture: Capture) {
+        for processedFile in capture.processedFiles {
+            let url = Storage.url(for: capture, with: processedFile.quality)
+            try? FileManager.default.removeItem(at: url)
+        }
+    }
+    
     static private func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
