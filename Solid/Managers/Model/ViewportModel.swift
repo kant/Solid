@@ -107,8 +107,6 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         if let lightingEnvironment = LightingEnvironment(rawValue: lightingEnvironmentValue) {
             setupLightingEnvironment(for: lightingEnvironment)
         }
-        
-        
     }
     
     func update(withNewCapture newCapture: Capture, quality: PhotogrammetrySession.Request.Detail) {

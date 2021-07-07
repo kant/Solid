@@ -17,7 +17,7 @@ struct ImportOptionsView: View {
     @ObservedObject var importConfiguration: ImportConfiguration
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 20) {
             Spacer()
             
             //Name
@@ -26,35 +26,39 @@ struct ImportOptionsView: View {
                 .textFieldStyle(.roundedBorder)
             
             
-            //Folder Url
-            if let _ = importConfiguration.rawFolderUrl {
-                HStack(alignment: .top) {
+            let gridItem = GridItem(alignment: .topLeading)
+            LazyVGrid(columns: [gridItem, gridItem], spacing: 20) {
+                //Folder Url
+                if let _ = importConfiguration.rawFolderUrl {
                     Text("Folder Location:")
                         .bold()
-                    Text(importConfiguration.relativePath)
+                    VStack(alignment: .leading) {
+                        Text(importConfiguration.relativePath)
+                        
+                        //Number of Images
+                        if let numberOfImages = importConfiguration.numberOfImages() {
+                            Text("\(numberOfImages) Images")
+                                .bold()
+                                .padding(.top, 2)
+                        }
+                    }
                 }
-                .font(.subheadline)
-            } else {
-                Text("Relink Folder")
-            }
-            
-            //Number of Images
-            if let numberOfImages = importConfiguration.numberOfImages() {
-                Text("\(numberOfImages) Images")
-            }
-            
-            
-            
-            //Quality Toggles
-            VStack(alignment: .leading) {
-                ForEach(importConfiguration.qualitySelections.indices) { index in
-                    Toggle(
-                        importConfiguration.qualitySelections[index].quality.name,
-                        isOn: $importConfiguration.qualitySelections[index].selected
-                    )
+                
+                //Quality Selection
+                VStack(alignment: .leading) {
+                    Text("Quality:")
+                        .bold()
+                    Text("Preview, medium, and reduced are iOS ready. Use full & raw for pro workflows.")
+                }
+                VStack(alignment: .leading) {
+                    ForEach(importConfiguration.qualitySelections.indices) { index in
+                        Toggle(
+                            importConfiguration.qualitySelections[index].quality.name,
+                            isOn: $importConfiguration.qualitySelections[index].selected
+                        )
+                    }
                 }
             }
-            .padding()
             
             //Generate Button
             Button {
@@ -63,7 +67,11 @@ struct ImportOptionsView: View {
                 )
             } label: {
                 Text("Generate Model")
+                    .frame(maxWidth: .infinity)
             }
+            .disabled(importConfiguration.numberOfQualitiesSelected <= 0)
+            //.keyboardShortcut(.defaultAction)
+            
         }
     }
 }

@@ -12,7 +12,6 @@ import RealmSwift
 
 struct ViewportView: View { //Equatable
     
-    
     @ObservedObject var viewportModel: ViewportModel
     @ObservedRealmObject var capture: Capture
     

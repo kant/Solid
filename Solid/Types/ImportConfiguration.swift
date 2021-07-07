@@ -47,6 +47,16 @@ class ImportConfiguration: ObservableObject, Equatable {
         }
         return selection
     }()
+    var numberOfQualitiesSelected: Int {
+        var selectedCount = 0
+        for selection in qualitySelections {
+            if selection.selected {
+                selectedCount += 1
+            }
+        }
+        return selectedCount
+    }
+    
     
     init(for capture: Capture) {
         self.captureId = capture.id
