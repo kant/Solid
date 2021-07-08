@@ -39,7 +39,7 @@ struct NoCaptureSelectedView: View {
                             //    .bold()
                             Text("• Capture from all angles")
                             Text("• Flip the object to capture all sides")
-                            Text("• Good uniform lighting helps")
+                            Text("• Keep uniform lighting")
                             Text("• 20-200 images will yield a good results")
                         }
                         .font(.body)
