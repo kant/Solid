@@ -30,6 +30,24 @@ struct SolidApp: SwiftUI.App {
             CommandGroup(replacing: .help) {
                 EmptyView()
             }
+            
+            
+            CommandGroup(replacing: .appInfo) {
+                if let contributeUrl = URL(string: "https://github.com/aswyer/Solid") {
+                    Link("Contribute to Solid", destination: contributeUrl)
+                }
+                
+                Divider()
+                
+                if
+                    let gsgUrl = URL(string: "https://greyscalegorilla.com"),
+                    let hdriHavenUrl = URL(string: "https://hdrihaven.com")
+                {
+                    Text("Environments from:")
+                    Link("Greyscalegorilla", destination: gsgUrl)
+                    Link("HDRIHaven", destination: hdriHavenUrl)
+                }
+            }
             SidebarCommands()
         }
         .windowToolbarStyle( UnifiedWindowToolbarStyle() )
