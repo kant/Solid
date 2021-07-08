@@ -16,6 +16,8 @@ import CoreImage.CIFilterBuiltins
 
 class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
     
+    //@Published var isLoading = false
+    
     lazy var sceneView = SCNView()
     private var scene = SCNScene()
 
@@ -39,6 +41,7 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
     //TODO: cache of nodes?
 
     override init() {
+        
         super.init()
         
         //CAMERA SETUP
@@ -80,17 +83,23 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
             return
         }
         
+        //spinner
+        //isLoading = true
+        
         //update local variables
         capture = newCapture
         previewQuality = quality
         guard let capture = capture, let previewQuality = previewQuality else { return }
-        
 
         //get url and check that file exists
         let url = Storage.url(for: capture, with: previewQuality)
         guard Storage.fileExists(at: url) else {
             debugPrint("capture file NOT found")
             self.captureNode?.removeFromParentNode()
+            
+            //remove spinner
+            //isLoading = false
+            
             return
         }
         debugPrint("capture file found")
@@ -101,13 +110,22 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         let gZeroNode = newNode?.childNode(withName: "g0", recursively: true)
         gZeroNode?.geometry?.firstMaterial?.lightingModel = .physicallyBased
         
-        //remove current capture node
-        self.captureNode?.removeFromParentNode()
+        guard let newNode = newNode else {
+            //isLoading = false
+            return
+        }
         
-        //add new capture to scene
-        captureNode = newNode
-        if let captureNode = captureNode {
-            scene.rootNode.addChildNode(captureNode)
+        sceneView.prepare([newNode]) { completed in
+            //remove current capture node
+            self.captureNode?.removeFromParentNode()
+            
+            //add new capture to scene
+            self.captureNode = newNode
+            if let captureNode = self.captureNode {
+                self.scene.rootNode.addChildNode(captureNode)
+            }
+            
+            //self.isLoading = false
         }
     }
  

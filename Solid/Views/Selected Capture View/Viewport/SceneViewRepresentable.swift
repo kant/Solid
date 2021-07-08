@@ -22,6 +22,8 @@ struct SceneViewRepresentable: NSViewRepresentable {
     @AppStorage("focusDistance") var focusDistance = Defaults.focusDistance
     @AppStorage("environmentRotation") var environmentRotation = Defaults.environmentRotation
     
+    //@Binding var isLoading: Bool
+    
     var selectedPreviewQuality: PhotogrammetrySession.Request.Detail
     
     func makeNSView(context: Context) -> NSView {
@@ -33,6 +35,7 @@ struct SceneViewRepresentable: NSViewRepresentable {
     }
     
     func updatedSceneView() -> SCNView {
+        
         //update capture
         viewportModel.update(withNewCapture: capture, quality: selectedPreviewQuality)
         

@@ -27,6 +27,9 @@ class CaptureGenerator: Equatable {
     
     func process() {
         debugPrint("begin processing with options")
+        
+        //model.viewportModel.isLoading = true
+        
         setState(to: .processing)
         
         do {
@@ -62,18 +65,6 @@ class CaptureGenerator: Equatable {
         
     }
     
-    //1
-    //self.model.currentlyProcessingProgress = fractionComplete
-    
-    
-    //2
-//    debugPrint("RealityKit has finished processing a request.")
-//    debugPrint("& has saved to \(url)")
-//
-//    let processedFile = ProcessedFile()
-//    processedFile.quality = quality
-//    capture.processedFiles.append(processedFile)
-    
     func subscribe(with session: PhotogrammetrySession) {
         async {
             for try await output in session.outputs {
@@ -88,6 +79,7 @@ class CaptureGenerator: Equatable {
                     debugPrint("& has saved to \(saveUrl)")
                     
                     model.storage.new(ProcessedFile(quality: quality), for: capture)
+                    //model.viewportModel.isLoading = false
                     
                 case .requestProgress(_, fractionComplete: let fractionComplete):
                     debugPrint("progress update: \(fractionComplete)")

@@ -18,11 +18,19 @@ struct ViewportView: View { //Equatable
     @Binding var selectedPreviewQuality: PhotogrammetrySession.Request.Detail
     
     var body: some View {
-        SceneViewRepresentable(
-            viewportModel: viewportModel,
-            capture: capture,
-            selectedPreviewQuality: selectedPreviewQuality
-        )
+        ZStack {
+            SceneViewRepresentable(
+                viewportModel: viewportModel,
+                capture: capture,
+                selectedPreviewQuality: selectedPreviewQuality
+            )
+//            if viewportModel.isLoading {
+//                ProgressView()
+//                    .padding()
+//                    .background(.regularMaterial)
+//                    .cornerRadius(10)
+//            }
+        }
     }
 }
 
