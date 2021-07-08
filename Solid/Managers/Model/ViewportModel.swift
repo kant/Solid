@@ -11,29 +11,38 @@ import RealityKit
 import SpriteKit
 import ModelIO
 import SwiftUI
+import CoreImage.CIFilterBuiltins
 
 
 class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
     
-    var scnView: SCNView?
-    var scene = SCNScene()
+    lazy var sceneView = SCNView()
+    private var scene = SCNScene()
+
+    private var capture: Capture?
+    var captureNode: SCNNode?
     
-    var povCameraNode: SCNNode? {
-        return scnView?.pointOfView
+    private var floorNode: SCNNode?
+    
+    private var previewQuality: PhotogrammetrySession.Request.Detail?
+    
+    var isBackgroundVisible = UserDefaults.standard.bool(forKey: "isBackgroundVisible") {
+        didSet {
+            floorNode?.isHidden = isBackgroundVisible
+        }
     }
-    
-    private lazy var referenceCameraNode: SCNNode = {
-        let cameraNode = SCNNode()
-        cameraNode.camera = referenceCamera
-        cameraNode.position = SCNVector3(x: 0, y: 0, z: 2)
-        cameraNode.constraints?.append(
-            SCNLookAtConstraint(target: scene.rootNode)
-        )
-        return cameraNode
-    }()
-    private var referenceCamera: SCNCamera = {
-        let camera = SCNCamera()
+
+    private var backgroundColor: CGColor {
+        return CGColor(gray: 0.05, alpha: 1)
+    }
+   
+    //TODO: cache of nodes?
+
+    override init() {
+        super.init()
         
+        //CAMERA SETUP
+        let camera = SCNCamera()
         camera.zNear = Defaults.zMin
         camera.wantsDepthOfField = UserDefaults.standard.bool(forKey: "wantsDOF")
         camera.fStop = 1
@@ -44,65 +53,18 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         camera.exposureAdaptationDarkeningSpeedFactor = 10
         camera.exposureAdaptationBrighteningSpeedFactor = 10
         
-//        camera.bloomThreshold = 0.5
-//        camera.bloomBlurRadius = 30
+        let cameraNode = SCNNode()
+        cameraNode.camera = camera
         
+        scene.rootNode.addChildNode(cameraNode)
+        cameraNode.position = SCNVector3(x: 0, y: 0, z: 2)
         
-        return camera
-    }()
-
-
-    var capture: Capture?
-    var captureNode: SCNNode?
-    
-    var floorNode: SCNNode?
-    
-    var previewQuality: PhotogrammetrySession.Request.Detail?
-    
-    
-    var isBackgroundVisible = UserDefaults.standard.bool(forKey: "isBackgroundVisible") {
-        didSet {
-            //guard let camera = povCameraNode?.camera else { return }
-            //camera.bloomIntensity = isBackgroundVisible ? 0.6 : 0
-            floorNode?.isHidden = isBackgroundVisible
-        }
-    }
-//    var colorScheme: ColorScheme = .dark {
-//        didSet {
-//            scene.fogColor = backgroundColor
-//            if !isBackgroundVisible {
-//                scene.background.contents = backgroundColor
-//            }
-//        }
-//    }
-    private var backgroundColor: CGColor {
-//        switch colorScheme {
-//        case .light:
-//            return CGColor(gray: 0.9, alpha: 1)
-//        case .dark:
-            return CGColor(gray: 0.05, alpha: 1)
-//        @unknown default:
-//            return CGColor(gray: 0.9, alpha: 1)
-//        }
-    }
-   
-    
-    //TODO: cache of nodes?
-    
-    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        //debugPrint(cameraNode.rotation)
-    }
-    
-    override init() {
-        super.init()
+        //SCENE VIEW SETUP
+        sceneView.scene = scene
+        sceneView.allowsCameraControl = true
         
-        //camera setup
-        scene.rootNode.addChildNode(referenceCameraNode)
-        
-        //scene options
+        //ENVIRONMENT SETUP
         setupSceneEnvironment()
-        
-        //setup lighting environment
         let lightingEnvironmentValue = UserDefaults.standard.integer(forKey: "lightingEnvironment")
         if let lightingEnvironment = LightingEnvironment(rawValue: lightingEnvironmentValue) {
             setupLightingEnvironment(for: lightingEnvironment)
@@ -186,14 +148,6 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
     }
     
     func setupLightingEnvironment(for style: LightingEnvironment) {
-        //cube
-//        var sky: [NSImage] = []
-//        for index in 0...5 {
-//            if let image = NSImage(named: "light_\(style.rawValue)_0000\(index).exr") {
-//                sky.append(image)
-//            }
-//        }
-        
         let imageName = "environment_\(style.rawValue)"
         scene.lightingEnvironment.contents = imageName
         
@@ -206,18 +160,19 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
     }
     
     
-    func resetFrame() { //completion: (() -> Void)? = nil
-        guard let captureNode = captureNode else { return }
+    func resetFrame() {
         SCNTransaction.begin()
         SCNTransaction.animationDuration = 1
         
-        povCameraNode?.position = SCNVector3(x: 0, y: 0, z: 2)
-        povCameraNode?.rotation = SCNVector4(x: 0, y: 0, z: 0, w: 0)
-        povCameraNode?.look(at: captureNode.worldPosition)
-        
-        //SCNTransaction.completionBlock = completion
+        sceneView.pointOfView?.position = SCNVector3(x: 0, y: 0, z: 2)
+        sceneView.pointOfView?.rotation = SCNVector4(x: 0, y: 0, z: 0, w: 0)
+        sceneView.pointOfView?.look(at: SCNVector3(x: 0, y: 0, z: 0)) //captureNode.worldPosition
         
         SCNTransaction.commit()
+        
+//        sceneView.pointOfView?.filters = [
+//            CIFilter.photoEffectNoir()
+//        ]
     }
     
 }

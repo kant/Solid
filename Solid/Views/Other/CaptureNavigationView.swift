@@ -20,16 +20,18 @@ struct CaptureNavigationView: View {
             NavigationView {
                 SwiftUI.List(selection: $selectedCapture) {
                     ForEach(captures) { capture in
-                        NavigationLink {
-                            SelectedCaptureView(model: model, capture: capture)
-                        } label: {
+//                        NavigationLink {
+//                            SelectedCaptureView(model: model, capture: capture)
+//                        } label: {
                             ModelListCell(capture: capture)
-                        }.tag(capture)
+                                .tag(capture)
                     }
                 }
                 .listStyle(.sidebar)
                 
-                if selectedCapture == nil {
+                if let selectedCapture = selectedCapture {
+                    SelectedCaptureView(model: model, capture: selectedCapture)
+                } else {
                     NoCaptureSelectedView()
                 }
             }

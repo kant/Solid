@@ -171,10 +171,10 @@
 		405400692694E4CA007B8452 /* Viewport */ = {
 			isa = PBXGroup;
 			children = (
-				40340D50268D0EA200F34A37 /* ToolBar.swift */,
-				406335262688E9B5006105BC /* ProgressBar.swift */,
 				400AD14F26803C6D00A3F81D /* ViewportView.swift */,
 				40770FF0268ED90B00DF7637 /* SceneViewRepresentable.swift */,
+				40340D50268D0EA200F34A37 /* ToolBar.swift */,
+				406335262688E9B5006105BC /* ProgressBar.swift */,
 			);
 			path = Viewport;
 			sourceTree = "<group>";
