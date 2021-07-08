@@ -17,10 +17,34 @@ struct SolidApp: SwiftUI.App {
         return ContentViewModel(storage: storage)
     }()
     
+    @State var displayHelpWindow = false
+    
     var body: some Scene {
         WindowGroup {
             MainView(model: model)
         }
+        .commands {
+            CommandGroup(replacing: .newItem) {
+                EmptyView()
+            }
+            CommandGroup(replacing: .help) {
+                EmptyView()
+            }
+            SidebarCommands()
+        }
         .windowToolbarStyle( UnifiedWindowToolbarStyle() )
+        
+        
+        WindowGroup("HelpWindowGroup") {
+            Text("HELP window")
+                .padding()
+                .handlesExternalEvents(
+                    preferring: Set(arrayLiteral: "HelpWindowGroup"),
+                    allowing: Set(arrayLiteral: "*")
+                )
+        }
+        .handlesExternalEvents(matching: Set(arrayLiteral: "HelpWindowGroup"))
+        //.windowToolbarStyle( UnifiedWindowToolbarStyle() )
+        
     }
 }

@@ -70,6 +70,7 @@
 		40E543B4269104C300B889C5 /* environment_2.hdr */ = {isa = PBXFileReference; lastKnownFileType = file; path = environment_2.hdr; sourceTree = "<group>"; };
 		40E543B5269104C300B889C5 /* environment_0.exr */ = {isa = PBXFileReference; lastKnownFileType = file; path = environment_0.exr; sourceTree = "<group>"; };
 		40E543B6269104C300B889C5 /* environment_1.exr */ = {isa = PBXFileReference; lastKnownFileType = file; path = environment_1.exr; sourceTree = "<group>"; };
+		40E979832697941D00176DB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		6D0D230AFDFE70A6BCE6D737 /* Pods-Solid.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Solid.debug.xcconfig"; path = "Target Support Files/Pods-Solid/Pods-Solid.debug.xcconfig"; sourceTree = "<group>"; };
 		7E9B1923B45AC3410CA35F93 /* Pods_Solid.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Solid.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5ECA71D61695FABD1DCAE8F /* Pods-Solid.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Solid.release.xcconfig"; path = "Target Support Files/Pods-Solid/Pods-Solid.release.xcconfig"; sourceTree = "<group>"; };
@@ -200,6 +201,7 @@
 		40795A9D267D985E00953D36 /* Solid */ = {
 			isa = PBXGroup;
 			children = (
+				40E979832697941D00176DB8 /* Info.plist */,
 				40C368DB268E0285001E49BA /* Environments */,
 				4052AA1C267E313D00644CC2 /* Views */,
 				400AD15B268175F700A3F81D /* Types */,
@@ -516,6 +518,10 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Solid/Info.plist;
+				INFOPLIST_KEY_CFBundleExecutable = Solid;
+				INFOPLIST_KEY_CFBundleName = Solid;
+				INFOPLIST_KEY_CFBundleVersion = 1;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -546,6 +552,10 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Solid/Info.plist;
+				INFOPLIST_KEY_CFBundleExecutable = Solid;
+				INFOPLIST_KEY_CFBundleName = Solid;
+				INFOPLIST_KEY_CFBundleVersion = 1;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
