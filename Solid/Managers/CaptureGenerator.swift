@@ -28,8 +28,6 @@ class CaptureGenerator: Equatable {
     func process() {
         debugPrint("begin processing with options")
         
-        //model.viewportModel.isLoading = true
-        
         setState(to: .processing)
         
         do {

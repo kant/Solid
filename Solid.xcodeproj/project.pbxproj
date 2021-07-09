@@ -203,9 +203,9 @@
 			children = (
 				40E979832697941D00176DB8 /* Info.plist */,
 				40C368DB268E0285001E49BA /* Environments */,
+				4052AA19267E2CCF00644CC2 /* Managers */,
 				4052AA1C267E313D00644CC2 /* Views */,
 				400AD15B268175F700A3F81D /* Types */,
-				4052AA19267E2CCF00644CC2 /* Managers */,
 				40795AA2267D986000953D36 /* Assets.xcassets */,
 				40795AA4267D986000953D36 /* Preview Content */,
 			);

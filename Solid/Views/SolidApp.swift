@@ -34,7 +34,7 @@ struct SolidApp: SwiftUI.App {
             
             CommandGroup(replacing: .appInfo) {
                 if let contributeUrl = URL(string: "https://github.com/aswyer/Solid") {
-                    Link("Contribute to Solid", destination: contributeUrl)
+                    Link("Solid Open-Source Project", destination: contributeUrl)
                 }
                 
                 Divider()
@@ -51,18 +51,6 @@ struct SolidApp: SwiftUI.App {
             SidebarCommands()
         }
         .windowToolbarStyle( UnifiedWindowToolbarStyle() )
-        
-        
-        WindowGroup("HelpWindowGroup") {
-            Text("HELP window")
-                .padding()
-                .handlesExternalEvents(
-                    preferring: Set(arrayLiteral: "HelpWindowGroup"),
-                    allowing: Set(arrayLiteral: "*")
-                )
-        }
-        .handlesExternalEvents(matching: Set(arrayLiteral: "HelpWindowGroup"))
-        //.windowToolbarStyle( UnifiedWindowToolbarStyle() )
         
     }
 }

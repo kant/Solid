@@ -38,7 +38,7 @@ struct MainView: View {
             ToolbarItem(placement: ToolbarItemPlacement.destructiveAction) {
                 Button(action: {
                     guard let selectedCapture = selectedCapture else { return }
-                    model.storage.delete(capture: selectedCapture)
+                    model.storage.delete(capture: selectedCapture, model: model)
                     self.selectedCapture = nil
                     debugPrint("deleted \(selectedCapture.name)")
                 }, label: {

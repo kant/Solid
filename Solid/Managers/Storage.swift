@@ -40,7 +40,8 @@ class Storage {
         }
     }
     
-    func delete(capture: Capture) {
+    func delete(capture: Capture, model: ContentViewModel) {
+        stopProcessing(for: capture, with: model)
         deleteFiles(for: capture)
         do {
             try realm.write {
@@ -58,6 +59,22 @@ class Storage {
             let url = Storage.url(for: capture, with: processedFile.quality)
             try? FileManager.default.removeItem(at: url)
         }
+    }
+    
+    private func stopProcessing(for capture: Capture, with model: ContentViewModel) {
+        for captureGenerator in model.captureGenerators {
+            if
+                captureGenerator.capture == capture,
+                let index = model.captureGenerators.firstIndex(of: captureGenerator) {
+                
+                captureGenerator.session?.cancel()
+                model.captureGenerators.remove(at: index)
+                
+                
+                break
+            }
+        }
+        
     }
     
     static private func getDocumentsDirectory() -> URL {
