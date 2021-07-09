@@ -11,18 +11,20 @@ import RealmSwift
 @main
 struct SolidApp: SwiftUI.App {
     
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     @StateObject var model: ContentViewModel = {
         let realm = try! Realm()
         let storage = Storage(with: realm)
         return ContentViewModel(storage: storage)
     }()
     
-    @State var displayHelpWindow = false
-    
     var body: some Scene {
         WindowGroup {
             MainView(model: model)
         }
+        
+        
         .commands {
             CommandGroup(replacing: .newItem) {
                 EmptyView()
@@ -52,5 +54,30 @@ struct SolidApp: SwiftUI.App {
         }
         .windowToolbarStyle( UnifiedWindowToolbarStyle() )
         
+    }
+}
+
+
+class AppDelegate: NSObject, NSApplicationDelegate {
+    
+    //var model: ContentViewModel?
+    @ObservedResults(Capture.self, sortDescriptor: SortDescriptor(keyPath: "dateCreated", ascending: false)) var captures
+    
+    func applicationWillTerminate(_ notification: Notification) {
+        //guard let model = model else { return }
+        debugPrint("applicationWillTerminate")
+        
+        let realm = try! Realm()
+        let storage = Storage(with: realm)
+        
+        var capturesToDelete: [Capture] = []
+        
+        for capture in captures {
+            if capture.state != .stored {
+                capturesToDelete.append(capture)
+            }
+        }
+        
+        storage.delete(captures: capturesToDelete)
     }
 }

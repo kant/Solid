@@ -40,21 +40,32 @@ class Storage {
         }
     }
     
-    func delete(capture: Capture, model: ContentViewModel) {
-        stopProcessing(for: capture, with: model)
-        deleteFiles(for: capture)
+    func delete(captures: [Capture], model: ContentViewModel? = nil) {
+        debugPrint("deleting \(captures.count) captures")
+       
+        var thawedCaptures: [Capture] = []
+        
+        for capture in captures {
+            if let model = model {
+                stopProcessing(for: capture, with: model)
+            }
+            Storage.deleteFiles(for: capture)
+            
+            if let thawed = capture.thaw() {
+                thawedCaptures.append(thawed)
+            }
+        }
+        
         do {
             try realm.write {
-                if let thawedCapture = capture.thaw() {
-                    realm.delete(thawedCapture)
-                }
+                realm.delete(thawedCaptures)
             }
         } catch {
             debugPrint("couldn't add new processed file")
         }
     }
     
-    private func deleteFiles(for capture: Capture) {
+    private static func deleteFiles(for capture: Capture) {
         for processedFile in capture.processedFiles {
             let url = Storage.url(for: capture, with: processedFile.quality)
             try? FileManager.default.removeItem(at: url)
@@ -70,11 +81,9 @@ class Storage {
                 captureGenerator.session?.cancel()
                 model.captureGenerators.remove(at: index)
                 
-                
                 break
             }
         }
-        
     }
     
     static private func getDocumentsDirectory() -> URL {
