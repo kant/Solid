@@ -92,8 +92,13 @@ class Storage {
         return documentsDirectory
     }
     
-    static func url(for capture: Capture, with quality: PhotogrammetrySession.Request.Detail) -> URL {
-        return getDocumentsDirectory().appendingPathComponent("\(capture.id)_\(quality.name).usdz")
+    static func url(for capture: Capture, with quality: PhotogrammetrySession.Request.Detail, includeUsdzExtension: Bool = true) -> URL {
+        let id = "\(capture.id)_\(quality.name)"
+        if includeUsdzExtension {
+            return getDocumentsDirectory().appendingPathComponent("\(id).usdz")
+        } else {
+            return getDocumentsDirectory().appendingPathComponent(id, isDirectory: true)
+        }
     }
     
     static func fileExists(at url: URL) -> Bool {

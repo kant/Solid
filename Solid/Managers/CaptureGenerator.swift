@@ -52,13 +52,21 @@ class CaptureGenerator: Equatable {
                     detail: selection.quality
                 )
             )
+            if config.wantsUsdaAndObjOutput {
+                requests.append(
+                    PhotogrammetrySession.Request.modelFile(
+                        url: Storage.url(for: capture, with: selection.quality, includeUsdzExtension: false),
+                        detail: selection.quality
+                    )
+                )
+            }
         }
         
         do {
             subscribe(with: session)
             try session.process(requests: requests)
         } catch {
-            debugPrint("failed to process session")
+            debugPrint("failed to process session \(error)")
         }
         
     }
@@ -80,7 +88,7 @@ class CaptureGenerator: Equatable {
                     //model.viewportModel.isLoading = false
                     
                 case .requestProgress(_, fractionComplete: let fractionComplete):
-                    debugPrint("progress update: \(fractionComplete)")
+                    //debugPrint("progress update: \(fractionComplete)")
                     self.model.currentlyProcessingProgress = fractionComplete
                     
                 case .processingComplete:

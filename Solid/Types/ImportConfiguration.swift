@@ -57,6 +57,8 @@ class ImportConfiguration: ObservableObject, Equatable {
         return selectedCount
     }
     
+    @Published var wantsUsdaAndObjOutput = false
+    
     
     init(for capture: Capture) {
         self.captureId = capture.id

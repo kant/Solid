@@ -48,7 +48,7 @@ struct ImportOptionsView: View {
                 VStack(alignment: .leading) {
                     Text("Quality:")
                         .bold()
-                    Text("Preview, medium, and reduced are iOS ready. Use full & raw for pro workflows.")
+                    Text("Medium and reduced are iOS/Web ready. Use full & raw for pro workflows.")
                 }
                 VStack(alignment: .leading) {
                     ForEach(importConfiguration.qualitySelections.indices) { index in
@@ -57,6 +57,26 @@ struct ImportOptionsView: View {
                             isOn: $importConfiguration.qualitySelections[index].selected
                         )
                     }
+                }
+                
+                
+                //File Format
+                VStack(alignment: .leading) {
+                    Text("File Format:")
+                        .bold()
+                    //Text("Medium and reduced are iOS/Web ready. Use full & raw for pro workflows.")
+                }
+                VStack(alignment: .leading) {
+                    Toggle(
+                        "USDZ",
+                        isOn: .constant(true)
+                    )
+                    .disabled(true)
+                    
+                    Toggle(
+                        "USDA and OBJ",
+                        isOn: $importConfiguration.wantsUsdaAndObjOutput
+                    )
                 }
             }
             
