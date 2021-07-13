@@ -72,7 +72,7 @@ class CaptureGenerator: Equatable {
     }
     
     func subscribe(with session: PhotogrammetrySession) {
-        async {
+        Task(priority: .utility) {
             for try await output in session.outputs {
                 switch output {
                     
@@ -105,11 +105,13 @@ class CaptureGenerator: Equatable {
                     debugPrint("skipped sample \(id)")
                 case .automaticDownsampling:
                     debugPrint("automatic down sampling")
-                @unknown default:
+                    
+                default:
                     debugPrint("PhotogrammetrySession.Outputs default")
                 }
             }
         }
+            
     }
     
     private func complete() {
