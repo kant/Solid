@@ -27,6 +27,20 @@ struct ToolBar: View {
     var body: some View {
         
         HStack {
+            
+            
+            //Quality Picker
+            if capture.processedFiles.count > 1 {
+                Picker(selection: $selectedPreviewQuality, label: EmptyView()) {
+                    ForEach(capture.processedFiles) { file in
+                        Text(file.quality.name).tag(file.quality)
+                    }
+                }
+                
+                .pickerStyle(.segmented)
+                .scaledToFit()
+                
+            }
             //Reset Frame
             Button {
                 model.viewportModel.resetFrame()
@@ -102,17 +116,7 @@ struct ToolBar: View {
                 }
                 .padding()
             }
-            
-            //Quality Picker
-            Picker(selection: $selectedPreviewQuality, label: EmptyView()) {
-                ForEach(capture.processedFiles) { file in
-                    Text(file.quality.name).tag(file.quality)
-                }
-            }
-            .pickerStyle(.segmented)
         }
-        
-        
     }
 }
 

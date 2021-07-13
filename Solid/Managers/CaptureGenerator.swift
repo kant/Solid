@@ -84,7 +84,9 @@ class CaptureGenerator: Equatable {
                     debugPrint("RealityKit has finished processing a request.")
                     debugPrint("& has saved to \(saveUrl)")
                     
-                    model.storage.new(ProcessedFile(quality: quality), for: capture)
+                    if !saveUrl.hasDirectoryPath {
+                        model.storage.new(ProcessedFile(quality: quality), for: capture)
+                    }
                     //model.viewportModel.isLoading = false
                     
                 case .requestProgress(_, fractionComplete: let fractionComplete):

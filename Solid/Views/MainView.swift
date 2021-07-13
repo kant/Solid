@@ -91,7 +91,7 @@ struct MainView: View {
             }
         )
         
-        .fileExporter(isPresented: $fileExportIsDisplayed, documents: Storage.exportItems(for: selectedCapture), contentType: UTType.usdz, onCompletion: { result in
+        .fileExporter(isPresented: $fileExportIsDisplayed, documents: Storage.exportItems(for: selectedCapture), contentType: UTType.folder, onCompletion: { result in
             debugPrint(result)
         })
         

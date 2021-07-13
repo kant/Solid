@@ -27,27 +27,7 @@ struct SelectedCaptureView: View {
             }
             
         case .processing, .stored:
-            ZStack() {
-                ViewportView(viewportModel: model.viewportModel, capture: capture, selectedPreviewQuality: $selectedPreviewQuality)
-                
-                VStack {
-                    //Preview Quality Picker
-                    ToolBar(model: model, capture: capture, selectedPreviewQuality: $selectedPreviewQuality)
-                        //.colorScheme(.light)
-                        .padding()
-                    
-                    Spacer()
-                    
-                    //Processing Bar
-                    if capture.state == .processing {
-                        ProgressBar(model: model, capture: capture)
-                            .padding()
-                            .background( Color(NSColor.textBackgroundColor) )
-                            .cornerRadius(10)
-                            .padding()
-                    }
-                }
-            }
+            ViewportView(model: model, viewportModel: model.viewportModel, capture: capture, selectedPreviewQuality: $selectedPreviewQuality)
         }
     }
 }

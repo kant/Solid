@@ -12,6 +12,7 @@ import RealmSwift
 
 struct ViewportView: View { //Equatable
     
+    @ObservedObject var model: ContentViewModel
     @ObservedObject var viewportModel: ViewportModel
     @ObservedRealmObject var capture: Capture
     
@@ -24,12 +25,31 @@ struct ViewportView: View { //Equatable
                 capture: capture,
                 selectedPreviewQuality: selectedPreviewQuality
             )
-//            if viewportModel.isLoading {
-//                ProgressView()
-//                    .padding()
-//                    .background(.regularMaterial)
-//                    .cornerRadius(10)
-//            }
+            
+            VStack {
+                
+                //Processing Bar
+                if capture.state == .processing {
+                    ProgressBar(model: model, capture: capture)
+                        .padding()
+                        .background( Color(NSColor.textBackgroundColor) )
+                        .cornerRadius(10)
+                        .padding()
+                }
+                
+                Spacer()
+                
+                //Preview Quality Picker
+                HStack {
+                    Spacer()
+                    ToolBar(model: model, capture: capture, selectedPreviewQuality: $selectedPreviewQuality)
+                        .padding(8)
+                        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 8))
+                        .padding(16)
+                    Spacer()
+                }
+            }
+            
         }
     }
 }
