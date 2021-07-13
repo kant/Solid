@@ -40,7 +40,9 @@ struct MainView: View {
                 Button(action: {
                     guard let selectedCapture = selectedCapture else { return }
                     model.storage.delete(captures: [selectedCapture], model: model)
-                    self.selectedCapture = nil
+                    
+                    self.selectedCapture = captures.first
+                    
                     debugPrint("deleted \(selectedCapture.name)")
                 }, label: {
                     Image(systemName: "trash")
@@ -84,6 +86,7 @@ struct MainView: View {
                         model.importConfigurations.append(
                             ImportConfiguration(for: capture)
                         )
+                        selectedCapture = capture
                     }
                 } catch {
                     debugPrint("error with importing")
@@ -95,14 +98,15 @@ struct MainView: View {
             debugPrint(result)
         })
         
-        
-//        .fileMover(isPresented: $fileExportIsDisplayed, files: Storage.exportItems(for: selectedCapture), onCompletion: { result in
-//            debugPrint(result)
-//        })
-        
         //Navigation Title / Subtitle
         .navigationTitle(selectedCapture?.name ?? "")
         .navigationSubtitle(selectedCapture?.dateCreated.formatted(date: .abbreviated, time: .shortened) ?? "")
+        
+        
+        //present first capture on appear
+        .onAppear {
+            selectedCapture = captures.first
+        }
     }
 }
 
