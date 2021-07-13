@@ -39,13 +39,15 @@ class ImportConfiguration: ObservableObject, Equatable {
     }()
     
     @Published var qualitySelections: [QualitySelection] = {
-        var selection: [QualitySelection] = []
+        var selections: [QualitySelection] = []
         for qualityLevel in PhotogrammetrySession.Request.Detail.allCases {
-            selection.append(
-                QualitySelection(quality: qualityLevel)
-            )
+            let selection = QualitySelection(quality: qualityLevel)
+            if qualityLevel == .preview {
+                selection.selected = true
+            }
+            selections.append(selection)
         }
-        return selection
+        return selections
     }()
     var numberOfQualitiesSelected: Int {
         var selectedCount = 0

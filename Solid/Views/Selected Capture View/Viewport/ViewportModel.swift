@@ -83,9 +83,6 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
             return
         }
         
-        //spinner
-        //isLoading = true
-        
         //update local variables
         capture = newCapture
         previewQuality = quality
@@ -96,9 +93,6 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         guard Storage.fileExists(at: url) else {
             debugPrint("capture file NOT found")
             self.captureNode?.removeFromParentNode()
-            
-            //remove spinner
-            //isLoading = false
             
             return
         }
