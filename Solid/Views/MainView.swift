@@ -15,7 +15,8 @@ struct MainView: View {
     
     @State private var selectedCapture: Capture?
     
-    @State private var displayFileBrowser: Bool = false
+    @State private var importFileBrowserDisplayed: Bool = false
+    @State private var fileExportIsDisplayed: Bool = false
 
     @ObservedResults(Capture.self, sortDescriptor: SortDescriptor(keyPath: "dateCreated", ascending: false)) var captures
     
@@ -44,20 +45,23 @@ struct MainView: View {
                 }, label: {
                     Image(systemName: "trash")
                 })
+                .disabled(selectedCapture == nil)
             }
 
             ToolbarItem(placement: ToolbarItemPlacement.automatic) {
                 Button(action: {
                     guard let selectedCapture = selectedCapture else { return }
                     debugPrint("sharing all quality levels of \(selectedCapture.name)")
+                    fileExportIsDisplayed = true
                 }, label: {
                     Image(systemName: "square.and.arrow.up")
                 })
+                .disabled(selectedCapture == nil)
             }
 
             ToolbarItem(placement: ToolbarItemPlacement.primaryAction) {
                 Button(action: {
-                    displayFileBrowser = true
+                    importFileBrowserDisplayed = true
                 }, label: {
                     Image(systemName: "plus")
                 })
@@ -67,7 +71,7 @@ struct MainView: View {
         
         //File Import
         .fileImporter(
-            isPresented: $displayFileBrowser,
+            isPresented: $importFileBrowserDisplayed,
             allowedContentTypes: [UTType.folder],
             allowsMultipleSelection: false,
             onCompletion: { result in
@@ -86,6 +90,15 @@ struct MainView: View {
                 }
             }
         )
+        
+        .fileExporter(isPresented: $fileExportIsDisplayed, documents: Storage.exportItems(for: selectedCapture), contentType: UTType.usdz, onCompletion: { result in
+            debugPrint(result)
+        })
+        
+        
+//        .fileMover(isPresented: $fileExportIsDisplayed, files: Storage.exportItems(for: selectedCapture), onCompletion: { result in
+//            debugPrint(result)
+//        })
         
         //Navigation Title / Subtitle
         .navigationTitle(selectedCapture?.name ?? "")

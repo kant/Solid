@@ -104,4 +104,80 @@ class Storage {
     static func fileExists(at url: URL) -> Bool {
         return FileManager.default.fileExists(atPath: url.path)
     }
+    
+//    static func exportItems(for capture: Capture?) -> [URL] {
+//        guard let capture = capture else { return [] }
+//
+//        var urls: [URL] = []
+//
+//        for quality in PhotogrammetrySession.Request.Detail.allCases {
+//            let id = "\(capture.id)_\(quality.name)"
+//
+//            //USDZ
+//            let fileUrl = getDocumentsDirectory().appendingPathComponent("\(id).usdz")
+//            if FileManager.default.fileExists(atPath: fileUrl.path) {
+//                urls.append( fileUrl )
+//            }
+//
+//            //USDA & OBJ folder
+//            let folderUrl = getDocumentsDirectory().appendingPathComponent(id, isDirectory: true)
+//            if FileManager.default.fileExists(atPath: folderUrl.path) {
+//                urls.append( folderUrl )
+//            }
+//        }
+//        return urls
+//    }
+    
+    static func exportItems(for capture: Capture?) -> [ExportItem] {
+        guard let capture = capture else { return [] }
+        
+        var exportItems: [ExportItem] = []
+        
+        for quality in PhotogrammetrySession.Request.Detail.allCases {
+            let id = "\(capture.id)_\(quality.name)"
+            
+            //USDZ
+            let fileUrl = getDocumentsDirectory().appendingPathComponent("\(id).usdz")
+            if FileManager.default.fileExists(atPath: fileUrl.path) {
+                let item = ExportItem(url: fileUrl)
+                exportItems.append( item )
+            }
+            
+            //USDA & OBJ folder
+            let folderUrl = getDocumentsDirectory().appendingPathComponent(id, isDirectory: true)
+            if FileManager.default.fileExists(atPath: folderUrl.path) {
+                let item = ExportItem(url: folderUrl)
+                exportItems.append( item )
+            }
+        }
+        return exportItems
+    }
+}
+
+import UniformTypeIdentifiers
+enum ExportItemErrors: Error {
+    case initFromReadConfigurationError
+}
+struct ExportItem: FileDocument {
+    static var readableContentTypes: [UTType] = [.folder]
+    
+    var url: URL
+    
+    init(url: URL) {
+        self.url = url
+    }
+    
+    init(configuration: ReadConfiguration) throws {
+        if let configUrl = configuration.file.symbolicLinkDestinationURL {
+            url = configUrl
+        } else {
+            throw ExportItemErrors.initFromReadConfigurationError
+        }
+    }
+    
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        return try FileWrapper(url: url, options: .immediate)
+    }
+    
+    
 }

@@ -65,6 +65,7 @@
 		40795AAE267DA97B00953D36 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		40795AB0267DABED00953D36 /* SelectedCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedCaptureView.swift; sourceTree = "<group>"; };
 		40795AB2267DB34500953D36 /* ModelListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelListCell.swift; sourceTree = "<group>"; };
+		4080DF47269D17E300B9BD7C /* Solid.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Solid.entitlements; sourceTree = "<group>"; };
 		40E20B882689250500C4EDFC /* CaptureGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureGenerator.swift; sourceTree = "<group>"; };
 		40E543B3269104C300B889C5 /* environment_3.hdr */ = {isa = PBXFileReference; lastKnownFileType = file; path = environment_3.hdr; sourceTree = "<group>"; };
 		40E543B4269104C300B889C5 /* environment_2.hdr */ = {isa = PBXFileReference; lastKnownFileType = file; path = environment_2.hdr; sourceTree = "<group>"; };
@@ -100,8 +101,6 @@
 		400AD158268173EB00A3F81D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4052AA1A267E312200644CC2 /* ContentViewModel.swift */,
-				400AD15126804DE700A3F81D /* ViewportModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -152,9 +151,10 @@
 			isa = PBXGroup;
 			children = (
 				40795A9E267D985E00953D36 /* SolidApp.swift */,
+				4052AA1A267E312200644CC2 /* ContentViewModel.swift */,
 				40795AA0267D985E00953D36 /* MainView.swift */,
-				405400682694E483007B8452 /* Other */,
 				400AD15C2681762300A3F81D /* Selected Capture View */,
+				405400682694E483007B8452 /* Other */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -172,6 +172,7 @@
 		405400692694E4CA007B8452 /* Viewport */ = {
 			isa = PBXGroup;
 			children = (
+				400AD15126804DE700A3F81D /* ViewportModel.swift */,
 				400AD14F26803C6D00A3F81D /* ViewportView.swift */,
 				40770FF0268ED90B00DF7637 /* SceneViewRepresentable.swift */,
 				40340D50268D0EA200F34A37 /* ToolBar.swift */,
@@ -201,6 +202,7 @@
 		40795A9D267D985E00953D36 /* Solid */ = {
 			isa = PBXGroup;
 			children = (
+				4080DF47269D17E300B9BD7C /* Solid.entitlements */,
 				40E979832697941D00176DB8 /* Info.plist */,
 				40C368DB268E0285001E49BA /* Environments */,
 				4052AA19267E2CCF00644CC2 /* Managers */,
@@ -508,6 +510,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Solid/Solid.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -542,6 +545,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Solid/Solid.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
