@@ -24,7 +24,6 @@ struct SolidApp: SwiftUI.App {
             MainView(model: model)
         }
         
-        
         .commands {
             CommandGroup(replacing: .newItem) {
                 EmptyView()
@@ -58,15 +57,19 @@ struct SolidApp: SwiftUI.App {
 }
 
 
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     
-    //var model: ContentViewModel?
     @ObservedResults(Capture.self, sortDescriptor: SortDescriptor(keyPath: "dateCreated", ascending: false)) var captures
     
+    var window: NSWindow? {
+        NSApplication.shared.windows.first
+    }
+    
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        window?.delegate = self
+    }
+    
     func applicationWillTerminate(_ notification: Notification) {
-        //guard let model = model else { return }
-        debugPrint("applicationWillTerminate")
-        
         let realm = try! Realm()
         let storage = Storage(with: realm)
         
@@ -80,4 +83,61 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         storage.delete(captures: capturesToDelete)
     }
+    
+    var shouldQuit: Bool?
+    
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return true
+    }
+    
+    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        if shouldQuit == nil {
+            shouldQuit = appShouldQuit()
+        }
+        
+        if shouldQuit ?? true {
+            return .terminateNow
+        } else {
+            shouldQuit = nil
+            return .terminateCancel
+        }
+        
+
+    }
+    
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+        shouldQuit = appShouldQuit()
+        
+        if shouldQuit ?? true {
+            return true
+        } else {
+            shouldQuit = nil
+            return false
+        }
+    }
+    
+    func appShouldQuit() -> Bool {
+        for capture in captures {
+            if capture.state == .processing {
+                let alert = NSAlert()
+                alert.alertStyle = .critical
+                
+                alert.messageText = "Do you want to continue processing?"
+                alert.informativeText = "Solid is currently processing a capture. If you quit the capture will be deleted"
+                
+                alert.addButton(withTitle: "Continue")
+                alert.addButton(withTitle: "Quit")
+                
+                let response = alert.runModal()
+                
+                if response == .alertFirstButtonReturn {
+                    return false
+                }
+                break
+            }
+        }
+        
+        return true
+    }
+
 }

@@ -32,8 +32,7 @@ struct ViewportView: View { //Equatable
                 if capture.state == .processing {
                     ProgressBar(model: model, capture: capture)
                         .padding()
-                        .background( Color(NSColor.textBackgroundColor) )
-                        .cornerRadius(10)
+                        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 8))
                         .padding()
                 }
                 
