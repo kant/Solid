@@ -1,2 +1,5 @@
+<img align="right" src="Solid/Assets.xcassets/AppIcon.appiconset/128@2x.png" width="64">
+
 # Solid
-Generate 3D models from photos. Based on PhotogrammetrySession.
+
+Solid creates 3D models from images of an object at different angles. This is made possible by the Object Capture API introduced in macOS 12. Solid features creation and preview of multiple quality levels, storage of models, a customizable viewport, and exporting in USDZ, USDA, and OBJ formats.
