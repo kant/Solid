@@ -28,7 +28,7 @@ class ContentViewModel: NSObject, ObservableObject {
     func importConfiguration(for capture: Capture) -> ImportConfiguration? {
     
         let existingConfig = importConfigurations.first { config in
-            config.captureId == capture.id
+            config.captureId == capture._id
         }
         
         //return existing config
@@ -41,5 +41,7 @@ class ContentViewModel: NSObject, ObservableObject {
             importConfigurations.append(newConfig)
             return newConfig
         }
-    }  
+    }
+    
+    
 }

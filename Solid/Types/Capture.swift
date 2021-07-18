@@ -29,9 +29,17 @@ extension CaptureState: CustomStringConvertible {
 }
 
 @objcMembers class Capture: Object, ObjectKeyIdentifiable {
-    @objc dynamic var id = ObjectId.generate()
     
-    @objc var state: CaptureState {
+    //Stored by Realm
+    @Persisted(primaryKey: true) var _id: ObjectId
+    @Persisted var stateValue: Int = 0
+    @Persisted var name: String
+    @Persisted var dateCreated: Date
+    @Persisted var importFolderRelativePath: String
+    let processedFiles = RealmSwift.List<ProcessedFile>()
+    
+    //Not stored by Realm
+    var state: CaptureState {
         get {
             return CaptureState(rawValue: stateValue) ?? .configuring
         }
@@ -39,10 +47,6 @@ extension CaptureState: CustomStringConvertible {
             stateValue = newValue.rawValue
         }
     }
-    @objc private dynamic var stateValue: Int = 0
-    
-    @objc dynamic var name: String
-    @objc dynamic var dateCreated: Date
     lazy var formatedDate: String = {
         //display time created
         if Calendar.current.isDateInToday(dateCreated) {
@@ -57,9 +61,6 @@ extension CaptureState: CustomStringConvertible {
         //dateFormater.unitsStyle = .abbreviated
         //return dateFormater.localizedString(for: dateCreated, relativeTo: currentDate)
     }()
-    
-    @objc dynamic var importFolderRelativePath: String
-    let processedFiles = RealmSwift.List<ProcessedFile>()
     
     
     init(name: String, rawUrl: URL?) {
@@ -88,7 +89,7 @@ extension CaptureState: CustomStringConvertible {
         return "id"
     }
     
-    override class func ignoredProperties() -> [String] {
-        return [#keyPath(formatedDate), #keyPath(state)]
-    }
+//    override class func ignoredProperties() -> [String] {
+//        return [#keyPath(formatedDate), #keyPath(state)]
+//    }
 }

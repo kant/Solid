@@ -6,5 +6,5 @@ target 'Solid' do
   use_frameworks!
 
   # Pods for Solid
-  pod 'RealmSwift', '=10.8.0'
+  pod 'RealmSwift'
 end

@@ -63,7 +63,7 @@ class ImportConfiguration: ObservableObject, Equatable {
     
     
     init(for capture: Capture) {
-        self.captureId = capture.id
+        self.captureId = capture._id
         
 
         relativePath = capture.importFolderRelativePath

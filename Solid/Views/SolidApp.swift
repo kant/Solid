@@ -18,10 +18,17 @@ struct SolidApp: SwiftUI.App {
         let storage = Storage(with: realm)
         return ContentViewModel(storage: storage)
     }()
+    @ObservedResults(CaptureGroup.self) var captureGroups
     
     var body: some Scene {
         WindowGroup {
-            MainView(model: model)
+            if let group = captureGroups.first {
+                MainView(model: model, group: group)
+            } else {
+                ProgressView().onAppear {
+                    $captureGroups.append( CaptureGroup() )
+                }
+            }
         }
         
         .commands {

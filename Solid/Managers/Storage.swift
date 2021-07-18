@@ -86,6 +86,18 @@ class Storage {
         }
     }
     
+    func changeName(for capture: Capture, to newName: String) {
+        do {
+            try realm.write {
+                if let thawedCapture = capture.thaw() {
+                    thawedCapture.name = newName
+                }
+            }
+        } catch {
+            debugPrint("couldn't change name for capture")
+        }
+    }
+    
     static private func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
