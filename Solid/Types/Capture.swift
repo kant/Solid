@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import RealityKit
 import RealmSwift
 import SwiftUI
 
@@ -15,6 +14,7 @@ import SwiftUI
     case processing
     case stored
 }
+
 extension CaptureState: CustomStringConvertible {
     var description: String {
         switch self {
@@ -88,8 +88,4 @@ extension CaptureState: CustomStringConvertible {
     override class func primaryKey() -> String? {
         return "id"
     }
-    
-//    override class func ignoredProperties() -> [String] {
-//        return [#keyPath(formatedDate), #keyPath(state)]
-//    }
 }

@@ -10,27 +10,14 @@ import RealmSwift
 
 struct ModelListCell: View {
     
-//    /@ObservedObject private var model: ContentViewModel
     @ObservedRealmObject var capture: Capture
-    //@State var captureName: String
-    
-//    init(capture: Capture, model: ContentViewModel) {
-//        self.capture = capture
-//        self.model = model
-//        captureName = "capture.name"
-//    }
     
     var body: some View {
         HStack() {
             VStack(alignment: .leading) {
                 TextField("", text: $capture.name)
                     .textFieldStyle(.plain)
-
-//                TextField("", text: $captureName, onEditingChanged: {_ in }) {
-//                    //model.storage.changeName(for: capture, to: captureName)
-//                    $capture.name = $captureName
-//                }
-
+                
                 Text(capture.formatedDate)
                     .foregroundStyle(.secondary)
             }
