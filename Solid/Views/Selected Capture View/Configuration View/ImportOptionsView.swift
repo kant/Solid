@@ -102,17 +102,3 @@ extension PhotogrammetrySession.Request.Detail: CaseIterable {
         .preview, .reduced, .medium, .full, .raw
     ]
 }
-
-//struct ImportOptionsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let capture = Capture(
-//            name: "Testing",
-//            rawUrl: URL(string: "url/")
-//        )
-//        ImportOptionsView(
-//            model: ContentViewModel(storage: Storage(with: try! Realm())),
-//            capture: capture,
-//            importConfiguration: ImportConfiguration(for: capture)
-//        )
-//    }
-//}

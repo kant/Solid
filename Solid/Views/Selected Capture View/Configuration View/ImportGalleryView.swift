@@ -36,21 +36,7 @@ struct ImportGalleryView: View {
                 }.padding()
             }
         } else {
-            Text("Could not load ImportConfiguration 1")
+            Text("Could not load ImportConfiguration")
         }
     }
 }
-
-//struct ImportOptionsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let capture = Capture(
-//            name: "Testing",
-//            rawUrl: URL(string: "url/")
-//        )
-//        ImportOptionsView(
-//            model: ContentViewModel(storage: Storage(with: Realm())),
-//            capture: capture,
-//            importConfiguration: ImportConfiguration(for: capture)
-//        )
-//    }
-//}

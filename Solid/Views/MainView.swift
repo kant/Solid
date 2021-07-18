@@ -62,7 +62,7 @@ struct MainView: View {
                 }, label: {
                     Image(systemName: "square.and.arrow.up")
                 })
-                .disabled(selectedCapture == nil)
+                    .disabled(selectedCapture == nil || selectedCapture?.state != .stored)
             }
 
             ToolbarItem(placement: ToolbarItemPlacement.primaryAction) {

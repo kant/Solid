@@ -15,9 +15,6 @@ import CoreImage.CIFilterBuiltins
 
 
 class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
-    
-    //@Published var isLoading = false
-    
     lazy var sceneView = SCNView()
     private var scene = SCNScene()
 
@@ -96,7 +93,7 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
             
             return
         }
-        debugPrint("capture file found")
+        //debugPrint("capture file found")
         
         //create capture node
         let newNode = SCNReferenceNode(url: url)
@@ -105,7 +102,6 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         gZeroNode?.geometry?.firstMaterial?.lightingModel = .physicallyBased
         
         guard let newNode = newNode else {
-            //isLoading = false
             return
         }
         
@@ -118,8 +114,6 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
             if let captureNode = self.captureNode {
                 self.scene.rootNode.addChildNode(captureNode)
             }
-            
-            //self.isLoading = false
         }
     }
  
@@ -181,10 +175,6 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         sceneView.pointOfView?.look(at: SCNVector3(x: 0, y: 0, z: 0)) //captureNode.worldPosition
         
         SCNTransaction.commit()
-        
-//        sceneView.pointOfView?.filters = [
-//            CIFilter.photoEffectNoir()
-//        ]
     }
     
 }

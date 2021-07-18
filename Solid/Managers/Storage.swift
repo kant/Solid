@@ -86,18 +86,6 @@ class Storage {
         }
     }
     
-    func changeName(for capture: Capture, to newName: String) {
-        do {
-            try realm.write {
-                if let thawedCapture = capture.thaw() {
-                    thawedCapture.name = newName
-                }
-            }
-        } catch {
-            debugPrint("couldn't change name for capture")
-        }
-    }
-    
     static private func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
@@ -116,29 +104,6 @@ class Storage {
     static func fileExists(at url: URL) -> Bool {
         return FileManager.default.fileExists(atPath: url.path)
     }
-    
-//    static func exportItems(for capture: Capture?) -> [URL] {
-//        guard let capture = capture else { return [] }
-//
-//        var urls: [URL] = []
-//
-//        for quality in PhotogrammetrySession.Request.Detail.allCases {
-//            let id = "\(capture.id)_\(quality.name)"
-//
-//            //USDZ
-//            let fileUrl = getDocumentsDirectory().appendingPathComponent("\(id).usdz")
-//            if FileManager.default.fileExists(atPath: fileUrl.path) {
-//                urls.append( fileUrl )
-//            }
-//
-//            //USDA & OBJ folder
-//            let folderUrl = getDocumentsDirectory().appendingPathComponent(id, isDirectory: true)
-//            if FileManager.default.fileExists(atPath: folderUrl.path) {
-//                urls.append( folderUrl )
-//            }
-//        }
-//        return urls
-//    }
     
     static func exportItems(for capture: Capture?) -> [ExportItem] {
         guard let capture = capture else { return [] }
