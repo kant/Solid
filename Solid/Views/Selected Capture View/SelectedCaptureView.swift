@@ -32,11 +32,4 @@ struct SelectedCaptureView: View {
     }
 }
 
-//struct PreviewView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let previewContent = PreviewContent()
-//        PreviewView(model: previewContent.contentViewModel, capture: PreviewContent.capture)
-//    }
-//}
-
 

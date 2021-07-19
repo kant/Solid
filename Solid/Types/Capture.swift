@@ -36,7 +36,7 @@ extension CaptureState: CustomStringConvertible {
     @Persisted var name: String
     @Persisted var dateCreated: Date
     @Persisted var importFolderRelativePath: String
-    let processedFiles = RealmSwift.List<ProcessedFile>()
+    @Persisted var processedFiles = RealmSwift.List<ProcessedFile>()
     
     //Not stored by Realm
     var state: CaptureState {

@@ -27,7 +27,6 @@ struct ViewportView: View { //Equatable
             )
             
             VStack {
-                
                 //Processing Bar
                 if capture.state == .processing {
                     ProgressBar(model: model, capture: capture)
