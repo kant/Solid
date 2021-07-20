@@ -11,7 +11,7 @@ import RealityKit
 
 struct ToolBar: View {
     
-    @ObservedObject var model: ContentViewModel
+    @ObservedObject var model: MainViewModel
     @ObservedRealmObject var capture: Capture
     
     @State var showLightingPopover = false
@@ -101,8 +101,6 @@ struct ToolBar: View {
                     }
                 }
                 .padding()
-                
-                
             }
             
             //Quality Picker

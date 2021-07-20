@@ -40,7 +40,7 @@ class Storage {
         }
     }
     
-    func delete(captures: [Capture], model: ContentViewModel? = nil) {
+    func delete(captures: [Capture], model: MainViewModel? = nil) {
         debugPrint("deleting \(captures.count) captures")
        
         var thawedCaptures: [Capture] = []
@@ -72,7 +72,7 @@ class Storage {
         }
     }
     
-    private func stopProcessing(for capture: Capture, with model: ContentViewModel) {
+    private func stopProcessing(for capture: Capture, with model: MainViewModel) {
         for captureGenerator in model.captureGenerators {
             if
                 captureGenerator.capture == capture,

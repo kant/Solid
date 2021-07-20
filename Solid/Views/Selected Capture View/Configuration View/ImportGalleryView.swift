@@ -11,7 +11,7 @@ import RealityKit
 
 struct ImportGalleryView: View {
     
-    @ObservedObject var model: ContentViewModel
+    @ObservedObject var model: MainViewModel
     @ObservedRealmObject var capture: Capture
     
     @ObservedObject var importConfiguration: ImportConfiguration

@@ -13,10 +13,10 @@ struct SolidApp: SwiftUI.App {
     
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    @StateObject var model: ContentViewModel = {
+    @StateObject var model: MainViewModel = {
         let realm = try! Realm()
         let storage = Storage(with: realm)
-        return ContentViewModel(storage: storage)
+        return MainViewModel(storage: storage)
     }()
     
     

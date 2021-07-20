@@ -12,7 +12,7 @@ import RealmSwift
 
 struct ViewportView: View { //Equatable
     
-    @ObservedObject var model: ContentViewModel
+    @ObservedObject var model: MainViewModel
     @ObservedObject var viewportModel: ViewportModel
     @ObservedRealmObject var capture: Capture
     

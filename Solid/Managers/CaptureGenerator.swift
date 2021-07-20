@@ -12,13 +12,13 @@ import RealityFoundation
 
 class CaptureGenerator: Equatable {
     
-    @ObservedObject private var model: ContentViewModel
+    @ObservedObject private var model: MainViewModel
     @ObservedRealmObject var capture: Capture
     var config: ImportConfiguration
     
     var session: PhotogrammetrySession?
     
-    init(for capture: Capture, with config: ImportConfiguration, model: ContentViewModel) {
+    init(for capture: Capture, with config: ImportConfiguration, model: MainViewModel) {
         self.capture = capture
         self.config = config
         self.model = model

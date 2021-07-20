@@ -12,7 +12,7 @@ import RealmSwift
 
 struct SelectedCaptureView: View {
     
-    @ObservedObject var model: ContentViewModel
+    @ObservedObject var model: MainViewModel
     @ObservedRealmObject var capture: Capture
     
     @State var selectedPreviewQuality: PhotogrammetrySession.Request.Detail = .preview

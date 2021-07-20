@@ -16,7 +16,7 @@ struct Defaults {
     static var focusDistance = 2.0
     static var environmentRotation = 0.0
     
-    static var zMin = Defaults.minFocusDistance - 0.1
+    static var zMin = 0.01
     static var minFocusDistance = 0.2
     static var maxFocusDistance = 3.0
 }

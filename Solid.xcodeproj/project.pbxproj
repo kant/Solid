@@ -14,7 +14,7 @@
 		4029483A268BABA0002B1B9D /* ImportGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40294839268BABA0002B1B9D /* ImportGalleryView.swift */; };
 		40340D4F268D0BD000F34A37 /* PreviewContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40340D4E268D0BD000F34A37 /* PreviewContent.swift */; };
 		40340D51268D0EA200F34A37 /* ToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40340D50268D0EA200F34A37 /* ToolBar.swift */; };
-		4052AA1B267E312200644CC2 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1A267E312200644CC2 /* ContentViewModel.swift */; };
+		4052AA1B267E312200644CC2 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1A267E312200644CC2 /* MainViewModel.swift */; };
 		4052AA1E267EF46600644CC2 /* ImportOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1D267EF46600644CC2 /* ImportOptionsView.swift */; };
 		4052AA20267F92F200644CC2 /* ImportConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052AA1F267F92F200644CC2 /* ImportConfiguration.swift */; };
 		4054006B2694E502007B8452 /* NoCaptureSelectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4054006A2694E502007B8452 /* NoCaptureSelectedView.swift */; };
@@ -47,7 +47,7 @@
 		40294839268BABA0002B1B9D /* ImportGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportGalleryView.swift; sourceTree = "<group>"; };
 		40340D4E268D0BD000F34A37 /* PreviewContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContent.swift; sourceTree = "<group>"; };
 		40340D50268D0EA200F34A37 /* ToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBar.swift; sourceTree = "<group>"; };
-		4052AA1A267E312200644CC2 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		4052AA1A267E312200644CC2 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		4052AA1D267EF46600644CC2 /* ImportOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportOptionsView.swift; sourceTree = "<group>"; };
 		4052AA1F267F92F200644CC2 /* ImportConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportConfiguration.swift; sourceTree = "<group>"; };
 		4054006A2694E502007B8452 /* NoCaptureSelectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCaptureSelectedView.swift; sourceTree = "<group>"; };
@@ -151,8 +151,9 @@
 			isa = PBXGroup;
 			children = (
 				40795A9E267D985E00953D36 /* SolidApp.swift */,
-				4052AA1A267E312200644CC2 /* ContentViewModel.swift */,
+				4052AA1A267E312200644CC2 /* MainViewModel.swift */,
 				40795AA0267D985E00953D36 /* MainView.swift */,
+				4054006C2694E816007B8452 /* CaptureNavigationView.swift */,
 				400AD15C2681762300A3F81D /* Selected Capture View */,
 				405400682694E483007B8452 /* Other */,
 			);
@@ -164,7 +165,6 @@
 			children = (
 				40795AB2267DB34500953D36 /* ModelListCell.swift */,
 				4054006A2694E502007B8452 /* NoCaptureSelectedView.swift */,
-				4054006C2694E816007B8452 /* CaptureNavigationView.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -364,7 +364,7 @@
 				40294838268BAB26002B1B9D /* ConfigurationView.swift in Sources */,
 				40340D51268D0EA200F34A37 /* ToolBar.swift in Sources */,
 				40795AB1267DABED00953D36 /* SelectedCaptureView.swift in Sources */,
-				4052AA1B267E312200644CC2 /* ContentViewModel.swift in Sources */,
+				4052AA1B267E312200644CC2 /* MainViewModel.swift in Sources */,
 				4029483A268BABA0002B1B9D /* ImportGalleryView.swift in Sources */,
 				40795AB3267DB34500953D36 /* ModelListCell.swift in Sources */,
 				4054006B2694E502007B8452 /* NoCaptureSelectedView.swift in Sources */,

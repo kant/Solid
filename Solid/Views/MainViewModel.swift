@@ -10,7 +10,7 @@ import SwiftUI
 import RealmSwift
 import Combine
 
-class ContentViewModel: NSObject, ObservableObject {
+class MainViewModel: NSObject, ObservableObject {
     
     var storage: Storage
     var viewportModel = ViewportModel()

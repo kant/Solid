@@ -11,7 +11,7 @@ import UniformTypeIdentifiers
 
 struct MainView: View {
     
-    @ObservedObject var model: ContentViewModel
+    @ObservedObject var model: MainViewModel
     
     @State private var selectedCaptureID: ObjectId?
     var selectedCapture: Capture? {

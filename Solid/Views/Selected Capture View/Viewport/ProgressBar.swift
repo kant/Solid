@@ -9,7 +9,7 @@ import SwiftUI
 import RealmSwift
 
 struct ProgressBar: View {
-    @ObservedObject var model: ContentViewModel
+    @ObservedObject var model: MainViewModel
     @ObservedRealmObject var capture: Capture
     
     var body: some View {

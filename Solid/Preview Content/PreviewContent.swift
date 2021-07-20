@@ -11,7 +11,7 @@ import RealmSwift
 class PreviewContent {
     let realm = try! Realm()
     var storage: Storage
-    var contentViewModel: ContentViewModel
+    var contentViewModel: MainViewModel
     
     static var capture: Capture {
         let capture = Capture()
@@ -26,6 +26,6 @@ class PreviewContent {
     
     init() {
         storage = Storage(with: realm)
-        contentViewModel = ContentViewModel(storage: storage)
+        contentViewModel = MainViewModel(storage: storage)
     }
 }

@@ -4,4 +4,4 @@
 
 Solid creates 3D models from images of an object at different angles. This is made possible by the Object Capture API introduced in macOS 12. Solid features creation and preview of multiple quality levels, storage of models, a customizable viewport, and exporting in USDZ, USDA, and OBJ formats.
 
-!["Main Window"](readMeAssets/main.png)
+!["Main Window"](readMeAssets/solidApp.png)

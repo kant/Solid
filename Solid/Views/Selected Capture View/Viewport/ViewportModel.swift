@@ -21,6 +21,8 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
     private var capture: Capture?
     var captureNode: SCNNode?
     
+    let camera = SCNCamera()
+    
     private var floorNode: SCNNode?
     
     private var previewQuality: PhotogrammetrySession.Request.Detail?
@@ -42,13 +44,14 @@ class ViewportModel: NSObject, ObservableObject, SCNSceneRendererDelegate {
         super.init()
         
         //CAMERA SETUP
-        let camera = SCNCamera()
+        
         camera.zNear = Defaults.zMin
         camera.wantsDepthOfField = UserDefaults.standard.bool(forKey: "wantsDOF")
         camera.fStop = 1
         
         camera.wantsHDR = true
         camera.wantsExposureAdaptation = true
+        
         
         camera.exposureAdaptationDarkeningSpeedFactor = 10
         camera.exposureAdaptationBrighteningSpeedFactor = 10
