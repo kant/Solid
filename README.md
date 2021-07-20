@@ -6,3 +6,4 @@ Solid creates 3D models from images of an object at different angles. This is ma
 
 !["Main Window"](readMeAssets/solidApp.png)
 [!["Captain America Sample"](readMeAssets/captainAmericaSample.gif)](https://youtu.be/hGtGRSaiMv0)
+Captain America and rocks were generatd by Solid. Final scene made in Blender. ["View Full"](https://youtu.be/hGtGRSaiMv0)
